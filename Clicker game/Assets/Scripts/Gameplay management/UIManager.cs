@@ -8,6 +8,10 @@ public class UIManager : MonoBehaviour
 {
     public TextMeshProUGUI moneyText;
     public TextMeshProUGUI pollutionText;
+    public GameObject TopUI;
+    public GameObject BottomUI;
+    public GameObject RightUI;
+
     void Start()
     {
         
@@ -15,7 +19,7 @@ public class UIManager : MonoBehaviour
     
     void Update()
     {
-        moneyText.text = "Money " + Currency.MONEY;
-        pollutionText.text = "Pollution " + Pollution.POLLUTION;
+        moneyText.text = "MONEY " + Currency.MONEY;
+        pollutionText.text = "POLLUTION " + Pollution.POLLUTION;
     }
 }

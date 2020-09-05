@@ -11,4 +11,9 @@ public class Currency : MonoBehaviour
     {
         MONEY = money;
     }
+
+    void Update()
+    {
+        money = MONEY;
+    }
 }

@@ -8,11 +8,11 @@ public class Pollution : MonoBehaviour
     public static float POLLUTION;
     void Start()
     {
-        
+        POLLUTION = pollution;
     }
     
     void Update()
     {
-        
+        pollution = POLLUTION;
     }
 }

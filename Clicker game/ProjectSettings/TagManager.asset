@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Node
+  - PlaceHolder
+  - StorageCanvas
+  - MainBuilding
   layers:
   - Default
   - TransparentFX

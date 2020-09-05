@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 281758397531508411}
   - component: {fileID: 281758397531508408}
   - component: {fileID: 281758397531508409}
+  - component: {fileID: 8029575684945867614}
   - component: {fileID: 281758397531508413}
   m_Layer: 0
-  m_Name: Factory
+  m_Name: Building2_Factory
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -95,6 +96,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8029575684945867614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 281758397531508390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 342e2728de3a46749bfd7e52b695306c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &281758397531508413
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -107,10 +120,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83007bfb679049546bdd2a64894b6504, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moneyProduced_popup: 10
+  pollutionProduced_popup: 3
+  interval_popup: 5
   moneyProduced_auto: 1
-  interval_auto: 3
-  moneyProduced_popup: 20
-  interval_popup: 10
+  moneyInterval_auto: 2
+  pollutionProduced_auto: 0.1
+  pollutionInterval_auto: 0.5
+  factoryPopUp: {fileID: 7541951108901463549, guid: 8ae78f63db5315641ab5b8c13d25542c,
+    type: 3}
+  popupStorageCanvas: {fileID: 0}
+  factoryPopUpREF: {fileID: 0}
 --- !u!1 &281758397948472151
 GameObject:
   m_ObjectHideFlags: 0
