@@ -20,15 +20,32 @@ public class Park : MonoBehaviour
     public GameObject popupStorageCanvas;
     [Header("Attached pop up (Do not edit)")]
     public GameObject parkPopUpREF;
+    [Header("Script reference (Do not edit)")]
+    public BuildingBuff buildingBuff;
+    [Header("Resources multiplier")]
+    public float efficiency = 1f;
 
     void Start()
     {
         popupStorageCanvas = GameObject.FindGameObjectWithTag("StorageCanvas");
+        buildingBuff = GetComponent<BuildingBuff>();
         StartCoroutine(ReducePollution_POP_UP(pollutionReduced_popup, interval_popup));
         //StartCoroutine(Pollution_AUTOMATIC(pollutionProduced_auto, pollutionInterval_auto));
     }
+    private void Update()
+    {
+        // each house increase the efficiency by 25%, whereas each factory nearby decrease the efficiency by 25%. Minimum 20% output.
+        if(efficiency > 0.2f)
+        {
+            efficiency = 1 + buildingBuff.nearbyHouse * 0.25f - buildingBuff.nearbyFactory * 0.4f;
+        }
+        if(efficiency <= 0.2f)
+        {
+            efficiency = 0.2f;
+        }
+    }
 
-    IEnumerator ReducePollution_POP_UP(float pollutionReduced, float interval)
+    public IEnumerator ReducePollution_POP_UP(float pollutionReduced, float interval)
     {
         while (parkPopUpREF == null)
         {
@@ -38,9 +55,9 @@ public class Park : MonoBehaviour
             parkPopUpREF.GetComponent<ParkPopUp>().parkREF = gameObject;
         }
     }
-    public void GetResources(float pollutionReduced)
+    public void GetResources(float pollutionReduced, float efficiency)
     {
-        Pollution.POLLUTION -= pollutionReduced;
+        Pollution.POLLUTION -= pollutionReduced * efficiency;
     }
     //IEnumerator Pollution_AUTOMATIC(float pollutionProduced, float interval)
     //{

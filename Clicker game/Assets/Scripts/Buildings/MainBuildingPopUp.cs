@@ -16,11 +16,12 @@ public class MainBuildingPopUp : MonoBehaviour
     {
         mainBuilding = GameObject.FindGameObjectWithTag("MainBuilding");
         pos = Camera.main.WorldToScreenPoint(mainBuilding.transform.position + offset);
+        img.transform.position = pos;
     }
     
     void Update()
     {
         img.transform.position += Vector3.up * flyingSpeed * Time.deltaTime;
-        Destroy(gameObject, 1f);
+        Destroy(gameObject, 1.5f);
     }
 }

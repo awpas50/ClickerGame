@@ -301,3 +301,6 @@ MonoBehaviour:
   offset: {x: 0, y: 0.8, z: 0}
   parkREF: {fileID: 0}
   parkREF_script: {fileID: 0}
+  popupStorageCanvas: {fileID: 0}
+  secondPopUp: {fileID: 7541951108901463549, guid: 9c33698179af3a342ab92ad8d3893531,
+    type: 3}

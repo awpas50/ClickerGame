@@ -21,16 +21,27 @@ public class Factory : MonoBehaviour
     public GameObject popupStorageCanvas;
     [Header("Attached pop up (Do not edit)")]
     public GameObject factoryPopUpREF;
+    [Header("Script reference (Do not edit)")]
+    public BuildingBuff buildingBuff;
+    [Header("Resources multiplier")]
+    public float efficiency = 1f;
 
     void Start()
     {
         popupStorageCanvas = GameObject.FindGameObjectWithTag("StorageCanvas");
+        buildingBuff = GetComponent<BuildingBuff>();
         StartCoroutine(Production_POP_UP(interval_popup));
         StartCoroutine(Production_AUTOMATIC(moneyProduced_auto, moneyInterval_auto));
         StartCoroutine(Pollution_AUTOMATIC(pollutionProduced_auto, pollutionInterval_auto));
     }
 
-    IEnumerator Production_POP_UP(float interval)
+    private void Update()
+    {
+        // each house & main building nearby increase the efficiency by 25%.
+        efficiency = 1 + buildingBuff.nearbyHouse * 0.25f + buildingBuff.nearbyMainBuilding * 0.25f;
+    }
+
+    public IEnumerator Production_POP_UP(float interval)
     {
         while (factoryPopUpREF == null)
         {
@@ -40,13 +51,13 @@ public class Factory : MonoBehaviour
             factoryPopUpREF.GetComponent<FactoryPopUp>().factoryREF = gameObject;
         }
     }
-    public void GetResources(float moneyProduced, float pollutionProduced)
+    public void GetResources(float moneyProduced, float efficiency, float pollutionProduced)
     {
-        Currency.MONEY += moneyProduced;
+        Currency.MONEY += moneyProduced * efficiency;
         Pollution.POLLUTION += pollutionProduced;
     }
 
-    IEnumerator Production_AUTOMATIC(float moneyProduced, float interval)
+    public IEnumerator Production_AUTOMATIC(float moneyProduced, float interval)
     {
         while(true)
         {
@@ -54,7 +65,7 @@ public class Factory : MonoBehaviour
             Currency.MONEY += moneyProduced;
         }
     }
-    IEnumerator Pollution_AUTOMATIC(float pollutionProduced, float interval)
+    public IEnumerator Pollution_AUTOMATIC(float pollutionProduced, float interval)
     {
         while (true)
         {
@@ -62,5 +73,7 @@ public class Factory : MonoBehaviour
             Pollution.POLLUTION += pollutionProduced;
         }
     }
+
+
     
 }

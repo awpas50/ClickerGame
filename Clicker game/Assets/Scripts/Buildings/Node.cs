@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,6 +11,7 @@ public class Node : MonoBehaviour
     public List<GameObject> nearbyNode;
     [Header("Check neraby node with building (Don not edit)")]
     public List<GameObject> nearbyNode_building;
+    public GameObject[] nearbyNode_building_house;
     [Header("Node REF (Do not edit)")]
     public int nodeIndex = -1;
     public GameObject placeHolder;
@@ -17,9 +19,16 @@ public class Node : MonoBehaviour
     public GameObject building_REF;
     public Vector3 offset;
 
+    private void Start()
+    {
+        nearbyNode_building_house = GameObject.FindGameObjectsWithTag("House");
+    }
     private void Update()
     {
-        GetNearbyNode();
+        if(building_REF)
+        {
+            CheckNearbyBuildingType();
+        }
     }
     private void OnMouseDown()
     {
@@ -68,25 +77,46 @@ public class Node : MonoBehaviour
     public void ConfirmPlaceBuilding()
     {
         GameObject buildingPrefab = Instantiate(placeHolder_building_REF, transform.position, Quaternion.identity);
-        // Add reference
+        
+        // Add reference (node recongize the building)
         building_REF = buildingPrefab;
-
+        // Add reference (building recongize the node)
+        building_REF.GetComponent<BuildingCommonProps>().node = gameObject;
         GameManager.instance.estimatedCostList.Clear();
     }
     public void RemoveBuildingPlaceHolder()
     {
         placeHolder_building_REF = null;
     }
-    public void OnTriggerEnter(Collider other)
+    public void CheckNearbyBuildingType()
     {
-        if(other.gameObject.CompareTag("Node"))
+        building_REF.GetComponent<BuildingBuff>().nearbyHouse = 0;
+        building_REF.GetComponent<BuildingBuff>().nearbyFactory = 0;
+        building_REF.GetComponent<BuildingBuff>().nearbyPark = 0;
+        building_REF.GetComponent<BuildingBuff>().nearbyMainBuilding = 0;
+        foreach (GameObject b in nearbyNode_building)
         {
-            Debug.Log("Touched");
-            nearbyNode.Add(other.gameObject);
+            if(b == null)
+            {
+                building_REF.GetComponent<BuildingBuff>().nearbyHouse += 0;
+            }
+            else if (b.gameObject.tag == "House")
+            {
+                building_REF.GetComponent<BuildingBuff>().nearbyHouse += 1;
+                Debug.Log(building_REF.GetComponent<BuildingBuff>().nearbyHouse);
+            }
+            else if (b.gameObject.tag == "Factory")
+            {
+                building_REF.GetComponent<BuildingBuff>().nearbyFactory += 1;
+            }
+            else if (b.gameObject.tag == "Park")
+            {
+                building_REF.GetComponent<BuildingBuff>().nearbyPark += 1;
+            }
+            else if (b.gameObject.tag == "MainBuilding")
+            {
+                building_REF.GetComponent<BuildingBuff>().nearbyMainBuilding += 1;
+            }
         }
-    }
-    public void GetNearbyNode()
-    {
-        OnTriggerEnter(boxCollider);
     }
 }

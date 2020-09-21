@@ -8,6 +8,10 @@ TagManager:
   - PlaceHolder
   - StorageCanvas
   - MainBuilding
+  - House
+  - Factory
+  - Park
+  - Generator
   layers:
   - Default
   - TransparentFX

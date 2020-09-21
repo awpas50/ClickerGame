@@ -10,10 +10,14 @@ public class ParkPopUp : MonoBehaviour
     [Header("Assigned in script - do not edit")]
     public GameObject parkREF;
     public Park parkREF_script;
+    public GameObject popupStorageCanvas;
+    [Header("Assigned manually")]
+    public GameObject secondPopUp;
 
     private void Start()
     {
         parkREF_script = parkREF.GetComponent<Park>();
+        popupStorageCanvas = GameObject.FindGameObjectWithTag("StorageCanvas");
     }
     void Update()
     {
@@ -34,7 +38,16 @@ public class ParkPopUp : MonoBehaviour
     // When clicked
     public void ButtonEvent()
     {
-        parkREF_script.GetResources(parkREF_script.pollutionReduced_popup);
+        parkREF_script.GetResources(parkREF_script.pollutionReduced_popup, parkREF_script.efficiency);
+        // Instantiate an additional pop up
+        GameObject secondPopUpPrefab = Instantiate(secondPopUp, Camera.main.WorldToScreenPoint(parkREF.transform.position + offset), Quaternion.identity);
+        secondPopUpPrefab.transform.SetParent(popupStorageCanvas.transform);
+        secondPopUpPrefab.GetComponent<BuildingPopUp>().buildingREF = parkREF;
+        secondPopUpPrefab.GetComponent<BuildingPopUp>().resourceText.text = "-" + (parkREF_script.pollutionReduced_popup * parkREF_script.efficiency).ToString() + " pollution";
+        // Remove reference
+        parkREF_script.parkPopUpREF = null;
+        // Restart coroutine
+        parkREF_script.StartCoroutine(parkREF_script.ReducePollution_POP_UP(parkREF_script.pollutionReduced_popup, parkREF_script.interval_popup));
         // Close this pop up.
         Destroy(gameObject);
     }
