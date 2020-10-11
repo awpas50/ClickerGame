@@ -19,4 +19,19 @@ public class BuildingSelection : MonoBehaviour
 
         UIManager.instance.buildingName.text = buildingName;
     }
+
+    private void Update()
+    {
+        if(Input.GetMouseButtonDown(1))
+        {
+            // Select building in scene
+            GameManager.instance.buildingSelectedInScene = null;
+
+            //Remove reference of builing selected in the UI
+            GameManager.instance.buildingSelectedInList = null;
+            GameManager.instance.buildingCost = 0;
+
+            UIManager.instance.buildingName.text = buildingName;
+        }
+    }
 }

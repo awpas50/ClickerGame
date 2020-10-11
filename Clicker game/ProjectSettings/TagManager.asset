@@ -12,6 +12,7 @@ TagManager:
   - Factory
   - Park
   - Generator
+  - Asteroid
   layers:
   - Default
   - TransparentFX

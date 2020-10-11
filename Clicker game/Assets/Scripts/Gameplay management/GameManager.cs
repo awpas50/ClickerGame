@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviour
         buildingSelectedInList = building1.building;
         buildingCost = building1.cost;
         //buildingName.text = "House";
-        buildingInfo.text = "House - Higher population buffs the efficiency of nearby factorys and parks.";
+        buildingInfo.text = "House ($50)- Higher population buffs the efficiency of nearby factorys and parks.";
 
         buildingSelectedInScene = null;
     }
@@ -72,7 +72,7 @@ public class GameManager : MonoBehaviour
         buildingSelectedInList = building2.building;
         buildingCost = building2.cost;
         //buildingName.text = "Factory";
-        buildingInfo.text = "Factory - Generate currency over a period of time. Gains benefit from nearby houses, but can pollution nearby park.";
+        buildingInfo.text = "Factory ($100) - Generate currency over a period of time. Gains benefit from nearby houses, but can pollution nearby park.";
         buildingSelectedInScene = null;
     }
     public void SelectBuilding3()
@@ -80,7 +80,7 @@ public class GameManager : MonoBehaviour
         buildingSelectedInList = building3.building;
         buildingCost = building3.cost;
         //buildingName.text = "Park";
-        buildingInfo.text = "Park - The clear air generator by plants can temporary keep out the pollution.";
+        buildingInfo.text = "Park ($75) - The clear air generator by plants can temporary keep out the pollution.";
 
         buildingSelectedInScene = null;
     }
@@ -90,7 +90,7 @@ public class GameManager : MonoBehaviour
         buildingSelectedInList = building4.building;
         buildingCost = building4.cost;
         //buildingName.text = "Perpetual motion machine";
-        buildingInfo.text = "Perpetual motion machine - If the bread was fasten with the cat, Unlimited power source can be generated as the cat will keep rotating.";
+        buildingInfo.text = "Perpetual motion machine ($100) - If the bread was fasten with the cat, Unlimited power source can be generated as the cat will keep rotating.";
 
         buildingSelectedInScene = null;
     }
