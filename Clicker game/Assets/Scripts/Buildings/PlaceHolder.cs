@@ -10,8 +10,12 @@ public class PlaceHolder : MonoBehaviour
     {
         // When clicked that means cancel building on the particular node:
         // Find the node in the node list (attached in GameManager and delete it)
+        // **(GameManager - nodeList)
+        // **(GameManager - futureBuildingList)
         GameManager.instance.nodeList.Remove(GameManager.instance.nodeList[attachedNode.GetComponent<Node>().nodeIndex]);
+        GameManager.instance.futureBuildingList.Remove(GameManager.instance.futureBuildingList[attachedNode.GetComponent<Node>().nodeIndex]);
         // Give back the money.
+        // **(GameManager - estimatedCostList)
         Currency.MONEY += GameManager.instance.estimatedCostList[attachedNode.GetComponent<Node>().nodeIndex];
         GameManager.instance.estimatedCostList.Remove(GameManager.instance.estimatedCostList[attachedNode.GetComponent<Node>().nodeIndex]);
         // Rearrange list

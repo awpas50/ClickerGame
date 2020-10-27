@@ -38,12 +38,12 @@ public class ParkPopUp : MonoBehaviour
     // When clicked
     public void ButtonEvent()
     {
-        parkREF_script.GetResources(parkREF_script.pollutionReduced_popup, parkREF_script.efficiency);
+        parkREF_script.GetResources(parkREF_script.pollutionReduced_popup, parkREF_script.efficiency, parkREF_script.levelMultipiler);
         // Instantiate an additional pop up
         GameObject secondPopUpPrefab = Instantiate(secondPopUp, Camera.main.WorldToScreenPoint(parkREF.transform.position + offset), Quaternion.identity);
         secondPopUpPrefab.transform.SetParent(popupStorageCanvas.transform);
         secondPopUpPrefab.GetComponent<BuildingPopUp>().buildingREF = parkREF;
-        secondPopUpPrefab.GetComponent<BuildingPopUp>().resourceText.text = "-" + (parkREF_script.pollutionReduced_popup * parkREF_script.efficiency).ToString() + " pollution";
+        secondPopUpPrefab.GetComponent<BuildingPopUp>().resourceText.text = "-" + (parkREF_script.pollutionReduced_popup * parkREF_script.efficiency * parkREF_script.levelMultipiler).ToString() + " pollution";
         // Remove reference
         parkREF_script.parkPopUpREF = null;
         // Restart coroutine

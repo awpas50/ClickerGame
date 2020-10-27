@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Park : MonoBehaviour
 {
     [Header("Manual collected resources (Reduce pollution)")]
+    public float pollutionReduced_popup_initial;
     public float pollutionReduced_popup;
     public float interval_popup;
 
@@ -22,20 +24,26 @@ public class Park : MonoBehaviour
     public GameObject parkPopUpREF;
     [Header("Script reference (Do not edit)")]
     public BuildingBuff buildingBuff;
+    public BuildingLevel buildingLevel;
     [Header("Resources multiplier")]
+    public float levelMultipiler = 1f;
     public float efficiency = 1f;
 
     void Start()
     {
+        pollutionReduced_popup_initial = pollutionReduced_popup;
+
         popupStorageCanvas = GameObject.FindGameObjectWithTag("StorageCanvas");
         buildingBuff = GetComponent<BuildingBuff>();
+        buildingLevel = GetComponent<BuildingLevel>();
         StartCoroutine(ReducePollution_POP_UP(pollutionReduced_popup, interval_popup));
         //StartCoroutine(Pollution_AUTOMATIC(pollutionProduced_auto, pollutionInterval_auto));
     }
     private void Update()
     {
+        levelMultipiler = 1f + ((buildingLevel.level - 1) * 0.25f);
         // each house increase the efficiency by 25%, whereas each factory nearby decrease the efficiency by 25%. Minimum 20% output.
-        if(efficiency > 0.2f)
+        if (efficiency > 0.2f)
         {
             efficiency = 1 + buildingBuff.nearbyHouse * 0.25f - buildingBuff.nearbyFactory * 0.4f;
         }
@@ -55,9 +63,9 @@ public class Park : MonoBehaviour
             parkPopUpREF.GetComponent<ParkPopUp>().parkREF = gameObject;
         }
     }
-    public void GetResources(float pollutionReduced, float efficiency)
+    public void GetResources(float pollutionReduced, float efficiency, float levelMultipiler)
     {
-        Pollution.POLLUTION -= pollutionReduced * efficiency;
+        Pollution.POLLUTION -= pollutionReduced * efficiency * levelMultipiler;
     }
     //IEnumerator Pollution_AUTOMATIC(float pollutionProduced, float interval)
     //{

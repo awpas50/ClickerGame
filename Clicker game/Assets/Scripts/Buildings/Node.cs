@@ -32,16 +32,27 @@ public class Node : MonoBehaviour
     }
     private void OnMouseDown()
     {
-        // Select building in scene
-        if (building_REF != null)
+        //// Select building in scene
+        //if (building_REF != null)
+        //{
+        //    GameManager.instance.buildingSelectedInScene = building_REF;
+        //    //Remove reference of builing selected in the UI
+        //    GameManager.instance.buildingSelectedInList = null;
+        //    GameManager.instance.buildingCost = 0;
+        //}
+
+        // DEBUG
+        if (GameManager.instance.buildingSelectedInUI == null)
         {
-            GameManager.instance.buildingSelectedInScene = building_REF;
-            //Remove reference of builing selected in the UI
-            GameManager.instance.buildingSelectedInList = null;
-            GameManager.instance.buildingCost = 0;
+            return;
         }
-        
-        if (building_REF == null && GameManager.instance.buildingSelectedInList && Currency.MONEY >= GameManager.instance.buildingCost)
+        if (building_REF == null && GameManager.instance.buildingSelectedInUI.name == "Building4_Generator" && GameManager.instance.isGeneratorInPlanning)
+        {
+            Debug.LogWarning("Generator is already in planning list");
+            return;
+        }
+        // EstimateCost: Precalculate the total cost needed
+        if (building_REF == null && GameManager.instance.buildingSelectedInUI && Currency.MONEY >= GameManager.instance.buildingCost)
         {
             AddPlaceHolder();
             EstimateCost();
@@ -50,8 +61,10 @@ public class Node : MonoBehaviour
 
     public void AddPlaceHolder()
     {
-        // Add the node into the list 
+        // Add the node into the list **(GameManager - nodeList)
         GameManager.instance.nodeList.Add(gameObject);
+        // **(GameManager - futureBuildingList)
+        GameManager.instance.futureBuildingList.Add(GameManager.instance.buildingSelectedInUI);
         // Using a index to recongnize the order (from 0)
         nodeIndex = GameManager.instance.nodeList.IndexOf(gameObject);
         // indicator only, make the node recongnize the placeHolder
@@ -60,15 +73,16 @@ public class Node : MonoBehaviour
         PlaceHolder placeHolder_script = placeHolder.GetComponent<PlaceHolder>();
         placeHolder_script.attachedNode = gameObject;
         // Store what building will be placed in the particular node
-        placeHolder_building_REF = GameManager.instance.buildingSelectedInList;
+        placeHolder_building_REF = GameManager.instance.buildingSelectedInUI;
     }
     public void EstimateCost()
     {
-        // Add the esitmated cost into a list
+        // Add the esitmated cost into a list **(GameManager - estimatedCostList)
         GameManager.instance.estimatedCostList.Add(GameManager.instance.buildingCost);
         // Deduct the money needed
         Currency.MONEY -= GameManager.instance.buildingCost;
     }
+    // Used in game manager
     public void RemovePlaceHolder()
     {
         Destroy(placeHolder);
@@ -76,8 +90,8 @@ public class Node : MonoBehaviour
     }
     public void ConfirmPlaceBuilding()
     {
+        // This is the actual process of generate a building
         GameObject buildingPrefab = Instantiate(placeHolder_building_REF, transform.position, Quaternion.identity);
-        
         // Add reference (node recongize the building)
         building_REF = buildingPrefab;
         // Add reference (building recongize the node)
@@ -86,10 +100,12 @@ public class Node : MonoBehaviour
     }
     public void RemoveBuildingPlaceHolder()
     {
+        // Remove the placeholder
         placeHolder_building_REF = null;
     }
     public void CheckNearbyBuildingType()
     {
+        // Check nearby building type every frame (using a specified collider on the node)
         building_REF.GetComponent<BuildingBuff>().nearbyHouse = 0;
         building_REF.GetComponent<BuildingBuff>().nearbyFactory = 0;
         building_REF.GetComponent<BuildingBuff>().nearbyPark = 0;

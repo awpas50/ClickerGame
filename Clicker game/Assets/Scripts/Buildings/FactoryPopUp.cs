@@ -38,12 +38,12 @@ public class FactoryPopUp : MonoBehaviour
     // When clicked
     public void ButtonEvent()
     {
-        factoryREF_script.GetResources(factoryREF_script.moneyProduced_popup, factoryREF_script.efficiency, factoryREF_script.pollutionProduced_popup);
+        factoryREF_script.GetResources(factoryREF_script.moneyProduced_popup, factoryREF_script.efficiency, factoryREF_script.pollutionProduced_popup, factoryREF_script.levelMultipiler);
         // Instantiate an additional pop up
         GameObject secondPopUpPrefab = Instantiate(secondPopUp, Camera.main.WorldToScreenPoint(factoryREF.transform.position + offset), Quaternion.identity);
         secondPopUpPrefab.transform.SetParent(popupStorageCanvas.transform);
         secondPopUpPrefab.GetComponent<BuildingPopUp>().buildingREF = factoryREF;
-        secondPopUpPrefab.GetComponent<BuildingPopUp>().resourceText.text = "+" + (factoryREF_script.moneyProduced_popup * factoryREF_script.efficiency).ToString();
+        secondPopUpPrefab.GetComponent<BuildingPopUp>().resourceText.text = "+" + (factoryREF_script.moneyProduced_popup * factoryREF_script.efficiency * factoryREF_script.levelMultipiler).ToString();
         // Remove reference
         factoryREF_script.factoryPopUpREF = null;
         // Restart coroutine

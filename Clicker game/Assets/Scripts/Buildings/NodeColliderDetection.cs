@@ -21,7 +21,6 @@ public class NodeColliderDetection : MonoBehaviour
         }
         if (other.gameObject.CompareTag("MainBuilding"))
         {
-            Debug.Log("Touched");
             nodeREF.nearbyNode.Add(other.gameObject);
             nodeREF.nearbyNode_building.Add(null);
         }
