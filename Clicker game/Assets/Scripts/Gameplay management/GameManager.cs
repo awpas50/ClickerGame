@@ -7,7 +7,7 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager instance;
+    public static GameManager i;
 
     [Header("Canvas of building details (assign manually)")]
     public GameObject buildingDetailsCanvas;
@@ -43,34 +43,29 @@ public class GameManager : MonoBehaviour
     public GameObject placeHolder;
 
     public bool buildingPurchasingState = false;
-    public bool isGeneratorInPlanning = false;
+    public bool isTurretInPlanning = false;
 
     [Header("Node animation")]
     public GameObject[] allNodes;
-
     Touch touch;
+
     void Awake()
     {
         //debug
-        if (instance != null)
+        if (i != null)
         {
             Debug.LogError("More than one GameManager in scene");
             return;
         }
-        instance = this;
+        i = this;
     }
-    private void Start()
-    {
-        // node animation
-        // allNodes = GetAllNodes();
-    }
+
     // Button event
     public void SelectBuilding1()
     {
         buildingSelectedInUI = building1.building;
         buildingCost = building1.cost;
-        //buildingName.text = "House";
-        buildingInfo.text = "House ($50)- Higher population buffs the efficiency of nearby factorys and parks.";
+        buildingInfo.text = "House ($60)- Higher population buffs the efficiency of nearby factorys and the parks will produce additional extra clear air.";
         if(buildingSelectedInScene)
         {
             buildingSelectedInScene.GetComponent<BuildingSelection>().indicator.SetActive(false);
@@ -82,8 +77,7 @@ public class GameManager : MonoBehaviour
         // Named factory, but this is the dark market where drug dealer do transaction here...........
         buildingSelectedInUI = building2.building;
         buildingCost = building2.cost;
-        //buildingName.text = "Factory";
-        buildingInfo.text = "Factory ($100) - Generate currency over a period of time. Gains benefit from nearby houses, but can pollution nearby park.";
+        buildingInfo.text = "Factory ($100) - Generate resources every 20 seconds. Gains efficiency buff from nearby houses, but will pollute nearby parks.";
         if (buildingSelectedInScene)
         {
             buildingSelectedInScene.GetComponent<BuildingSelection>().indicator.SetActive(false);
@@ -94,8 +88,7 @@ public class GameManager : MonoBehaviour
     {
         buildingSelectedInUI = building3.building;
         buildingCost = building3.cost;
-        //buildingName.text = "Park";
-        buildingInfo.text = "Park ($75) - The clear air generator by plants can temporary keep out the pollution.";
+        buildingInfo.text = "Park ($80) - The clear air generator by plants can temporary keep out the pollution - But remember not to put it near factories";
         if (buildingSelectedInScene)
         {
             buildingSelectedInScene.GetComponent<BuildingSelection>().indicator.SetActive(false);
@@ -108,8 +101,19 @@ public class GameManager : MonoBehaviour
         // A cat always lands on her feet whereas a bread with butter always fall buttered side down. 
         buildingSelectedInUI = building4.building;
         buildingCost = building4.cost;
-        //buildingName.text = "Perpetual motion machine";
-        buildingInfo.text = "Meteor defense ($100) - If the bread was fasten with the cat, Unlimited power source can be generated as the cat will keep rotating.";
+        buildingInfo.text = "Meteor defense ($400) - Build turrets to defend your city from the asteroids! Upgrading this building will increase its fire rate.";
+        if (buildingSelectedInScene)
+        {
+            buildingSelectedInScene.GetComponent<BuildingSelection>().indicator.SetActive(false);
+        }
+        buildingSelectedInScene = null;
+    }
+    public void SelectBuilding5()
+    {
+        // A cat always lands on her feet whereas a bread with butter always fall buttered side down. 
+        buildingSelectedInUI = building4.building;
+        buildingCost = building4.cost;
+        buildingInfo.text = "Airport ($1000) - Build airplanes to explore the outside world - numerous treasures are waiting for you!";
         if (buildingSelectedInScene)
         {
             buildingSelectedInScene.GetComponent<BuildingSelection>().indicator.SetActive(false);
@@ -170,22 +174,24 @@ public class GameManager : MonoBehaviour
     }
     public void Upgrade()
     {
-        Debug.Log("Upgrade");
-        if(Currency.MONEY <= buildingSelectedInScene.GetComponent<BuildingLevel>().cost)
+        BuildingLevel buildingLevel = buildingSelectedInScene.GetComponent<BuildingLevel>();
+        if (Currency.MONEY <= buildingLevel.costEachLevel[buildingLevel.level])
         {
             return;
         }
         else
         {
-            buildingSelectedInScene.GetComponent<BuildingLevel>().level += 1;
-            Currency.MONEY -= buildingSelectedInScene.GetComponent<BuildingLevel>().cost;
+            buildingLevel.level += 1;
+            Currency.MONEY -= buildingLevel.costEachLevel[buildingLevel.level];
         }
     }
+
     public void Sell()
     {
-        Debug.Log("Sell");
         Destroy(buildingSelectedInScene);
+        Currency.MONEY += buildingSelectedInScene.GetComponent<BuildingLevel>().sellCost;
     }
+
     private void Update()
     {
         list_house = GameObject.FindGameObjectsWithTag("House");
@@ -193,10 +199,81 @@ public class GameManager : MonoBehaviour
         list_park = GameObject.FindGameObjectsWithTag("Park");
         list_generator = GameObject.FindGameObjectsWithTag("Generator");
 
+        if(buildingSelectedInScene)
+        {
+            BuildingLevel buildingLevel = buildingSelectedInScene.GetComponent<BuildingLevel>();
+            BuildingSelection buildingSelection = buildingSelectedInScene.GetComponent<BuildingSelection>();
+            UIManager.i.sellText.text = "$" + buildingLevel.sellCost;
+            UIManager.i.upgradeText.text = "$" + buildingLevel.costEachLevel[buildingLevel.level];
+            UIManager.i.image.sprite = buildingSelection.sprite;
+            UIManager.i.buildingName.text = buildingSelection.buildingName + " (LEVEL " + buildingLevel.level + ")";
+            UIManager.i.Line1Text.color = UIManager.i.textDefaultColor;
+
+            // Disable button when maximum level:
+            if (buildingLevel.level >= buildingLevel.maxLevel)
+            {
+                UIManager.i.upgradeButton.interactable = false;
+                UIManager.i.upgradeText.text = "MAX";
+            }
+            else
+            {
+                UIManager.i.upgradeButton.interactable = true;
+                UIManager.i.upgradeText.text = "$" + buildingLevel.costEachLevel[buildingLevel.level];
+            }
+
+            // Building detail text
+            if (buildingSelectedInScene.tag == "House")
+            {
+                // Set building name in the UI
+                UIManager.i.Line1Text.text = "Efficiency: " + buildingSelectedInScene.GetComponent<House>().efficiency * 100 + "%";
+                UIManager.i.Line2Text.text = "";
+                UIManager.i.Line3Text.text = "";
+                UIManager.i.Line4Text.text = "";
+            }
+            if (buildingSelectedInScene.tag == "Factory")
+            {
+                // Set building name in the UI
+                UIManager.i.Line1Text.text = "Production: " + buildingSelectedInScene.GetComponent<Factory>().totalProduction +
+                    " + " + buildingSelectedInScene.GetComponent<Factory>().extraProduction;
+                UIManager.i.Line2Text.text = "Pollution: " + buildingSelectedInScene.GetComponent<Factory>().totalPollution;
+                UIManager.i.Line3Text.text = "Auto Production: " + buildingSelectedInScene.GetComponent<Factory>().moneyProduced_auto + " per second";
+                UIManager.i.Line4Text.text = "Auto Pollution: " + 
+                    (buildingSelectedInScene.GetComponent<Factory>().pollutionProduced_auto / buildingSelectedInScene.GetComponent<Factory>().pollutionInterval_auto) + " per second";
+            }
+            if (buildingSelectedInScene.tag == "Park")
+            {
+                // Set building name in the UI
+                if(buildingSelectedInScene.GetComponent<Park>().extraProduction >= 0)
+                {
+                    UIManager.i.Line1Text.text = "Pollution reduced: " + buildingSelectedInScene.GetComponent<Park>().totalProduction +
+                    " + " + buildingSelectedInScene.GetComponent<Park>().extraProduction;
+                }
+                else
+                {
+                    UIManager.i.Line1Text.color = UIManager.i.textWarningColor;
+                    UIManager.i.Line1Text.text = "Pollution reduced: " + buildingSelectedInScene.GetComponent<Park>().totalProduction +
+                    " - " + Mathf.Abs(buildingSelectedInScene.GetComponent<Park>().extraProduction);
+                }
+                
+                UIManager.i.Line2Text.text = "";
+                UIManager.i.Line3Text.text = "Auto Production: " 
+                    + (buildingSelectedInScene.GetComponent<Park>().CleanAirProduced_auto + buildingSelectedInScene.GetComponent<Park>().CleanAirInterval_auto) + " per second";
+                UIManager.i.Line4Text.text = "";
+            }
+            if (buildingSelectedInScene.tag == "Generator")
+            {
+                // Set building name in the UI
+                UIManager.i.Line1Text.text = "Fire rate: " + buildingSelectedInScene.GetComponent<Turret>().fireRate + " per second";
+                UIManager.i.Line2Text.text = "";
+                UIManager.i.Line3Text.text = "";
+                UIManager.i.Line4Text.text = "";
+            }
+        }
+
         if (Input.GetMouseButtonUp(0))
         {
             // prevent clicking through UI
-            if (EventSystem.current.IsPointerOverGameObject())
+            if (MouseOverUILayerObject.IsPointerOverUIObject())
             {
                 return;
             }
@@ -211,11 +288,7 @@ public class GameManager : MonoBehaviour
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 if (Physics.Raycast(ray, out hit))
                 {
-                    //if (hit.collider.gameObject.tag == "MainBuilding")
-                    //{
-                    //    hit.collider.gameObject.GetComponent<MainBuilding>().MainBuildingClickEvent();
-                    //}
-                    if(hit.collider.gameObject.tag == "Factory")
+                    if (hit.collider.gameObject.tag == "Factory")
                     {
                         if (hit.collider.gameObject.GetComponent<Factory>().factoryPopUpREF)
                         {
@@ -229,13 +302,12 @@ public class GameManager : MonoBehaviour
                             buildingDetailsCanvas.SetActive(true);
 
                             // Remove reference of builing selected in the UI
-                            GameManager.instance.buildingSelectedInUI = null;
-                            GameManager.instance.buildingCost = 0;
+                            GameManager.i.buildingSelectedInUI = null;
+                            GameManager.i.buildingCost = 0;
 
-                            // Set building name in the UI
-                            UIManager.instance.buildingName.text = buildingSelectedInScene.GetComponent<BuildingSelection>().buildingName + " (LEVEL " + buildingSelectedInScene.GetComponent<BuildingLevel>().level + ")";
-                            UIManager.instance.image.sprite = buildingSelectedInScene.GetComponent<BuildingSelection>().sprite;
-                            //UIManager.instance.buildingLevel.text = "LEVEL " + buildingSelectedInScene.GetComponent<BuildingLevel>().level;
+                            // Animation
+                            BuildingAnimation buildingAnimation = buildingSelectedInScene.GetComponent<BuildingAnimation>();
+                            buildingAnimation.StartCoroutine(buildingAnimation.BuildingPopAnimation());
                         }
                         
                     }
@@ -253,13 +325,12 @@ public class GameManager : MonoBehaviour
                             buildingDetailsCanvas.SetActive(true);
 
                             // Remove reference of builing selected in the UI
-                            GameManager.instance.buildingSelectedInUI = null;
-                            GameManager.instance.buildingCost = 0;
+                            GameManager.i.buildingSelectedInUI = null;
+                            GameManager.i.buildingCost = 0;
 
-                            // Set building name in the UI
-                            UIManager.instance.buildingName.text = buildingSelectedInScene.GetComponent<BuildingSelection>().buildingName + " (LEVEL " + buildingSelectedInScene.GetComponent<BuildingLevel>().level + ")";
-                            UIManager.instance.image.sprite = buildingSelectedInScene.GetComponent<BuildingSelection>().sprite;
-                            //UIManager.instance.buildingLevel.text = "LEVEL " + buildingSelectedInScene.GetComponent<BuildingLevel>().level;
+                            // Animation
+                            BuildingAnimation buildingAnimation = buildingSelectedInScene.GetComponent<BuildingAnimation>();
+                            buildingAnimation.StartCoroutine(buildingAnimation.BuildingPopAnimation());
                         }
                     }
                     else if (hit.collider.gameObject.tag == "House" ||
@@ -271,17 +342,14 @@ public class GameManager : MonoBehaviour
                         buildingDetailsCanvas.SetActive(true);
 
                         // Remove reference of builing selected in the UI
-                        GameManager.instance.buildingSelectedInUI = null;
-                        GameManager.instance.buildingCost = 0;
+                        GameManager.i.buildingSelectedInUI = null;
+                        GameManager.i.buildingCost = 0;
 
-                        // Set building name in the UI
-                        UIManager.instance.buildingName.text = buildingSelectedInScene.GetComponent<BuildingSelection>().buildingName + " (LEVEL " + buildingSelectedInScene.GetComponent<BuildingLevel>().level + ")";
-                        UIManager.instance.image.sprite = buildingSelectedInScene.GetComponent<BuildingSelection>().sprite;
-                        //if(buildingSelectedInScene.GetComponent<BuildingLevel>())
-                        //{
-                        //    UIManager.instance.buildingLevel.text = "LEVEL " + buildingSelectedInScene.GetComponent<BuildingLevel>().level;
-                        //}
+                        // Animation
+                        BuildingAnimation buildingAnimation = buildingSelectedInScene.GetComponent<BuildingAnimation>();
+                        buildingAnimation.StartCoroutine(buildingAnimation.BuildingPopAnimation());
                     }
+                    //not buildings
                     else
                     {
                         buildingDetailsCanvas.SetActive(false);
@@ -292,11 +360,11 @@ public class GameManager : MonoBehaviour
                             buildingSelectedInScene.GetComponent<BuildingSelection>().indicator.SetActive(false);
                         }
                         // deselect building in scene
-                        GameManager.instance.buildingSelectedInScene = null;
+                        GameManager.i.buildingSelectedInScene = null;
 
                         //Remove reference of builing selected in the UI
-                        GameManager.instance.buildingSelectedInUI = null;
-                        GameManager.instance.buildingCost = 0;
+                        GameManager.i.buildingSelectedInUI = null;
+                        GameManager.i.buildingCost = 0;
                     }
                     Debug.Log(hit.collider);
                 }
@@ -337,14 +405,14 @@ public class GameManager : MonoBehaviour
         if(buildingSelectedInUI != null)
         {
             buildingPurchasingState = true;
-            UIManager.instance.RightUI.SetActive(true);
-            UIManager.instance.BuildingInstructionUI.SetActive(true);
+            UIManager.i.RightUI.SetActive(true);
+            UIManager.i.BuildingInstructionUI.SetActive(true);
         }
         else if (buildingSelectedInUI == null)
         {
             buildingPurchasingState = false;
-            UIManager.instance.RightUI.SetActive(false);
-            UIManager.instance.BuildingInstructionUI.SetActive(false);
+            UIManager.i.RightUI.SetActive(false);
+            UIManager.i.BuildingInstructionUI.SetActive(false);
         }
 
         // base on "buildingPurchasingState" the mesh on each node (the first child, GetChild(0) will be disabled)
@@ -364,7 +432,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // Check if the generator is on a plan to be built:
+    // Check if the turret is on a plan to be built:
     //private bool IsGeneratorInPlanning()
     //{
     //    if(futureBuildingList.Count == 0)

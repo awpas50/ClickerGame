@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 8520843552009449592}
   - component: {fileID: 1283532377}
   - component: {fileID: 1961686758}
+  - component: {fileID: -595418874292705008}
   m_Layer: 0
   m_Name: Building2_Factory
   m_TagString: Factory
@@ -132,11 +133,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83007bfb679049546bdd2a64894b6504, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moneyProduced_popup: 15
-  pollutionProduced_popup: 3
-  interval_popup: 10
+  moneyProduced: 30
+  pollutionProduced: 3
+  interval: 20
+  totalProduction: 0
+  totalProduction_buff: 0
+  extraProduction: 0
+  totalPollution: 0
   moneyProduced_auto: 1
-  moneyInterval_auto: 2
+  interval_auto: 1
   pollutionProduced_auto: 0.1
   pollutionInterval_auto: 1
   factoryPopUp: {fileID: 7541951108901463549, guid: 8ae78f63db5315641ab5b8c13d25542c,
@@ -159,10 +164,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2512145170abfd4408e82d1683f1d8db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allBuildingList: []
   nearbyHouse: 0
   nearbyFactory: 0
   nearbyPark: 0
+  nearbyTurret: 0
   nearbyMainBuilding: 0
+  houseEfficiencyList: []
+  houseEfficiencyTotal: 0
 --- !u!114 &8520843552009449592
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -203,8 +212,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a44d5509287704a439e40ef96c98b8a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buildingBaseCost: 100
   level: 1
-  cost: 150
+  maxLevel: 8
+  costEachLevel: 0000000096000000fa00000090010000260200008a020000ee0200002003000000000000
+  sellCost: 0
+--- !u!114 &-595418874292705008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 281758397531508390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab50ec602ba3dd346bc74696d60117d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1926146317614599267
 GameObject:
   m_ObjectHideFlags: 0

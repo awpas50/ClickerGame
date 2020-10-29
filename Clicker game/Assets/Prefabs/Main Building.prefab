@@ -110,10 +110,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b8a9d00ef2ee6645a07fbd06c9fc2ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moneyEachClick: 1
   mainBuildingPopUp: {fileID: 7541951108901463549, guid: 6e0cdff9243333741a016cdc4295dc06,
     type: 3}
   popupStorageCanvas: {fileID: 0}
-  mainBuildingPopUpREF: {fileID: 0}
+  repeatable: 0
+  duration: 0.5
 --- !u!54 &1199124425
 Rigidbody:
   m_ObjectHideFlags: 0

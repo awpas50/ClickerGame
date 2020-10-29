@@ -1,19 +1,26 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class Factory : MonoBehaviour
 {
+    BuildingState buildingState;
     [Header("Manual collected resources (money)")]
-    private float moneyProduced_popup_initial;
-    public float moneyProduced_popup;
-    public float pollutionProduced_popup;
-    public float interval_popup;
+    [HideInInspector] private float moneyProduced_initial;
+    public float moneyProduced;
+    public float pollutionProduced;
+    public float interval;
+
+    public float totalProduction;
+    public float totalProduction_buff;
+    public float extraProduction;
+    public float totalPollution;
 
     [Header("Auto generated resources (money)")]
     public float moneyProduced_auto;
-    public float moneyInterval_auto;
+    public float interval_auto;
     public float pollutionProduced_auto;
     public float pollutionInterval_auto;
 
@@ -32,26 +39,38 @@ public class Factory : MonoBehaviour
 
     void Start()
     {
-        moneyProduced_popup_initial = moneyProduced_popup;
+        moneyProduced_initial = moneyProduced;
         popupStorageCanvas = GameObject.FindGameObjectWithTag("StorageCanvas");
         buildingBuff = GetComponent<BuildingBuff>();
         buildingLevel = GetComponent<BuildingLevel>();
-        StartCoroutine(Production_POP_UP(interval_popup));
-        StartCoroutine(Production_AUTOMATIC(moneyProduced_auto, moneyInterval_auto));
+        StartCoroutine(Production_POP_UP(interval));
+        StartCoroutine(Production_AUTOMATIC(moneyProduced_auto, interval_auto));
         StartCoroutine(Pollution_AUTOMATIC(pollutionProduced_auto, pollutionInterval_auto));
     }
 
     private void Update()
     {
-        levelMultipiler = 1f + ((buildingLevel.level - 1) * 0.25f);
+        levelMultipiler = 1f + ((buildingLevel.level - 1) * 0.35f);
         // each house & main building nearby increase the efficiency by 25%.
-        efficiency = 1 + buildingBuff.nearbyHouse * 0.25f + buildingBuff.nearbyMainBuilding * 0.25f;
+        efficiency = 1 + buildingBuff.houseEfficiencyTotal + buildingBuff.nearbyMainBuilding * 0.25f;
+
+        totalProduction = moneyProduced * levelMultipiler;
+        totalProduction_buff = moneyProduced * levelMultipiler * efficiency;
+        extraProduction = totalProduction_buff - totalProduction;
+
+        //Round off
+        totalProduction = (float)Math.Round(totalProduction, 1);
+        totalProduction_buff = (float)Math.Round(totalProduction_buff, 1);
+        extraProduction = (float)Math.Round(extraProduction, 1);
+
+        //Pollution
+        totalPollution = pollutionProduced * levelMultipiler;
     }
 
     public IEnumerator Production_POP_UP(float interval)
     {
-        // Instaniate a pop up every few seconds. Next pop up won't be spawned unless the 
-        while (factoryPopUpREF == null)
+        // Instaniate a pop up every few seconds. Next pop up won't be spawned unless the previous pop up has been collected
+        while (factoryPopUpREF == null && buildingState.isWorking)
         {
             yield return new WaitForSeconds(interval);
             factoryPopUpREF = Instantiate(factoryPopUp, transform.position, Quaternion.identity);
@@ -67,7 +86,7 @@ public class Factory : MonoBehaviour
 
     public IEnumerator Production_AUTOMATIC(float moneyProduced, float interval)
     {
-        while(true)
+        while(buildingState.isWorking)
         {
             yield return new WaitForSeconds(interval);
             Currency.MONEY += moneyProduced;
@@ -75,7 +94,7 @@ public class Factory : MonoBehaviour
     }
     public IEnumerator Pollution_AUTOMATIC(float pollutionProduced, float interval)
     {
-        while (true)
+        while (buildingState.isWorking)
         {
             yield return new WaitForSeconds(interval);
             Pollution.POLLUTION += pollutionProduced;

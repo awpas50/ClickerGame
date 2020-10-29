@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: -2012458942673174811}
   - component: {fileID: 362140470}
   - component: {fileID: 1276106045}
+  - component: {fileID: 984757850796011573}
   m_Layer: 0
   m_Name: Building3_Park
   m_TagString: Park
@@ -131,9 +132,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 662cd494898d34e4089379cf85200710, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pollutionReduced_popup_initial: 0
-  pollutionReduced_popup: 3
-  interval_popup: 10
+  pollutionReduced_initial: 0
+  pollutionReduced: 8
+  interval: 20
+  totalProduction: 0
+  totalProduction_buff: 0
+  extraProduction: 0
+  CleanAirProduced_auto: 0.05
+  CleanAirInterval_auto: 1
   parkPopUp: {fileID: 7911388053175523610, guid: cdb37538428dac8499949a5601d3fbea,
     type: 3}
   popupStorageCanvas: {fileID: 0}
@@ -154,10 +160,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2512145170abfd4408e82d1683f1d8db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allBuildingList: []
   nearbyHouse: 0
   nearbyFactory: 0
   nearbyPark: 0
+  nearbyTurret: 0
   nearbyMainBuilding: 0
+  houseEfficiencyList: []
+  houseEfficiencyTotal: 0
 --- !u!114 &-2012458942673174811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -198,8 +208,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a44d5509287704a439e40ef96c98b8a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buildingBaseCost: 80
   level: 1
-  cost: 150
+  maxLevel: 8
+  costEachLevel: 0000000096000000fa00000090010000260200008a020000ee020000b603000000000000
+  sellCost: 0
+--- !u!114 &984757850796011573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 281758397531508390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab50ec602ba3dd346bc74696d60117d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1972307103260379280
 PrefabInstance:
   m_ObjectHideFlags: 0

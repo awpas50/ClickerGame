@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -38,16 +39,17 @@ public class ParkPopUp : MonoBehaviour
     // When clicked
     public void ButtonEvent()
     {
-        parkREF_script.GetResources(parkREF_script.pollutionReduced_popup, parkREF_script.efficiency, parkREF_script.levelMultipiler);
+        parkREF_script.pollutionReduced = (float)Math.Round(parkREF_script.pollutionReduced, 1);
+        parkREF_script.GetResources(parkREF_script.pollutionReduced, parkREF_script.efficiency, parkREF_script.levelMultipiler);
         // Instantiate an additional pop up
         GameObject secondPopUpPrefab = Instantiate(secondPopUp, Camera.main.WorldToScreenPoint(parkREF.transform.position + offset), Quaternion.identity);
         secondPopUpPrefab.transform.SetParent(popupStorageCanvas.transform);
         secondPopUpPrefab.GetComponent<BuildingPopUp>().buildingREF = parkREF;
-        secondPopUpPrefab.GetComponent<BuildingPopUp>().resourceText.text = "-" + (parkREF_script.pollutionReduced_popup * parkREF_script.efficiency * parkREF_script.levelMultipiler).ToString() + " pollution";
+        secondPopUpPrefab.GetComponent<BuildingPopUp>().resourceText.text = "-" + (parkREF_script.pollutionReduced * parkREF_script.efficiency * parkREF_script.levelMultipiler).ToString() + " pollution";
         // Remove reference
         parkREF_script.parkPopUpREF = null;
         // Restart coroutine
-        parkREF_script.StartCoroutine(parkREF_script.ReducePollution_POP_UP(parkREF_script.pollutionReduced_popup, parkREF_script.interval_popup));
+        parkREF_script.StartCoroutine(parkREF_script.ReducePollution_POP_UP(parkREF_script.pollutionReduced, parkREF_script.interval));
         // Close this pop up.
         Destroy(gameObject);
     }

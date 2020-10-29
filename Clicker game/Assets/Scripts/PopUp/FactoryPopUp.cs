@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -38,16 +39,17 @@ public class FactoryPopUp : MonoBehaviour
     // When clicked
     public void ButtonEvent()
     {
-        factoryREF_script.GetResources(factoryREF_script.moneyProduced_popup, factoryREF_script.efficiency, factoryREF_script.pollutionProduced_popup, factoryREF_script.levelMultipiler);
+        factoryREF_script.moneyProduced = (float)Math.Round(factoryREF_script.moneyProduced, 1);
+        factoryREF_script.GetResources(factoryREF_script.moneyProduced, factoryREF_script.efficiency, factoryREF_script.pollutionProduced, factoryREF_script.levelMultipiler);
         // Instantiate an additional pop up
         GameObject secondPopUpPrefab = Instantiate(secondPopUp, Camera.main.WorldToScreenPoint(factoryREF.transform.position + offset), Quaternion.identity);
         secondPopUpPrefab.transform.SetParent(popupStorageCanvas.transform);
         secondPopUpPrefab.GetComponent<BuildingPopUp>().buildingREF = factoryREF;
-        secondPopUpPrefab.GetComponent<BuildingPopUp>().resourceText.text = "+" + (factoryREF_script.moneyProduced_popup * factoryREF_script.efficiency * factoryREF_script.levelMultipiler).ToString();
+        secondPopUpPrefab.GetComponent<BuildingPopUp>().resourceText.text = "+" + (factoryREF_script.moneyProduced * factoryREF_script.efficiency * factoryREF_script.levelMultipiler).ToString();
         // Remove reference
         factoryREF_script.factoryPopUpREF = null;
         // Restart coroutine
-        factoryREF_script.StartCoroutine(factoryREF_script.Production_POP_UP(factoryREF_script.interval_popup));
+        factoryREF_script.StartCoroutine(factoryREF_script.Production_POP_UP(factoryREF_script.interval));
         // Close this pop up.
         Destroy(gameObject);
     }

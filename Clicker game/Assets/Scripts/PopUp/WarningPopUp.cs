@@ -4,23 +4,24 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class BuildingPopUp : MonoBehaviour
+public class WarningPopUp : MonoBehaviour
 {
     [Header("Props")]
     public Image img;
     public float flyingSpeed;
     public Vector3 offset;
     Vector3 pos;
-    [Header("Assigned in script - do not edit")]
-    public GameObject buildingREF;
     [Header("Resources")]
-    public TextMeshProUGUI resourceText;
+    public TextMeshProUGUI warningText;
 
+    public void AssignText(string _text)
+    {
+        warningText.text = _text;
+    }
     void Start()
     {
-        pos = Camera.main.WorldToScreenPoint(buildingREF.transform.position + offset);
+        pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         img.transform.position = pos;
-
     }
 
     void Update()

@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 7541951108901463545}
   - component: {fileID: 7541951108901463544}
   - component: {fileID: 7541951108901463551}
-  - component: {fileID: 2385184796235220863}
-  m_Layer: 5
-  m_Name: PopUp UI (Tips)
+  - component: {fileID: -4817059282135654996}
+  m_Layer: 0
+  m_Name: PopUp UI (Warning)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -55,7 +55,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7541951108901463549}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -119,7 +119,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &2385184796235220863
+--- !u!114 &-4817059282135654996
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -128,12 +128,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 7541951108901463549}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a122b542ba271245a58ea2c38effcc6, type: 3}
+  m_Script: {fileID: 11500000, guid: 3e30edc334741734286b863d036ebeb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   img: {fileID: 7541951108901463544}
   flyingSpeed: 60
-  offset: {x: 0, y: 1.5, z: 0}
+  offset: {x: 0, y: 0, z: 0}
+  warningText: {fileID: 7541951110133354670}
 --- !u!1 &7541951110133354668
 GameObject:
   m_ObjectHideFlags: 0
@@ -145,7 +146,7 @@ GameObject:
   - component: {fileID: 7541951110133354669}
   - component: {fileID: 7541951110133354671}
   - component: {fileID: 7541951110133354670}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

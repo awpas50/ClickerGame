@@ -7,10 +7,22 @@ using TMPro;
 
 public class UIManager : MonoBehaviour
 {
-    public static UIManager instance;
+    public static UIManager i;
 
+    public Color textDefaultColor;
+    public Color textWarningColor;
+    [Header("Building details")]
     public TextMeshProUGUI buildingName;
-    public TextMeshProUGUI buildingLevel;
+    public TextMeshProUGUI Line1Text;
+    public TextMeshProUGUI Line2Text;
+    public TextMeshProUGUI Line3Text;
+    public TextMeshProUGUI Line4Text;
+    public TextMeshProUGUI sellText;
+    public TextMeshProUGUI upgradeText;
+    public Button sellButton;
+    public Button upgradeButton;
+
+    [Header("Top UI")]
     public TextMeshProUGUI moneyText;
     public TextMeshProUGUI pollutionText;
     public Image image;
@@ -23,33 +35,17 @@ public class UIManager : MonoBehaviour
     void Awake()
     {
         //debug
-        if (instance != null)
+        if (i != null)
         {
             Debug.LogError("More than one UIManager in scene");
             return;
         }
-        instance = this;
-    }
-
-    void Start()
-    {
-        
+        i = this;
     }
     
     void Update()
     {
         moneyText.text = "MONEY " + Currency.MONEY;
         pollutionText.text = "POLLUTION " + Math.Round(Pollution.POLLUTION, 2).ToString();
-        if(GameManager.instance.buildingSelectedInScene)
-        {
-            if(GameManager.instance.buildingSelectedInScene.GetComponent<BuildingLevel>())
-            {
-                buildingLevel.text = "LEVEL " + GameManager.instance.buildingSelectedInScene.GetComponent<BuildingLevel>().level;
-            }
-            else
-            {
-                buildingLevel.text = "";
-            }
-        }
     }
 }

@@ -12,16 +12,16 @@ public class PlaceHolder : MonoBehaviour
         // Find the node in the node list (attached in GameManager and delete it)
         // **(GameManager - nodeList)
         // **(GameManager - futureBuildingList)
-        GameManager.instance.nodeList.Remove(GameManager.instance.nodeList[attachedNode.GetComponent<Node>().nodeIndex]);
-        GameManager.instance.futureBuildingList.Remove(GameManager.instance.futureBuildingList[attachedNode.GetComponent<Node>().nodeIndex]);
+        GameManager.i.nodeList.Remove(GameManager.i.nodeList[attachedNode.GetComponent<Node>().nodeIndex]);
+        GameManager.i.futureBuildingList.Remove(GameManager.i.futureBuildingList[attachedNode.GetComponent<Node>().nodeIndex]);
         // Give back the money.
         // **(GameManager - estimatedCostList)
-        Currency.MONEY += GameManager.instance.estimatedCostList[attachedNode.GetComponent<Node>().nodeIndex];
-        GameManager.instance.estimatedCostList.Remove(GameManager.instance.estimatedCostList[attachedNode.GetComponent<Node>().nodeIndex]);
+        Currency.MONEY += GameManager.i.estimatedCostList[attachedNode.GetComponent<Node>().nodeIndex];
+        GameManager.i.estimatedCostList.Remove(GameManager.i.estimatedCostList[attachedNode.GetComponent<Node>().nodeIndex]);
         // Rearrange list
-        for(int i = attachedNode.GetComponent<Node>().nodeIndex; i < GameManager.instance.nodeList.Count; i++)
+        for(int i = attachedNode.GetComponent<Node>().nodeIndex; i < GameManager.i.nodeList.Count; i++)
         {
-            GameManager.instance.nodeList[i].GetComponent<Node>().nodeIndex--;
+            GameManager.i.nodeList[i].GetComponent<Node>().nodeIndex--;
         }
         // remove the references on the node.
         attachedNode.GetComponent<Node>().nodeIndex = -1;

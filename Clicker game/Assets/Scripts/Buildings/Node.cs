@@ -42,17 +42,17 @@ public class Node : MonoBehaviour
         //}
 
         // DEBUG
-        if (GameManager.instance.buildingSelectedInUI == null)
+        if (GameManager.i.buildingSelectedInUI == null)
         {
             return;
         }
-        if (building_REF == null && GameManager.instance.buildingSelectedInUI.name == "Building4_Generator" && GameManager.instance.isGeneratorInPlanning)
+        if (building_REF == null && GameManager.i.buildingSelectedInUI.name == "Building4_Generator" && GameManager.i.isTurretInPlanning)
         {
             Debug.LogWarning("Generator is already in planning list");
             return;
         }
         // EstimateCost: Precalculate the total cost needed
-        if (building_REF == null && GameManager.instance.buildingSelectedInUI && Currency.MONEY >= GameManager.instance.buildingCost)
+        if (building_REF == null && GameManager.i.buildingSelectedInUI && Currency.MONEY >= GameManager.i.buildingCost)
         {
             AddPlaceHolder();
             EstimateCost();
@@ -62,25 +62,25 @@ public class Node : MonoBehaviour
     public void AddPlaceHolder()
     {
         // Add the node into the list **(GameManager - nodeList)
-        GameManager.instance.nodeList.Add(gameObject);
+        GameManager.i.nodeList.Add(gameObject);
         // **(GameManager - futureBuildingList)
-        GameManager.instance.futureBuildingList.Add(GameManager.instance.buildingSelectedInUI);
+        GameManager.i.futureBuildingList.Add(GameManager.i.buildingSelectedInUI);
         // Using a index to recongnize the order (from 0)
-        nodeIndex = GameManager.instance.nodeList.IndexOf(gameObject);
+        nodeIndex = GameManager.i.nodeList.IndexOf(gameObject);
         // indicator only, make the node recongnize the placeHolder
-        placeHolder = Instantiate(GameManager.instance.placeHolder, transform.position, Quaternion.identity);
+        placeHolder = Instantiate(GameManager.i.placeHolder, transform.position, Quaternion.identity);
         // Oppositely, the placeHolder needs to recongnize the node.
         PlaceHolder placeHolder_script = placeHolder.GetComponent<PlaceHolder>();
         placeHolder_script.attachedNode = gameObject;
         // Store what building will be placed in the particular node
-        placeHolder_building_REF = GameManager.instance.buildingSelectedInUI;
+        placeHolder_building_REF = GameManager.i.buildingSelectedInUI;
     }
     public void EstimateCost()
     {
         // Add the esitmated cost into a list **(GameManager - estimatedCostList)
-        GameManager.instance.estimatedCostList.Add(GameManager.instance.buildingCost);
+        GameManager.i.estimatedCostList.Add(GameManager.i.buildingCost);
         // Deduct the money needed
-        Currency.MONEY -= GameManager.instance.buildingCost;
+        Currency.MONEY -= GameManager.i.buildingCost;
     }
     // Used in game manager
     public void RemovePlaceHolder()
@@ -95,8 +95,8 @@ public class Node : MonoBehaviour
         // Add reference (node recongize the building)
         building_REF = buildingPrefab;
         // Add reference (building recongize the node)
-        building_REF.GetComponent<BuildingCommonProps>().node = gameObject;
-        GameManager.instance.estimatedCostList.Clear();
+        building_REF.GetComponent<BuildingState>().node = gameObject;
+        GameManager.i.estimatedCostList.Clear();
     }
     public void RemoveBuildingPlaceHolder()
     {
@@ -106,10 +106,15 @@ public class Node : MonoBehaviour
     public void CheckNearbyBuildingType()
     {
         // Check nearby building type every frame (using a specified collider on the node)
+        building_REF.GetComponent<BuildingBuff>().allBuildingList.Clear();
         building_REF.GetComponent<BuildingBuff>().nearbyHouse = 0;
         building_REF.GetComponent<BuildingBuff>().nearbyFactory = 0;
         building_REF.GetComponent<BuildingBuff>().nearbyPark = 0;
+        building_REF.GetComponent<BuildingBuff>().nearbyTurret = 0;
         building_REF.GetComponent<BuildingBuff>().nearbyMainBuilding = 0;
+        building_REF.GetComponent<BuildingBuff>().houseEfficiencyList.Clear();
+        building_REF.GetComponent<BuildingBuff>().houseEfficiencyTotal = 0;
+
         foreach (GameObject b in nearbyNode_building)
         {
             if(b == null)
@@ -118,21 +123,34 @@ public class Node : MonoBehaviour
             }
             else if (b.gameObject.tag == "House")
             {
+                building_REF.GetComponent<BuildingBuff>().allBuildingList.Add(b.gameObject);
                 building_REF.GetComponent<BuildingBuff>().nearbyHouse += 1;
-                Debug.Log(building_REF.GetComponent<BuildingBuff>().nearbyHouse);
+                building_REF.GetComponent<BuildingBuff>().houseEfficiencyList.Add(b.GetComponent<House>().efficiency);
             }
             else if (b.gameObject.tag == "Factory")
             {
+                building_REF.GetComponent<BuildingBuff>().allBuildingList.Add(b.gameObject);
                 building_REF.GetComponent<BuildingBuff>().nearbyFactory += 1;
             }
             else if (b.gameObject.tag == "Park")
             {
+                building_REF.GetComponent<BuildingBuff>().allBuildingList.Add(b.gameObject);
                 building_REF.GetComponent<BuildingBuff>().nearbyPark += 1;
+            }
+            else if (b.gameObject.tag == "Generator")
+            {
+                building_REF.GetComponent<BuildingBuff>().allBuildingList.Add(b.gameObject);
+                building_REF.GetComponent<BuildingBuff>().nearbyTurret += 1;
             }
             else if (b.gameObject.tag == "MainBuilding")
             {
+                building_REF.GetComponent<BuildingBuff>().allBuildingList.Add(b.gameObject);
                 building_REF.GetComponent<BuildingBuff>().nearbyMainBuilding += 1;
             }
+        }
+        for (int i = 0; i < building_REF.GetComponent<BuildingBuff>().houseEfficiencyList.Count; i++)
+        {
+            building_REF.GetComponent<BuildingBuff>().houseEfficiencyTotal += building_REF.GetComponent<BuildingBuff>().houseEfficiencyList[i];
         }
     }
 }

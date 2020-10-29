@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 
 public class MainBuilding : MonoBehaviour
 {
+    public int moneyEachClick;
     [Header("What to instantiate")]
     public GameObject mainBuildingPopUp;
     [Header("Where to instantiate (Do not edit)")]
@@ -24,23 +25,23 @@ public class MainBuilding : MonoBehaviour
         originalScale = transform.localScale;
         popupStorageCanvas = GameObject.FindGameObjectWithTag("StorageCanvas");
     }
-
+    
     public void OnMouseOver()
     {
-        if(Input.GetMouseButtonUp(0) && !GameManager.instance.buildingPurchasingState)
+        //prevent clicking through UI
+        //if (EventSystem.current.IsPointerOverGameObject())
+        //{
+        //    return;
+        //}
+        if (Input.GetMouseButtonUp(0) && !GameManager.i.buildingPurchasingState && !GameManager.i.buildingSelectedInScene)
         {
-            // prevent clicking through UI
-            //if (EventSystem.current.IsPointerOverGameObject())
-            //{
-            //    return;
-            //}
             MainBuildingClickEvent();
             StartCoroutine(BuildingPopAnimation());
         }
     }
     public void MainBuildingClickEvent()
     {
-        Currency.MONEY += 1;
+        Currency.MONEY += moneyEachClick;
         GameObject mainBuildingPopUpREF = Instantiate(mainBuildingPopUp, transform.position, Quaternion.identity);
         mainBuildingPopUpREF.transform.SetParent(popupStorageCanvas.transform);
     }

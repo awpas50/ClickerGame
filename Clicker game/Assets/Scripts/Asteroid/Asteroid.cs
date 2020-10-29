@@ -4,24 +4,42 @@ using UnityEngine;
 
 public class Asteroid : MonoBehaviour
 {
-    public float speed = 3f;
+    private float speed;
+    public float speedMin = 5f;
+    public float speedMax = 10f;
     public GameObject[] targetList;
     public GameObject target;
     public GameObject explosionEffect;
+    public ParticleSystem particleEffect1;
+    public ParticleSystem particleEffect2;
+
+    public bool reachedDestination = false;
+
     // Start is called before the first frame update
     void Start()
     {
         targetList = GameObject.FindGameObjectsWithTag("Node");
         target = targetList[Random.Range(0, targetList.Length)];
         transform.LookAt(target.transform);
-        speed = Random.Range(2f, 4.5f);
+        speed = Random.Range(speedMin, speedMax);
     }
     
     void Update()
     {
         //transform.position += Vector3.down * speed * Time.deltaTime;
         transform.position = Vector3.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime);
-        Destroy(gameObject, 15f);
+
+        if(Vector3.Distance(transform.position, target.transform.position) <= 0.2f)
+        {
+            particleEffect1.Stop();
+            particleEffect2.Stop();
+            Destroy(gameObject, 4f);
+            if(!reachedDestination)
+            {
+                Instantiate(explosionEffect, transform.position, Quaternion.identity);
+                reachedDestination = true;
+            }
+        }
     }
 
     private void OnCollisionEnter(Collision collision)

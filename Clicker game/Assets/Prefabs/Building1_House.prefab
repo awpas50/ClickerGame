@@ -17,6 +17,8 @@ GameObject:
   - component: {fileID: 1203822481746043851}
   - component: {fileID: 1787958570}
   - component: {fileID: 1038537921}
+  - component: {fileID: -4119267480032863507}
+  - component: {fileID: -9065938611911806873}
   m_Layer: 0
   m_Name: Building1_House
   m_TagString: House
@@ -130,10 +132,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2512145170abfd4408e82d1683f1d8db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allBuildingList: []
   nearbyHouse: 0
   nearbyFactory: 0
   nearbyPark: 0
+  nearbyTurret: 0
   nearbyMainBuilding: 0
+  houseEfficiencyList: []
+  houseEfficiencyTotal: 0
 --- !u!114 &1203822481746043851
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -174,8 +180,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a44d5509287704a439e40ef96c98b8a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buildingBaseCost: 60
   level: 1
-  cost: 150
+  maxLevel: 6
+  costEachLevel: 00000000c8000000f4010000ee020000840300004c04000000000000
+  sellCost: 0
+--- !u!114 &-4119267480032863507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 281758397531508390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1348e8c4c294bc84998ee60f76b755c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  efficiency: 0.25
+--- !u!114 &-9065938611911806873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 281758397531508390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab50ec602ba3dd346bc74696d60117d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  repeatable: 0
+  duration: 0.5
 --- !u!1001 &1084056560250503448
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -393,7 +429,7 @@ PrefabInstance:
     - target: {fileID: 7333355348098287890, guid: 4223646f6e8438a409ff53f81acac5c5,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7333355348098287893, guid: 4223646f6e8438a409ff53f81acac5c5,
         type: 3}

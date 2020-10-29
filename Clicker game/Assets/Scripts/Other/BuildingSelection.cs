@@ -27,9 +27,9 @@ public class BuildingSelection : MonoBehaviour
     {
         // Add a indicator surrounded the building
         // if not selected, indicator disappears
-        if(GameManager.instance.buildingSelectedInScene != null)
+        if(GameManager.i.buildingSelectedInScene != null)
         {
-            if (GameManager.instance.buildingSelectedInScene != gameObject)
+            if (GameManager.i.buildingSelectedInScene != gameObject)
             {
                 indicator.SetActive(false);
             }
