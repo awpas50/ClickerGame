@@ -26,6 +26,7 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI moneyText;
     public TextMeshProUGUI pollutionText;
     public Image image;
+    public GameObject MainMenuUI;
     public GameObject TopUI;
     public GameObject BottomUI;
     public GameObject RightUI;
@@ -45,7 +46,7 @@ public class UIManager : MonoBehaviour
     
     void Update()
     {
-        moneyText.text = "MONEY " + Currency.MONEY;
+        moneyText.text = "RESOURCES " + Currency.MONEY;
         pollutionText.text = "POLLUTION " + Math.Round(Pollution.POLLUTION, 2).ToString();
     }
 }

@@ -15,5 +15,9 @@ public class Pollution : MonoBehaviour
     void Update()
     {
         pollution = POLLUTION;
+        if(POLLUTION <= 0)
+        {
+            POLLUTION = 0;
+        }
     }
 }

@@ -6,7 +6,6 @@ using UnityEngine.EventSystems;
 
 public class Factory : MonoBehaviour
 {
-    BuildingState buildingState;
     [Header("Manual collected resources (money)")]
     [HideInInspector] private float moneyProduced_initial;
     public float moneyProduced;
@@ -33,6 +32,7 @@ public class Factory : MonoBehaviour
     [Header("Script reference (Do not edit)")]
     public BuildingBuff buildingBuff;
     public BuildingLevel buildingLevel;
+    public BuildingState buildingState;
     [Header("Resources multiplier")]
     public float levelMultipiler = 1f;
     public float efficiency = 1f;
@@ -71,7 +71,7 @@ public class Factory : MonoBehaviour
     public IEnumerator Production_POP_UP(float interval)
     {
         // Instaniate a pop up every few seconds. Next pop up won't be spawned unless the previous pop up has been collected
-        while (factoryPopUpREF == null && buildingState.isWorking)
+        while (factoryPopUpREF == null)
         {
             yield return new WaitForSeconds(interval);
             factoryPopUpREF = Instantiate(factoryPopUp, transform.position, Quaternion.identity);

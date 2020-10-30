@@ -13,6 +13,8 @@ TagManager:
   - Park
   - Generator
   - Asteroid
+  - Ruin
+  - Airport
   layers:
   - Default
   - TransparentFX

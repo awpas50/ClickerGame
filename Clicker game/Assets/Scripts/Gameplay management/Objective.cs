@@ -9,6 +9,10 @@ public class Objective : MonoBehaviour
     public GameObject Platform3;
     public GameObject Platform4;
 
+    public float objective1;
+    public float objective2;
+    public float objective3;
+
     private void Start()
     {
         mainBuildingScript = FindObjectOfType<MainBuilding>();
@@ -16,17 +20,17 @@ public class Objective : MonoBehaviour
     void Update()
     {
         GameManager.i.allNodes = GameManager.i.GetAllNodes();
-        if (Currency.MONEY >= 1500)
+        if (Currency.MONEY >= objective1)
         {
             Platform2.SetActive(true);
             mainBuildingScript.moneyEachClick = 3;
         }
-        if (Currency.MONEY >= 5000)
+        if (Currency.MONEY >= objective2)
         {
             Platform3.SetActive(true);
             mainBuildingScript.moneyEachClick = 5;
         }
-        if (Currency.MONEY >= 10000)
+        if (Currency.MONEY >= objective3)
         {
             Platform4.SetActive(true);
             mainBuildingScript.moneyEachClick = 7;

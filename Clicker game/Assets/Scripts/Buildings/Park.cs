@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 public class Park : MonoBehaviour
 {
-    BuildingState buildingState;
+    
     [Header("Manual collected resources (Reduce pollution)")]
     [HideInInspector] public float pollutionReduced_initial;
     public float pollutionReduced;
@@ -29,6 +29,7 @@ public class Park : MonoBehaviour
     [Header("Script reference (Do not edit)")]
     public BuildingBuff buildingBuff;
     public BuildingLevel buildingLevel;
+    public BuildingState buildingState;
     [Header("Resources multiplier")]
     public float levelMultipiler = 1f;
     public float efficiency = 1f;

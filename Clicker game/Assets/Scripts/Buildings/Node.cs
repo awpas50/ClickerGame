@@ -17,6 +17,7 @@ public class Node : MonoBehaviour
     public GameObject placeHolder;
     public GameObject placeHolder_building_REF;
     public GameObject building_REF;
+    public GameObject building_ruin;
     public Vector3 offset;
 
     private void Start()
@@ -52,7 +53,7 @@ public class Node : MonoBehaviour
             return;
         }
         // EstimateCost: Precalculate the total cost needed
-        if (building_REF == null && GameManager.i.buildingSelectedInUI && Currency.MONEY >= GameManager.i.buildingCost)
+        if (building_REF == null && GameManager.i.buildingSelectedInUI && Currency.MONEY >= GameManager.i.buildingCost && !building_ruin)
         {
             AddPlaceHolder();
             EstimateCost();

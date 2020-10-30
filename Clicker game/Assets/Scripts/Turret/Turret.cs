@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Turret : MonoBehaviour
 {
+    BuildingLevel buildingLevel;
     BuildingState buildingState;
     [Header("Bullet props")]
     public GameObject bullet;
@@ -21,6 +22,7 @@ public class Turret : MonoBehaviour
     public Transform target;
     public bool isLocked = false;
     [Header("Shooting")]
+    private float fireRate_initial;
     public float fireRate = 1f;
     private float fireCountdown = 0f;
 
@@ -37,7 +39,9 @@ public class Turret : MonoBehaviour
 
     void Start()
     {
+        fireRate_initial = fireRate;
         buildingState = GetComponent<BuildingState>();
+        buildingLevel = GetComponent<BuildingLevel>();
         InvokeRepeating("UpdateTarget", 0f, 0.2f);
         StartCoroutine(RandomAngleY());
         angleY_current = angleY_random;
@@ -45,7 +49,9 @@ public class Turret : MonoBehaviour
     
     void Update()
     {
-        if(target == null)
+        // Level
+        fireRate = fireRate_initial + ((buildingLevel.level - 1) * 0.25f);
+        if (target == null)
         {
             state = State.Idle;
         }
@@ -126,7 +132,7 @@ public class Turret : MonoBehaviour
         while(true)
         {
             angleY_random = Random.Range(angleY_random - 200, angleY_random + 200);
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(3f);
         }
     }
 }

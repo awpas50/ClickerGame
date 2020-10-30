@@ -185,7 +185,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   node: {fileID: 0}
-  isWorking: 1
 --- !u!114 &1283532377
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -452,9 +451,9 @@ ParticleSystem:
         m_RotationOrder: 4
     startColor:
       serializedVersion: 2
-      minMaxState: 0
-      minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 0.4577373, b: 0, a: 1}
+      minMaxState: 2
+      minColor: {r: 1, g: 0.45882353, b: 0, a: 0.6509804}
+      maxColor: {r: 1, g: 0.4577373, b: 0, a: 0.11372549}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -978,7 +977,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 0.2
+      value: 0.25
       mode: 0
       spread: 0
       speed:
@@ -1097,7 +1096,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 8
+      scalar: 6
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -1223,7 +1222,7 @@ ParticleSystem:
           outWeight: 0
         - serializedVersion: 3
           time: 1
-          value: 1
+          value: 0.4861107
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -4941,7 +4940,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 94cebf29c9b2c3a42bca6effd85a21a4, type: 2}
+  - {fileID: 2100000, guid: 5507e202063177e43a96a4908c4ae5c7, type: 2}
   - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0

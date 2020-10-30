@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
     public BuildingBluePrint building2;
     public BuildingBluePrint building3;
     public BuildingBluePrint building4;
+    public BuildingBluePrint building5;
     [Header("Building Buttons")]
     public Button buildingButton1;
     public Button buildingButton2;
@@ -44,6 +45,7 @@ public class GameManager : MonoBehaviour
 
     public bool buildingPurchasingState = false;
     public bool isTurretInPlanning = false;
+    public bool isPaused = false;
 
     [Header("Node animation")]
     public GameObject[] allNodes;
@@ -111,8 +113,8 @@ public class GameManager : MonoBehaviour
     public void SelectBuilding5()
     {
         // A cat always lands on her feet whereas a bread with butter always fall buttered side down. 
-        buildingSelectedInUI = building4.building;
-        buildingCost = building4.cost;
+        buildingSelectedInUI = building5.building;
+        buildingCost = building5.cost;
         buildingInfo.text = "Airport ($1000) - Build airplanes to explore the outside world - numerous treasures are waiting for you!";
         if (buildingSelectedInScene)
         {
@@ -257,9 +259,9 @@ public class GameManager : MonoBehaviour
                     " - " + Mathf.Abs(buildingSelectedInScene.GetComponent<Park>().extraProduction);
                 }
                 
-                UIManager.i.Line2Text.text = "";
-                UIManager.i.Line3Text.text = "Auto Production: " 
-                    + (buildingSelectedInScene.GetComponent<Park>().CleanAirProduced_auto + buildingSelectedInScene.GetComponent<Park>().CleanAirInterval_auto) + " per second";
+                UIManager.i.Line2Text.text = "Auto Production: " 
+                    + (buildingSelectedInScene.GetComponent<Park>().CleanAirProduced_auto / buildingSelectedInScene.GetComponent<Park>().CleanAirInterval_auto) + " per second";
+                UIManager.i.Line3Text.text = "";
                 UIManager.i.Line4Text.text = "";
             }
             if (buildingSelectedInScene.tag == "Generator")
@@ -268,6 +270,15 @@ public class GameManager : MonoBehaviour
                 UIManager.i.Line1Text.text = "Fire rate: " + buildingSelectedInScene.GetComponent<Turret>().fireRate + " per second";
                 UIManager.i.Line2Text.text = "";
                 UIManager.i.Line3Text.text = "";
+                UIManager.i.Line4Text.text = "";
+            }
+            if (buildingSelectedInScene.tag == "Airport")
+            {
+                // Set building name in the UI
+                UIManager.i.Line1Text.text = "Copter speed: " + " per second";
+                UIManager.i.Line2Text.text = "Copter collect time:" + "seconds";
+                UIManager.i.Line3Text.text = "Auto Pollution: " +
+                    (buildingSelectedInScene.GetComponent<Airport>().pollutionProduced_auto / buildingSelectedInScene.GetComponent<Airport>().pollutionInterval_auto) + " per second";
                 UIManager.i.Line4Text.text = "";
             }
         }
@@ -336,7 +347,8 @@ public class GameManager : MonoBehaviour
                         }
                     }
                     else if (hit.collider.gameObject.tag == "House" ||
-                    hit.collider.gameObject.tag == "Generator")
+                    hit.collider.gameObject.tag == "Generator" ||
+                    hit.collider.gameObject.tag == "Airport")
                     {
 
                         buildingSelectedInScene = hit.collider.gameObject;
@@ -350,6 +362,12 @@ public class GameManager : MonoBehaviour
                         // Animation
                         BuildingAnimation buildingAnimation = buildingSelectedInScene.GetComponent<BuildingAnimation>();
                         buildingAnimation.StartCoroutine(buildingAnimation.BuildingPopAnimation());
+                    }
+                    // Click ruin to trigger event on the pop up (UI)
+                    else if (hit.collider.gameObject.tag == "Ruin")
+                    {
+                        hit.collider.gameObject.GetComponent<Ruin>().repairPopUp_REF.
+                                GetComponent<RepairPopUp>().ButtonEvent();
                     }
                     //not buildings
                     else
@@ -432,7 +450,19 @@ public class GameManager : MonoBehaviour
                 allNodes[i].transform.GetChild(0).gameObject.SetActive(false);
             }
         }
+        if(isPaused)
+        {
+            UIManager.i.MainMenuUI.SetActive(true);
+            Time.timeScale = 0;
+        }
+        else
+        {
+            UIManager.i.MainMenuUI.SetActive(false);
+            Time.timeScale = 1;
+        }
     }
+
+    
 
     // Check if the turret is on a plan to be built:
     //private bool IsGeneratorInPlanning()
@@ -459,4 +489,40 @@ public class GameManager : MonoBehaviour
         return GameObject.FindGameObjectsWithTag("Node");
     }
 
+    public void PauseGameMenu()
+    {
+        buildingSelectedInScene = null;
+        buildingSelectedInUI = null;
+        DisableGameUI();
+        isPaused = true;
+    }
+
+    public void Resume()
+    {
+        EnableGameUI();
+        isPaused = false;
+    }
+    public void Save()
+    {
+        
+    }
+    public void SaveAndQuit()
+    {
+
+    }
+
+    void DisableGameUI()
+    {
+        UIManager.i.TopUI.SetActive(false);
+        UIManager.i.BottomUI.SetActive(false);
+        UIManager.i.RightUI.SetActive(false);
+        buildingDetailsCanvas.SetActive(false);
+        buildingInfoCanvas.SetActive(false);
+    }
+    void EnableGameUI()
+    {
+        UIManager.i.TopUI.SetActive(true);
+        UIManager.i.BottomUI.SetActive(true);
+        UIManager.i.RightUI.SetActive(true);
+    }
 }

@@ -37,7 +37,7 @@ public class Asteroid : MonoBehaviour
         //transform.position += Vector3.down * speed * Time.deltaTime;
         transform.position = Vector3.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime);
 
-        if(Vector3.Distance(transform.position, target.transform.position) <= 0.2f)
+        if(Vector3.Distance(transform.position, target.transform.position) <= 0.1f)
         {
             particleEffect1.Stop();
             particleEffect2.Stop();
@@ -47,32 +47,130 @@ public class Asteroid : MonoBehaviour
             Destroy(particleEffect2.gameObject, 5f);
             if (!reachedDestination)
             {
-                Instantiate(explosionEffect, transform.position, Quaternion.identity);
+                GameObject effectPrefab = Instantiate(explosionEffect, transform.position, Quaternion.identity);
+                Destroy(effectPrefab, 3f);
                 Destroy(gameObject, 0.5f);
                 reachedDestination = true;
             }
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if(collision.collider.gameObject.tag == "House" || 
-            collision.collider.gameObject.tag == "Factory" || 
-            collision.collider.gameObject.tag == "Park" || 
-            collision.collider.gameObject.tag == "Generator")
-        {
-            Destroy(gameObject);
-            Destroy(collision.collider.gameObject);
-            Instantiate(explosionEffect, transform.position, Quaternion.identity);
-        }
-    }
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if(collision.collider.gameObject.tag == "House" || 
+    //        collision.collider.gameObject.tag == "Factory" || 
+    //        collision.collider.gameObject.tag == "Park" || 
+    //        collision.collider.gameObject.tag == "Generator")
+    //    {
+    //        Debug.Log("AAA");
+    //        // create a ruin on top of the node & destroy building
+    //        Node nodeLocationForRuin = collision.collider.gameObject.GetComponent<BuildingState>().node.GetComponent<Node>();
+    //        nodeLocationForRuin.building_REF = Instantiate(ruin1, nodeLocationForRuin.gameObject.transform.position, Quaternion.identity);
+    //        Destroy(collision.collider.gameObject);
+
+    //        // destroy asteroid
+    //        GameObject effectPrefab = Instantiate(explosionEffect, transform.position, Quaternion.identity);
+    //        Destroy(effectPrefab, 5f);
+    //        Destroy(gameObject, 0.5f);
+
+    //    }
+    //}
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "House" || other.gameObject.tag == "Factory" || other.gameObject.tag == "Park")
+        if (other.gameObject.tag == "House" ||
+            other.gameObject.tag == "Factory" ||
+            other.gameObject.tag == "Park" ||
+            other.gameObject.tag == "Generator" ||
+            other.gameObject.tag == "Airport")
         {
-            Destroy(gameObject);
+            // create a ruin on top of the node & destroy building
+            Node nodeLocationForRuin = other.gameObject.GetComponent<BuildingState>().node.GetComponent<Node>();
+            Ruin ruinScript;
+            // remove building reference from node
+            nodeLocationForRuin.building_REF = null;
+            
+            // different colored ruin
+            if (other.gameObject.tag == "House")
+            {
+                nodeLocationForRuin.building_ruin = Instantiate(ruin1, nodeLocationForRuin.gameObject.transform.position, Quaternion.identity);
+                // Store building data for restoring
+                ruinScript = nodeLocationForRuin.building_ruin.GetComponent<Ruin>();
+                ruinScript.buildingData = GameManager.i.building1.building;
+
+                // ruin needs to recongize node
+                ruinScript.node = nodeLocationForRuin.gameObject;
+                ruinScript.buildingLevel = other.gameObject.GetComponent<BuildingLevel>().level;
+                ruinScript.repairCost = other.gameObject.GetComponent<BuildingLevel>().sellCost / 3;
+            }
+            if (other.gameObject.tag == "Factory")
+            {
+                nodeLocationForRuin.building_ruin = Instantiate(ruin2, nodeLocationForRuin.gameObject.transform.position, Quaternion.identity);
+                // Store building data for restoring
+                ruinScript = nodeLocationForRuin.building_ruin.GetComponent<Ruin>();
+                ruinScript.buildingData = GameManager.i.building2.building;
+
+                // ruin needs to recongize node
+                ruinScript.node = nodeLocationForRuin.gameObject;
+                ruinScript.buildingLevel = other.gameObject.GetComponent<BuildingLevel>().level;
+                ruinScript.repairCost = other.gameObject.GetComponent<BuildingLevel>().sellCost / 3;
+
+                // if it has a pop up than destroy the pop up
+                other.gameObject.GetComponent<Factory>().StopAllCoroutines();
+                GameObject tempPopUpData = other.gameObject.GetComponent<Factory>().factoryPopUpREF;
+                Destroy(tempPopUpData, 0.1f);
+                other.gameObject.GetComponent<Factory>().factoryPopUpREF = null;
+            }
+            if (other.gameObject.tag == "Park")
+            {
+                nodeLocationForRuin.building_ruin = Instantiate(ruin3, nodeLocationForRuin.gameObject.transform.position, Quaternion.identity);
+                // Store building data for restoring
+                ruinScript = nodeLocationForRuin.building_ruin.GetComponent<Ruin>();
+                ruinScript.buildingData = GameManager.i.building3.building;
+
+                // ruin needs to recongize node
+                ruinScript.node = nodeLocationForRuin.gameObject;
+                ruinScript.buildingLevel = other.gameObject.GetComponent<BuildingLevel>().level;
+                ruinScript.repairCost = other.gameObject.GetComponent<BuildingLevel>().sellCost / 3;
+
+                // if it has a pop up than destroy the pop up
+                other.gameObject.GetComponent<Park>().StopAllCoroutines();
+                GameObject tempPopUpData = other.gameObject.GetComponent<Park>().parkPopUpREF;
+                Destroy(tempPopUpData, 0.1f);
+                other.gameObject.GetComponent<Park>().parkPopUpREF = null;
+            }
+            if (other.gameObject.tag == "Generator")
+            {
+                nodeLocationForRuin.building_ruin = Instantiate(ruin4, nodeLocationForRuin.gameObject.transform.position, Quaternion.identity);
+                // Store building data for restoring
+                ruinScript = nodeLocationForRuin.building_ruin.GetComponent<Ruin>();
+                ruinScript.buildingData = GameManager.i.building4.building;
+
+                // ruin needs to recongize node
+                ruinScript.node = nodeLocationForRuin.gameObject;
+                ruinScript.buildingLevel = other.gameObject.GetComponent<BuildingLevel>().level;
+                ruinScript.repairCost = other.gameObject.GetComponent<BuildingLevel>().sellCost / 3;
+            }
+            if (other.gameObject.tag == "Airport")
+            {
+                nodeLocationForRuin.building_ruin = Instantiate(ruin5, nodeLocationForRuin.gameObject.transform.position, Quaternion.identity);
+                // Store building data for restoring
+                ruinScript = nodeLocationForRuin.building_ruin.GetComponent<Ruin>();
+                ruinScript.buildingData = GameManager.i.building5.building;
+
+                // ruin needs to recongize node
+                ruinScript.node = nodeLocationForRuin.gameObject;
+                ruinScript.buildingLevel = other.gameObject.GetComponent<BuildingLevel>().level;
+                ruinScript.repairCost = other.gameObject.GetComponent<BuildingLevel>().sellCost / 3;
+            }
+
+            // destroy building
+            Destroy(other.gameObject, 0.1f);
+
+            // destroy asteroid
             GameObject effectPrefab = Instantiate(explosionEffect, transform.position, Quaternion.identity);
-            Destroy(effectPrefab, 5f);
+            Destroy(effectPrefab, 3f);
+            Destroy(gameObject, 0.5f);
+
         }
     }
 }
