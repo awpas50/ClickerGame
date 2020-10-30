@@ -153,6 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   node: {fileID: 0}
+  isWorking: 1
 --- !u!114 &1787958570
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -429,7 +430,7 @@ PrefabInstance:
     - target: {fileID: 7333355348098287890, guid: 4223646f6e8438a409ff53f81acac5c5,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7333355348098287893, guid: 4223646f6e8438a409ff53f81acac5c5,
         type: 3}

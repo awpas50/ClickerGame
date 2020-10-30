@@ -40,6 +40,7 @@ public class Park : MonoBehaviour
         popupStorageCanvas = GameObject.FindGameObjectWithTag("StorageCanvas");
         buildingBuff = GetComponent<BuildingBuff>();
         buildingLevel = GetComponent<BuildingLevel>();
+        buildingState = GetComponent<BuildingState>();
         StartCoroutine(ReducePollution_POP_UP(pollutionReduced, interval));
         StartCoroutine(ReducePollution_AUTOMATIC(CleanAirProduced_auto, CleanAirInterval_auto));
     }
@@ -69,7 +70,7 @@ public class Park : MonoBehaviour
     public IEnumerator ReducePollution_POP_UP(float pollutionReduced, float interval)
     {
         // Instaniate a pop up every few seconds. Next pop up won't be spawned unless the previous pop up has been collected
-        while (parkPopUpREF == null && buildingState.isWorking)
+        while (parkPopUpREF == null)
         {
             yield return new WaitForSeconds(interval);
             parkPopUpREF = Instantiate(parkPopUp, transform.position, Quaternion.identity);
@@ -83,7 +84,7 @@ public class Park : MonoBehaviour
     }
     IEnumerator ReducePollution_AUTOMATIC(float cleanAirProduced, float interval)
     {
-        while (buildingState.isWorking)
+        while (true)
         {
             yield return new WaitForSeconds(interval);
             Pollution.POLLUTION -= cleanAirProduced;

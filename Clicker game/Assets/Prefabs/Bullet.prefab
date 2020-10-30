@@ -4862,7 +4862,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8fde110f3457e244a411452c4f3a52a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  explosionEffect: {fileID: 4787146697146794734, guid: b62a470e6d534b54cb6610298ec13928,
+    type: 3}
+  speed: 20
+  particleEffect1: {fileID: 8055660204556588285}
+  particleEffect2: {fileID: 233553711353220468}
 --- !u!1 &8366643049791662760
 GameObject:
   m_ObjectHideFlags: 0
@@ -5306,8 +5310,8 @@ ParticleSystem:
     startRotationX:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 3.1415927
-      minScalar: 0
+      scalar: 0
+      minScalar: 6.283185
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -5359,8 +5363,8 @@ ParticleSystem:
     startRotationY:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 3.1415927
-      minScalar: 0
+      scalar: 0
+      minScalar: 6.283185
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -5412,8 +5416,8 @@ ParticleSystem:
     startRotation:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 3.1415927
-      minScalar: 0
+      scalar: 0
+      minScalar: 6.283185
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -5728,7 +5732,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 100
+      scalar: 200
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -9612,7 +9616,7 @@ ParticleSystemRenderer:
   m_ApplyActiveColorSpace: 1
   m_AllowRoll: 1
   m_VertexStreams: 00010304
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}

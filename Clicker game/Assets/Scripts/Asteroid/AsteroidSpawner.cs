@@ -32,7 +32,12 @@ public class AsteroidSpawner : MonoBehaviour
             yield return new WaitForSeconds(45f);
             if (Pollution.POLLUTION >= 0 && Pollution.POLLUTION < 10)
             {
-                yield return null;
+                //yield return null;
+                for (int i = 0; i < 1; i++)
+                {
+                    Instantiate(asteroid, new Vector3(randomX, randomY, randomZ), Quaternion.identity);
+                    yield return new WaitForSeconds(0.4f);
+                }
             }
             if (Pollution.POLLUTION >= 10 && Pollution.POLLUTION < 20)
             {
@@ -81,7 +86,12 @@ public class AsteroidSpawner : MonoBehaviour
     {
         if (Pollution.POLLUTION >= 0 && Pollution.POLLUTION < 10)
         {
-            yield return null;
+            //yield return null;
+            for (int i = 0; i < 1; i++)
+            {
+                Instantiate(asteroid, new Vector3(randomX, randomY, randomZ), Quaternion.identity);
+                yield return new WaitForSeconds(0.4f);
+            }
         }
         if (Pollution.POLLUTION >= 10 && Pollution.POLLUTION < 20)
         {

@@ -188,6 +188,8 @@ public class GameManager : MonoBehaviour
 
     public void Sell()
     {
+        // Remove ref on node properly
+        buildingSelectedInScene.GetComponent<BuildingState>().node.GetComponent<Node>().building_REF = null;
         Destroy(buildingSelectedInScene);
         Currency.MONEY += buildingSelectedInScene.GetComponent<BuildingLevel>().sellCost;
     }

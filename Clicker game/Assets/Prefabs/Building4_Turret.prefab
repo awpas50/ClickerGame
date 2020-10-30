@@ -154,6 +154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   node: {fileID: 0}
+  isWorking: 1
 --- !u!114 &7333943512379084853
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,10 +188,13 @@ MonoBehaviour:
   firePoint: {fileID: 99339759188520866}
   cannonBase: {fileID: 8300584068172101159}
   barrel: {fileID: 505694878688373738}
-  turnSpeed: 10
+  turnSpeed: 2
   enemyTag: Asteroid
-  range: 15
+  range: 30
+  asteroids: []
+  targetID: 0
   target: {fileID: 0}
+  isLocked: 0
   fireRate: 0.5
   state: 0
 --- !u!114 &-8504143129427781751

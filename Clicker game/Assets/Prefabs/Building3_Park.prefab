@@ -181,6 +181,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   node: {fileID: 0}
+  isWorking: 1
 --- !u!114 &362140470
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -225,6 +226,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab50ec602ba3dd346bc74696d60117d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  repeatable: 0
+  duration: 0.5
 --- !u!1001 &1972307103260379280
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -13,19 +13,13 @@ public class House : MonoBehaviour
         // efficiency_initial = 25%
         efficiency_initial = efficiency;
         buildingLevel = GetComponent<BuildingLevel>();
+        buildingState = GetComponent<BuildingState>();
     }
     
     void Update()
     {
         // Base efficiency 25%, where each upgrade increase its performance by 5%.
         // 25% + ((n - 1) * 5%)
-        if(buildingState.isWorking)
-        {
-            efficiency = efficiency_initial + ((buildingLevel.level - 1) * 0.05f);
-        }
-        else
-        {
-            efficiency = 0;
-        }
+        efficiency = efficiency_initial + ((buildingLevel.level - 1) * 0.05f);
     }
 }

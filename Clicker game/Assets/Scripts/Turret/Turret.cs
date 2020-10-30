@@ -15,7 +15,11 @@ public class Turret : MonoBehaviour
     public float turnSpeed = 10f;
     public string enemyTag = "Asteroid";
     public float range;
+    [Header("Target")]
+    public GameObject[] asteroids;
+    public int targetID;
     public Transform target;
+    public bool isLocked = false;
     [Header("Shooting")]
     public float fireRate = 1f;
     private float fireCountdown = 0f;
@@ -34,7 +38,7 @@ public class Turret : MonoBehaviour
     void Start()
     {
         buildingState = GetComponent<BuildingState>();
-        InvokeRepeating("UpdateTarget", 0f, 0.5f);
+        InvokeRepeating("UpdateTarget", 0f, 0.2f);
         StartCoroutine(RandomAngleY());
         angleY_current = angleY_random;
     }
@@ -60,6 +64,7 @@ public class Turret : MonoBehaviour
         }
         if (state == State.Attack)
         {
+            // only turn around if it has a target
             Vector3 dir = target.position - transform.position;
             Quaternion lookRotation = Quaternion.LookRotation(dir);
             Vector3 rotation = Quaternion.Lerp(cannonBase.transform.rotation, lookRotation, Time.deltaTime * turnSpeed).eulerAngles;
@@ -77,25 +82,28 @@ public class Turret : MonoBehaviour
 
     void UpdateTarget()
     {
-        GameObject[] asteroids = GameObject.FindGameObjectsWithTag(enemyTag);
-
-        float shortestDistance = Mathf.Infinity;
-        GameObject nearestAsteroid = null;
-        foreach(GameObject asteroid in asteroids)
+        isLocked = false;
+        asteroids = GameObject.FindGameObjectsWithTag(enemyTag);
+        if(asteroids.Length == 0)
         {
-            float distanceToEnemy = Vector3.Distance(transform.position, asteroid.transform.position);
-            if(distanceToEnemy < shortestDistance)
+            return;
+        }
+        targetID = Random.Range(0, asteroids.Length);
+        if(!isLocked)
+        {
+            target = asteroids[targetID].transform;
+            if (asteroids[targetID].GetComponent<Asteroid>().isLockedByTurret)
             {
-                shortestDistance = distanceToEnemy;
-                nearestAsteroid = asteroid;
+                targetID = Random.Range(0, asteroids.Length);
+            }
+            else
+            {
+                asteroids[targetID].GetComponent<Asteroid>().isLockedByTurret = true;
+                isLocked = true;
             }
         }
-
-        if(nearestAsteroid != null && shortestDistance <= range)
-        {
-            target = nearestAsteroid.transform;
-        }
     }
+
     void Shoot()
     {
         GameObject bulletPrefab = Instantiate(bullet, firePoint.position, firePoint.rotation);

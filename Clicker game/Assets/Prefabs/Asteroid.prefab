@@ -4815,13 +4815,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 985f712debf655f439af598dff3204b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedMin: 5
-  speedMax: 10
+  speedMin: 2.5
+  speedMax: 6
   targetList: []
   target: {fileID: 0}
-  explosionEffect: {fileID: 100012, guid: 1f1aa87040db08846a4332981b0a6fa7, type: 3}
+  explosionEffect: {fileID: 4787146697146794734, guid: e9050f838eb01db44b8958e4d8266866,
+    type: 3}
   particleEffect1: {fileID: 6568800129298314836}
   particleEffect2: {fileID: 8986456627865731124}
+  isLockedByTurret: 0
   reachedDestination: 0
 --- !u!135 &7076955248598834115
 SphereCollider:

@@ -13,7 +13,15 @@ public class Asteroid : MonoBehaviour
     public ParticleSystem particleEffect1;
     public ParticleSystem particleEffect2;
 
+    public bool isLockedByTurret = false;
     public bool reachedDestination = false;
+
+    [Header("Building Ruins")]
+    public GameObject ruin1;
+    public GameObject ruin2;
+    public GameObject ruin3;
+    public GameObject ruin4;
+    public GameObject ruin5;
 
     // Start is called before the first frame update
     void Start()
@@ -33,10 +41,14 @@ public class Asteroid : MonoBehaviour
         {
             particleEffect1.Stop();
             particleEffect2.Stop();
-            Destroy(gameObject, 4f);
-            if(!reachedDestination)
+            particleEffect1.gameObject.transform.parent = null;
+            particleEffect2.gameObject.transform.parent = null;
+            Destroy(particleEffect1.gameObject, 5f);
+            Destroy(particleEffect2.gameObject, 5f);
+            if (!reachedDestination)
             {
                 Instantiate(explosionEffect, transform.position, Quaternion.identity);
+                Destroy(gameObject, 0.5f);
                 reachedDestination = true;
             }
         }
@@ -44,9 +56,13 @@ public class Asteroid : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.collider.gameObject.tag == "House" || collision.collider.gameObject.tag == "Factory" || collision.collider.gameObject.tag == "Park")
+        if(collision.collider.gameObject.tag == "House" || 
+            collision.collider.gameObject.tag == "Factory" || 
+            collision.collider.gameObject.tag == "Park" || 
+            collision.collider.gameObject.tag == "Generator")
         {
             Destroy(gameObject);
+            Destroy(collision.collider.gameObject);
             Instantiate(explosionEffect, transform.position, Quaternion.identity);
         }
     }

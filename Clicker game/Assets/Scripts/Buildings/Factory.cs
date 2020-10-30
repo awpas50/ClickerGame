@@ -43,6 +43,7 @@ public class Factory : MonoBehaviour
         popupStorageCanvas = GameObject.FindGameObjectWithTag("StorageCanvas");
         buildingBuff = GetComponent<BuildingBuff>();
         buildingLevel = GetComponent<BuildingLevel>();
+        buildingState = GetComponent<BuildingState>();
         StartCoroutine(Production_POP_UP(interval));
         StartCoroutine(Production_AUTOMATIC(moneyProduced_auto, interval_auto));
         StartCoroutine(Pollution_AUTOMATIC(pollutionProduced_auto, pollutionInterval_auto));
@@ -86,7 +87,7 @@ public class Factory : MonoBehaviour
 
     public IEnumerator Production_AUTOMATIC(float moneyProduced, float interval)
     {
-        while(buildingState.isWorking)
+        while(true)
         {
             yield return new WaitForSeconds(interval);
             Currency.MONEY += moneyProduced;
@@ -94,7 +95,7 @@ public class Factory : MonoBehaviour
     }
     public IEnumerator Pollution_AUTOMATIC(float pollutionProduced, float interval)
     {
-        while (buildingState.isWorking)
+        while (true)
         {
             yield return new WaitForSeconds(interval);
             Pollution.POLLUTION += pollutionProduced;

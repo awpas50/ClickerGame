@@ -82,6 +82,7 @@ GameObject:
   - component: {fileID: 7541951108901463545}
   - component: {fileID: 7541951108901463544}
   - component: {fileID: 7541951108901463551}
+  - component: {fileID: 6924615879293102834}
   - component: {fileID: 7541951108901463546}
   - component: {fileID: 1307570065090839936}
   m_Layer: 5
@@ -202,6 +203,25 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &6924615879293102834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7541951108901463549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83a169cc1f2c2af41a81e12d7b4db887, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  img: {fileID: 0}
+  offset: {x: 0, y: 0, z: 0}
+  factoryREF: {fileID: 0}
+  factoryREF_script: {fileID: 0}
+  popupStorageCanvas: {fileID: 0}
+  secondPopUp: {fileID: 0}
+  attachedBuilding: {fileID: 0}
 --- !u!114 &7541951108901463546
 MonoBehaviour:
   m_ObjectHideFlags: 0
