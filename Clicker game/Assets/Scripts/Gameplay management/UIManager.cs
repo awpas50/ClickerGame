@@ -21,6 +21,7 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI upgradeText;
     public Button sellButton;
     public Button upgradeButton;
+    public Button OKButton;
 
     [Header("Top UI")]
     public TextMeshProUGUI moneyText;

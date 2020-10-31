@@ -54,27 +54,6 @@ public class Asteroid : MonoBehaviour
             }
         }
     }
-
-    //private void OnCollisionEnter(Collision collision)
-    //{
-    //    if(collision.collider.gameObject.tag == "House" || 
-    //        collision.collider.gameObject.tag == "Factory" || 
-    //        collision.collider.gameObject.tag == "Park" || 
-    //        collision.collider.gameObject.tag == "Generator")
-    //    {
-    //        Debug.Log("AAA");
-    //        // create a ruin on top of the node & destroy building
-    //        Node nodeLocationForRuin = collision.collider.gameObject.GetComponent<BuildingState>().node.GetComponent<Node>();
-    //        nodeLocationForRuin.building_REF = Instantiate(ruin1, nodeLocationForRuin.gameObject.transform.position, Quaternion.identity);
-    //        Destroy(collision.collider.gameObject);
-
-    //        // destroy asteroid
-    //        GameObject effectPrefab = Instantiate(explosionEffect, transform.position, Quaternion.identity);
-    //        Destroy(effectPrefab, 5f);
-    //        Destroy(gameObject, 0.5f);
-
-    //    }
-    //}
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "House" ||
@@ -83,6 +62,20 @@ public class Asteroid : MonoBehaviour
             other.gameObject.tag == "Generator" ||
             other.gameObject.tag == "Airport")
         {
+            // Audio
+            int seed = Random.Range(0, 3);
+            if(seed == 0)
+            {
+                AudioManager.instance.Play(SoundList.explosion1);
+            }
+            else if(seed == 1)
+            {
+                AudioManager.instance.Play(SoundList.explosion2);
+            }
+            else
+            {
+                AudioManager.instance.Play(SoundList.explosion3);
+            }
             // create a ruin on top of the node & destroy building
             Node nodeLocationForRuin = other.gameObject.GetComponent<BuildingState>().node.GetComponent<Node>();
             Ruin ruinScript;

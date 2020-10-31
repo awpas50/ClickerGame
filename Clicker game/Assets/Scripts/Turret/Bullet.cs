@@ -50,6 +50,21 @@ public class Bullet : MonoBehaviour
     {
         if (!isSpawnedEffect)
         {
+            // Audio
+            int seed = Random.Range(0, 3);
+            if (seed == 0)
+            {
+                AudioManager.instance.Play(SoundList.explosion1);
+            }
+            else if (seed == 1)
+            {
+                AudioManager.instance.Play(SoundList.explosion2);
+            }
+            else
+            {
+                AudioManager.instance.Play(SoundList.explosion3);
+            }
+
             GameObject tempGO = Instantiate(explosionEffect, transform.position, Quaternion.identity);
             Destroy(tempGO, 5f);
             isSpawnedEffect = true;

@@ -1,18 +1,39 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
-public class Sound : MonoBehaviour
+public enum SoundList
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    ButtonClicked,
+    BuildingPlaced,
+    Cancel,
+    explosion1,
+    explosion2,
+    explosion3,
+    SelectHouse,
+    SelectFactory,
+    SelectPark,
+    SelectTurret,
+    SelectAirport,
+    AsteroidPassBy,
+    GetMoney,
+    GetCleanAir,
+    Repair
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
+
+[System.Serializable]
+public class Sound
+{
+    // as we are going to add audio in the AudioManager gameObject, we need a reference
+    public AudioClip clip;
+    public SoundList soundList;
+    [HideInInspector] public AudioSource source;
+    [HideInInspector] public float originalVolume;
+    [Range(0f, 2f)] public float volume;
+    [Range(0.1f, 3f)] public float pitch;
+    // determine 2D or 3D sound.
+    [Range(0f, 1f)] public float reverbZoneMix;
+}
+

@@ -23,6 +23,9 @@ public class Factory : MonoBehaviour
     public float pollutionProduced_auto;
     public float pollutionInterval_auto;
 
+    public float moneyProduced_auto_initial;
+    public float pollutionProduced_auto_initial;
+
     [Header("What to instantiate")]
     public GameObject factoryPopUp;
     [Header("Where to instantiate (Do not edit)")]
@@ -39,6 +42,9 @@ public class Factory : MonoBehaviour
 
     void Start()
     {
+        moneyProduced_auto_initial = moneyProduced_auto;
+        pollutionProduced_auto_initial = pollutionProduced_auto;
+
         moneyProduced_initial = moneyProduced;
         popupStorageCanvas = GameObject.FindGameObjectWithTag("StorageCanvas");
         buildingBuff = GetComponent<BuildingBuff>();
@@ -66,6 +72,10 @@ public class Factory : MonoBehaviour
 
         //Pollution
         totalPollution = pollutionProduced * levelMultipiler;
+
+        // Auto production & pollution
+        pollutionProduced_auto = pollutionProduced_auto_initial + (buildingLevel.level - 1) * 0.02f;
+        moneyProduced_auto = moneyProduced_auto_initial + (buildingLevel.level - 1) * 0.25f;
     }
 
     public IEnumerator Production_POP_UP(float interval)

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -65,6 +66,9 @@ public class GameManager : MonoBehaviour
     // Button event
     public void SelectBuilding1()
     {
+        // Audio
+        AudioManager.instance.Play(SoundList.ButtonClicked);
+
         buildingSelectedInUI = building1.building;
         buildingCost = building1.cost;
         buildingInfo.text = "House ($60)- Higher population buffs the efficiency of nearby factorys and the parks will produce additional extra clear air.";
@@ -76,6 +80,9 @@ public class GameManager : MonoBehaviour
     }
     public void SelectBuilding2()
     {
+        // Audio
+        AudioManager.instance.Play(SoundList.ButtonClicked);
+
         // Named factory, but this is the dark market where drug dealer do transaction here...........
         buildingSelectedInUI = building2.building;
         buildingCost = building2.cost;
@@ -88,9 +95,12 @@ public class GameManager : MonoBehaviour
     }
     public void SelectBuilding3()
     {
+        // Audio
+        AudioManager.instance.Play(SoundList.ButtonClicked);
+
         buildingSelectedInUI = building3.building;
         buildingCost = building3.cost;
-        buildingInfo.text = "Park ($80) - The clear air generator by plants can temporary keep out the pollution - But remember not to put it near factories";
+        buildingInfo.text = "Park ($80) - The clear air generated every 20 seconds by plants can temporary keep out the pollution - But remember not to put it near factories";
         if (buildingSelectedInScene)
         {
             buildingSelectedInScene.GetComponent<BuildingSelection>().indicator.SetActive(false);
@@ -100,6 +110,9 @@ public class GameManager : MonoBehaviour
     }
     public void SelectBuilding4()
     {
+        // Audio
+        AudioManager.instance.Play(SoundList.ButtonClicked);
+
         // A cat always lands on her feet whereas a bread with butter always fall buttered side down. 
         buildingSelectedInUI = building4.building;
         buildingCost = building4.cost;
@@ -112,6 +125,9 @@ public class GameManager : MonoBehaviour
     }
     public void SelectBuilding5()
     {
+        // Audio
+        AudioManager.instance.Play(SoundList.ButtonClicked);
+
         // A cat always lands on her feet whereas a bread with butter always fall buttered side down. 
         buildingSelectedInUI = building5.building;
         buildingCost = building5.cost;
@@ -124,6 +140,9 @@ public class GameManager : MonoBehaviour
     }
     public void OK_PurchaseBuilding()
     {
+        // Audio
+        AudioManager.instance.Play(SoundList.ButtonClicked);
+
         // Remove placeHolder and building reference
         // Place building according to the building reference on the node
         for (int i = 0; i < nodeList.Count; i++)
@@ -152,8 +171,11 @@ public class GameManager : MonoBehaviour
     }
     public void Cancel_PurchaseBuilding()
     {
+        // Audio
+        AudioManager.instance.Play(SoundList.Cancel);
+
         // Remove all placeHolder
-        for(int i = 0; i < nodeList.Count; i++)
+        for (int i = 0; i < nodeList.Count; i++)
         {
             Node nodeWithPlaceHolder = nodeList[i].GetComponent<Node>();
             nodeWithPlaceHolder.RemovePlaceHolder();
@@ -162,9 +184,10 @@ public class GameManager : MonoBehaviour
 
         // Clear node list reference
         nodeList.Clear();
+        futureBuildingList.Clear();
 
         // Add back the money deducted, than clear the money list
-        for(int i = 0; i < estimatedCostList.Count; i++)
+        for (int i = 0; i < estimatedCostList.Count; i++)
         {
             Currency.MONEY += estimatedCostList[i];
         }
@@ -239,7 +262,7 @@ public class GameManager : MonoBehaviour
                 // Set building name in the UI
                 UIManager.i.Line1Text.text = "Production: " + buildingSelectedInScene.GetComponent<Factory>().totalProduction +
                     " + " + buildingSelectedInScene.GetComponent<Factory>().extraProduction;
-                UIManager.i.Line2Text.text = "Pollution: " + buildingSelectedInScene.GetComponent<Factory>().totalPollution;
+                UIManager.i.Line2Text.text = "Pollution: " + Math.Round(buildingSelectedInScene.GetComponent<Factory>().totalPollution, 2);
                 UIManager.i.Line3Text.text = "Auto Production: " + buildingSelectedInScene.GetComponent<Factory>().moneyProduced_auto + " per second";
                 UIManager.i.Line4Text.text = "Auto Pollution: " + 
                     (buildingSelectedInScene.GetComponent<Factory>().pollutionProduced_auto / buildingSelectedInScene.GetComponent<Factory>().pollutionInterval_auto) + " per second";
@@ -310,6 +333,9 @@ public class GameManager : MonoBehaviour
                         }
                         else
                         {
+                            // Audio
+                            AudioManager.instance.Play(SoundList.SelectFactory);
+
                             buildingSelectedInScene = hit.collider.gameObject;
                             StartCoroutine(buildingSelectedInScene.GetComponent<BuildingSelection>().BuildingPopAnimation());
                             buildingDetailsCanvas.SetActive(true);
@@ -333,6 +359,9 @@ public class GameManager : MonoBehaviour
                         }
                         else
                         {
+                            // Audio
+                            AudioManager.instance.Play(SoundList.SelectPark);
+
                             buildingSelectedInScene = hit.collider.gameObject;
                             StartCoroutine(buildingSelectedInScene.GetComponent<BuildingSelection>().BuildingPopAnimation());
                             buildingDetailsCanvas.SetActive(true);
@@ -350,6 +379,19 @@ public class GameManager : MonoBehaviour
                     hit.collider.gameObject.tag == "Generator" ||
                     hit.collider.gameObject.tag == "Airport")
                     {
+                        if(hit.collider.gameObject.tag == "House")
+                        {
+                            // Audio
+                            AudioManager.instance.Play(SoundList.SelectHouse);
+                        }
+                        if (hit.collider.gameObject.tag == "Generator")
+                        {
+                            AudioManager.instance.Play(SoundList.SelectTurret);
+                        }
+                        if (hit.collider.gameObject.tag == "Airport")
+                        {
+                            AudioManager.instance.Play(SoundList.SelectAirport);
+                        }
 
                         buildingSelectedInScene = hit.collider.gameObject;
                         StartCoroutine(buildingSelectedInScene.GetComponent<BuildingSelection>().BuildingPopAnimation());
@@ -427,6 +469,16 @@ public class GameManager : MonoBehaviour
             buildingPurchasingState = true;
             UIManager.i.RightUI.SetActive(true);
             UIManager.i.BuildingInstructionUI.SetActive(true);
+
+            // Right UI state
+            if (nodeList.Count == 0)
+            {
+                UIManager.i.OKButton.interactable = false;
+            }
+            else
+            {
+                UIManager.i.OKButton.interactable = true;
+            }
         }
         else if (buildingSelectedInUI == null)
         {
@@ -491,6 +543,7 @@ public class GameManager : MonoBehaviour
 
     public void PauseGameMenu()
     {
+        AudioManager.instance.Play(SoundList.ButtonClicked);
         buildingSelectedInScene = null;
         buildingSelectedInUI = null;
         DisableGameUI();
@@ -499,16 +552,17 @@ public class GameManager : MonoBehaviour
 
     public void Resume()
     {
+        AudioManager.instance.Play(SoundList.ButtonClicked);
         EnableGameUI();
         isPaused = false;
     }
     public void Save()
     {
-        
+        AudioManager.instance.Play(SoundList.ButtonClicked);
     }
     public void SaveAndQuit()
     {
-
+        AudioManager.instance.Play(SoundList.ButtonClicked);
     }
 
     void DisableGameUI()

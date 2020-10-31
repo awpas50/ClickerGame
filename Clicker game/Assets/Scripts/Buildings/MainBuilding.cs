@@ -35,6 +35,7 @@ public class MainBuilding : MonoBehaviour
         //}
         if (Input.GetMouseButtonUp(0) && !GameManager.i.buildingPurchasingState && !GameManager.i.buildingSelectedInScene)
         {
+            AudioManager.instance.Play(SoundList.ButtonClicked);
             MainBuildingClickEvent();
             StartCoroutine(BuildingPopAnimation());
         }

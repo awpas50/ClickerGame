@@ -39,6 +39,8 @@ public class ParkPopUp : MonoBehaviour
     // When clicked
     public void ButtonEvent()
     {
+        // Audio
+        AudioManager.instance.Play(SoundList.GetCleanAir);
         parkREF_script.pollutionReduced = (float)Math.Round(parkREF_script.pollutionReduced, 1);
         parkREF_script.GetResources(parkREF_script.pollutionReduced, parkREF_script.efficiency, parkREF_script.levelMultipiler);
         // Instantiate an additional pop up

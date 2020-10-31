@@ -33,15 +33,11 @@ public class Node : MonoBehaviour
     }
     private void OnMouseDown()
     {
-        //// Select building in scene
-        //if (building_REF != null)
-        //{
-        //    GameManager.instance.buildingSelectedInScene = building_REF;
-        //    //Remove reference of builing selected in the UI
-        //    GameManager.instance.buildingSelectedInList = null;
-        //    GameManager.instance.buildingCost = 0;
-        //}
-
+        // prevent clicking through UI
+        if (MouseOverUILayerObject.IsPointerOverUIObject())
+        {
+            return;
+        }
         // DEBUG
         if (GameManager.i.buildingSelectedInUI == null)
         {
@@ -62,6 +58,8 @@ public class Node : MonoBehaviour
 
     public void AddPlaceHolder()
     {
+        // Audio
+        AudioManager.instance.Play(SoundList.BuildingPlaced);
         // Add the node into the list **(GameManager - nodeList)
         GameManager.i.nodeList.Add(gameObject);
         // **(GameManager - futureBuildingList)

@@ -133,7 +133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pollutionReduced_initial: 0
-  pollutionReduced: 8
+  pollutionReduced: 10
   interval: 20
   totalProduction: 0
   totalProduction_buff: 0
@@ -146,6 +146,7 @@ MonoBehaviour:
   parkPopUpREF: {fileID: 0}
   buildingBuff: {fileID: 0}
   buildingLevel: {fileID: 0}
+  buildingState: {fileID: 0}
   levelMultipiler: 1
   efficiency: 1
 --- !u!114 &-4303101137104981377
@@ -181,7 +182,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   node: {fileID: 0}
-  isWorking: 1
 --- !u!114 &362140470
 MonoBehaviour:
   m_ObjectHideFlags: 0

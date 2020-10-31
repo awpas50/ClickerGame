@@ -39,6 +39,9 @@ public class FactoryPopUp : MonoBehaviour
     // When clicked
     public void ButtonEvent()
     {
+        // Audio
+        AudioManager.instance.Play(SoundList.GetMoney);
+
         factoryREF_script.moneyProduced = (float)Math.Round(factoryREF_script.moneyProduced, 1);
         factoryREF_script.GetResources(factoryREF_script.moneyProduced, factoryREF_script.efficiency, factoryREF_script.pollutionProduced, factoryREF_script.levelMultipiler);
         // Instantiate an additional pop up

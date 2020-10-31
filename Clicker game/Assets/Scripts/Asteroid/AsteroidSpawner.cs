@@ -8,9 +8,13 @@ public class AsteroidSpawner : MonoBehaviour
     private float randomY;
     private float randomZ;
     public GameObject asteroid;
+
+    public int asteroidCount = 0;
+    float val;
+
     void Start()
     {
-        StartCoroutine(Spawn());
+        //StartCoroutine(Spawn());
     }
 
     private void Update()
@@ -23,115 +27,120 @@ public class AsteroidSpawner : MonoBehaviour
         {
             StartCoroutine(Spawn_DEBUG());
         }
+
+        
+        if(Pollution.POLLUTION == 0)
+        {
+            asteroidCount = 0;
+            val = 1;
+        }
+        else
+        {
+           val = Pollution.POLLUTION;
+        }
+        if(val - 15 >= 0)
+        {
+            asteroidCount = (int)Mathf.Sqrt(val - 15);
+        }
+        else
+        {
+            asteroidCount = 0;
+        }
+        
     }
 
     IEnumerator Spawn()
     {
-        while(true)
+        while (true)
         {
-            yield return new WaitForSeconds(45f);
-            if (Pollution.POLLUTION >= 0 && Pollution.POLLUTION < 10)
+            yield return new WaitForSeconds(40f);
+            AudioManager.instance.Play(SoundList.AsteroidPassBy);
+            // A formula to control the asteroid number
+            if (Pollution.POLLUTION <= 15)
             {
-                //yield return null;
-                for (int i = 0; i < 1; i++)
-                {
-                    Instantiate(asteroid, new Vector3(randomX, randomY, randomZ), Quaternion.identity);
-                    yield return new WaitForSeconds(0.4f);
-                }
+                asteroidCount = 0;
             }
-            if (Pollution.POLLUTION >= 10 && Pollution.POLLUTION < 20)
+            if (asteroidCount > 12)
             {
-                for (int i = 0; i < 1; i++)
-                {
-                    Instantiate(asteroid, new Vector3(randomX, randomY, randomZ), Quaternion.identity);
-                    yield return new WaitForSeconds(0.4f);
-                }
+                asteroidCount = 12;
             }
-            if (Pollution.POLLUTION >= 20 && Pollution.POLLUTION < 40)
+            AudioManager.instance.Play(SoundList.AsteroidPassBy);
+            //yield return null;
+            for (int i = 0; i < asteroidCount; i++)
             {
-                for (int i = 0; i < 1; i++)
-                {
-                    Instantiate(asteroid, new Vector3(randomX, randomY, randomZ), Quaternion.identity);
-                    yield return new WaitForSeconds(0.4f);
-                }
-            }
-            if (Pollution.POLLUTION >= 40 && Pollution.POLLUTION < 60)
-            {
-                for (int i = 0; i < 3; i++)
-                {
-                    Instantiate(asteroid, new Vector3(randomX, randomY, randomZ), Quaternion.identity);
-                    yield return new WaitForSeconds(0.4f);
-                }
-            }
-            if (Pollution.POLLUTION >= 60 && Pollution.POLLUTION < 80)
-            {
-                for (int i = 0; i < 5; i++)
-                {
-                    Instantiate(asteroid, new Vector3(randomX, randomY, randomZ), Quaternion.identity);
-                    yield return new WaitForSeconds(0.4f);
-                }
-            }
-            if (Pollution.POLLUTION >= 80 && Pollution.POLLUTION < 100)
-            {
-                for (int i = 0; i < 7; i++)
-                {
-                    Instantiate(asteroid, new Vector3(randomX, randomY, randomZ), Quaternion.identity);
-                    yield return new WaitForSeconds(0.4f);
-                }
+                Instantiate(asteroid, new Vector3(randomX, randomY, randomZ), Quaternion.identity);
+                yield return new WaitForSeconds(Random.Range(0.3f, 2f));
             }
         }
     }
 
     IEnumerator Spawn_DEBUG()
     {
-        if (Pollution.POLLUTION >= 0 && Pollution.POLLUTION < 10)
+        //if (Pollution.POLLUTION >= 0 && Pollution.POLLUTION < 10)
+        //{
+        //    //yield return null;
+        //    for (int i = 0; i < 1; i++)
+        //    {
+        //        Instantiate(asteroid, new Vector3(randomX, randomY, randomZ), Quaternion.identity);
+        //        yield return new WaitForSeconds(0.4f);
+        //    }
+        //}
+        //if (Pollution.POLLUTION >= 10 && Pollution.POLLUTION < 20)
+        //{
+        //    for (int i = 0; i < 1; i++)
+        //    {
+        //        Instantiate(asteroid, new Vector3(randomX, randomY, randomZ), Quaternion.identity);
+        //        yield return new WaitForSeconds(0.4f);
+        //    }
+        //}
+        //if (Pollution.POLLUTION >= 20 && Pollution.POLLUTION < 40)
+        //{
+        //    for (int i = 0; i < 1; i++)
+        //    {
+        //        Instantiate(asteroid, new Vector3(randomX, randomY, randomZ), Quaternion.identity);
+        //        yield return new WaitForSeconds(0.4f);
+        //    }
+        //}
+        //if (Pollution.POLLUTION >= 40 && Pollution.POLLUTION < 60)
+        //{
+        //    for (int i = 0; i < 3; i++)
+        //    {
+        //        Instantiate(asteroid, new Vector3(randomX, randomY, randomZ), Quaternion.identity);
+        //        yield return new WaitForSeconds(0.4f);
+        //    }
+        //}
+        //if (Pollution.POLLUTION >= 60 && Pollution.POLLUTION < 80)
+        //{
+        //    for (int i = 0; i < 5; i++)
+        //    {
+        //        Instantiate(asteroid, new Vector3(randomX, randomY, randomZ), Quaternion.identity);
+        //        yield return new WaitForSeconds(0.4f);
+        //    }
+        //}
+        //if (Pollution.POLLUTION >= 80 && Pollution.POLLUTION < 100)
+        //{
+        //    for (int i = 0; i < 7; i++)
+        //    {
+        //        Instantiate(asteroid, new Vector3(randomX, randomY, randomZ), Quaternion.identity);
+        //        yield return new WaitForSeconds(0.4f);
+        //    }
+        //}
+        // A formula to control the asteroid number
+        
+        if (Pollution.POLLUTION <= 15)
         {
-            //yield return null;
-            for (int i = 0; i < 1; i++)
-            {
-                Instantiate(asteroid, new Vector3(randomX, randomY, randomZ), Quaternion.identity);
-                yield return new WaitForSeconds(0.4f);
-            }
+            asteroidCount = 0;
         }
-        if (Pollution.POLLUTION >= 10 && Pollution.POLLUTION < 20)
+        if (asteroidCount > 12)
         {
-            for (int i = 0; i < 1; i++)
-            {
-                Instantiate(asteroid, new Vector3(randomX, randomY, randomZ), Quaternion.identity);
-                yield return new WaitForSeconds(0.4f);
-            }
+            asteroidCount = 12;
         }
-        if (Pollution.POLLUTION >= 20 && Pollution.POLLUTION < 40)
+        AudioManager.instance.Play(SoundList.AsteroidPassBy);
+        //yield return null;
+        for (int i = 0; i < asteroidCount; i++)
         {
-            for (int i = 0; i < 1; i++)
-            {
-                Instantiate(asteroid, new Vector3(randomX, randomY, randomZ), Quaternion.identity);
-                yield return new WaitForSeconds(0.4f);
-            }
-        }
-        if (Pollution.POLLUTION >= 40 && Pollution.POLLUTION < 60)
-        {
-            for (int i = 0; i < 3; i++)
-            {
-                Instantiate(asteroid, new Vector3(randomX, randomY, randomZ), Quaternion.identity);
-                yield return new WaitForSeconds(0.4f);
-            }
-        }
-        if (Pollution.POLLUTION >= 60 && Pollution.POLLUTION < 80)
-        {
-            for (int i = 0; i < 5; i++)
-            {
-                Instantiate(asteroid, new Vector3(randomX, randomY, randomZ), Quaternion.identity);
-                yield return new WaitForSeconds(0.4f);
-            }
-        }
-        if (Pollution.POLLUTION >= 80 && Pollution.POLLUTION < 100)
-        {
-            for (int i = 0; i < 7; i++)
-            {
-                Instantiate(asteroid, new Vector3(randomX, randomY, randomZ), Quaternion.identity);
-                yield return new WaitForSeconds(0.4f);
-            }
+            Instantiate(asteroid, new Vector3(randomX, randomY, randomZ), Quaternion.identity);
+            yield return new WaitForSeconds(Random.Range(0.3f, 2f));
         }
         StopCoroutine(Spawn_DEBUG());
     }

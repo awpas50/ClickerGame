@@ -45,6 +45,9 @@ public class RepairPopUp : MonoBehaviour
         // if enough repair cost
         if(Currency.MONEY >= ruinREF_script.repairCost)
         {
+            // Audio
+            AudioManager.instance.Play(SoundList.Repair);
+
             // Restore building (type, level)
             GameObject restoredBuilding = Instantiate(ruinREF_script.buildingData, ruinREF_script.node.transform.position, Quaternion.identity);
             restoredBuilding.GetComponent<BuildingLevel>().level = ruinREF_script.buildingLevel;

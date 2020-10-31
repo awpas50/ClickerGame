@@ -19,6 +19,8 @@ public class Park : MonoBehaviour
     [Header("Auto generated resources (Reduce pollution)")]
     public float CleanAirProduced_auto;
     public float CleanAirInterval_auto;
+    
+    public float CleanAirProduced_auto_initial;
 
     [Header("What to instantiate")]
     public GameObject parkPopUp;
@@ -36,6 +38,7 @@ public class Park : MonoBehaviour
 
     void Start()
     {
+        CleanAirProduced_auto_initial = CleanAirProduced_auto;
         pollutionReduced_initial = pollutionReduced;
 
         popupStorageCanvas = GameObject.FindGameObjectWithTag("StorageCanvas");
@@ -66,6 +69,8 @@ public class Park : MonoBehaviour
         totalProduction = (float)Math.Round(totalProduction, 1);
         totalProduction_buff = (float)Math.Round(totalProduction_buff, 1);
         extraProduction = (float)Math.Round(extraProduction, 1);
+
+        CleanAirProduced_auto = CleanAirProduced_auto_initial + (buildingLevel.level - 1) * 0.02f;
     }
 
     public IEnumerator ReducePollution_POP_UP(float pollutionReduced, float interval)

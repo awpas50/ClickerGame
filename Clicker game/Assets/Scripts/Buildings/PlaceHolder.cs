@@ -8,6 +8,9 @@ public class PlaceHolder : MonoBehaviour
     public GameObject attachedNode;
     private void OnMouseDown()
     {
+        // Audio
+        AudioManager.instance.Play(SoundList.BuildingPlaced);
+
         // When clicked that means cancel building on the particular node:
         // Find the node in the node list (attached in GameManager and delete it)
         // **(GameManager - nodeList)

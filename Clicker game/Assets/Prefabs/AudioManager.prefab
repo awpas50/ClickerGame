@@ -1,0 +1,151 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5748901789371089988
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5748901789371089986}
+  - component: {fileID: 5748901789371089987}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5748901789371089986
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5748901789371089988}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.3017454, y: -0.56095564, z: 0.7840051}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5748901789371089987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5748901789371089988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f382457fc3acc746853952cedf433b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - clip: {fileID: 8300000, guid: b6a06716d9c8d0047a985f60be53bea9, type: 3}
+    soundList: 0
+    source: {fileID: 0}
+    originalVolume: 0
+    volume: 0.5
+    pitch: 1
+    reverbZoneMix: 1
+  - clip: {fileID: 8300000, guid: 44282973147e3b94c80790e1cfec4a09, type: 3}
+    soundList: 1
+    source: {fileID: 0}
+    originalVolume: 0
+    volume: 0.5
+    pitch: 1
+    reverbZoneMix: 1
+  - clip: {fileID: 8300000, guid: 0e1b6ed865812334b8d3ea7ca03f80c8, type: 3}
+    soundList: 2
+    source: {fileID: 0}
+    originalVolume: 0
+    volume: 0.5
+    pitch: 1
+    reverbZoneMix: 1
+  - clip: {fileID: 8300000, guid: bc60c13df75e058479c67fa0f50432d0, type: 3}
+    soundList: 3
+    source: {fileID: 0}
+    originalVolume: 0
+    volume: 0.5
+    pitch: 1
+    reverbZoneMix: 1
+  - clip: {fileID: 8300000, guid: 80d3b7046a6eeb34a9032c0aeb796666, type: 3}
+    soundList: 4
+    source: {fileID: 0}
+    originalVolume: 0
+    volume: 0.5
+    pitch: 1
+    reverbZoneMix: 1
+  - clip: {fileID: 8300000, guid: 57262368007b9e645abee8e8930c1f29, type: 3}
+    soundList: 5
+    source: {fileID: 0}
+    originalVolume: 0
+    volume: 0.5
+    pitch: 1
+    reverbZoneMix: 1
+  - clip: {fileID: 8300000, guid: 4197fbeadaf1584408fa045740f854a4, type: 3}
+    soundList: 6
+    source: {fileID: 0}
+    originalVolume: 0
+    volume: 0.4
+    pitch: 1
+    reverbZoneMix: 1
+  - clip: {fileID: 8300000, guid: ba364dd242e17d949b99c2dc06896df9, type: 3}
+    soundList: 7
+    source: {fileID: 0}
+    originalVolume: 0
+    volume: 0.2
+    pitch: 1
+    reverbZoneMix: 1
+  - clip: {fileID: 8300000, guid: ba5b576295b14354f846f4078c16cc14, type: 3}
+    soundList: 8
+    source: {fileID: 0}
+    originalVolume: 0
+    volume: 0.7
+    pitch: 1
+    reverbZoneMix: 1
+  - clip: {fileID: 8300000, guid: 0ce9c0067ba1d3c49b4325afc4bb2e77, type: 3}
+    soundList: 9
+    source: {fileID: 0}
+    originalVolume: 0
+    volume: 0.2
+    pitch: 1
+    reverbZoneMix: 1
+  - clip: {fileID: 8300000, guid: c0258345d08cf3f4aaf03b6441b9c963, type: 3}
+    soundList: 11
+    source: {fileID: 0}
+    originalVolume: 0
+    volume: 0.15
+    pitch: 1
+    reverbZoneMix: 1
+  - clip: {fileID: 8300000, guid: b8b8835784e259d47aae2c5dea5fcf02, type: 3}
+    soundList: 10
+    source: {fileID: 0}
+    originalVolume: 0
+    volume: 0.7
+    pitch: 1
+    reverbZoneMix: 1
+  - clip: {fileID: 8300000, guid: 4481c7a026bd03f4191bbca2e91ec5c3, type: 3}
+    soundList: 12
+    source: {fileID: 0}
+    originalVolume: 0
+    volume: 0.5
+    pitch: 1
+    reverbZoneMix: 1
+  - clip: {fileID: 8300000, guid: e0ecf3b568b56094595ea9e7815e2b96, type: 3}
+    soundList: 13
+    source: {fileID: 0}
+    originalVolume: 0
+    volume: 0.7
+    pitch: 1
+    reverbZoneMix: 1
+  - clip: {fileID: 8300000, guid: 596790f05b873c04a8f10d3a1a3d3d96, type: 3}
+    soundList: 14
+    source: {fileID: 0}
+    originalVolume: 0
+    volume: 0.4
+    pitch: 1
+    reverbZoneMix: 1
