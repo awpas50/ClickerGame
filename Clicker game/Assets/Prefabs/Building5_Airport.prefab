@@ -168,10 +168,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   airplane: {fileID: 8887503176826465878, guid: d61f757604d0cd7428a0c11d2d5841ca,
     type: 3}
+  airplaneScript: {fileID: 0}
+  airplaneREF: {fileID: 0}
   point1: {fileID: 2644036457247890185}
   point2: {fileID: 3622753274027452090}
   pollutionProduced_auto: 0.05
   pollutionInterval_auto: 1
+  airportPopUp: {fileID: 7541951108901463549, guid: c656e3276e6e260498885c6a8415b820,
+    type: 3}
+  airportPopUpREF: {fileID: 0}
+  buildingLevel: {fileID: 0}
 --- !u!114 &3608320347679923104
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -184,10 +190,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a44d5509287704a439e40ef96c98b8a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildingBaseCost: 1000
+  buildingBaseCost: 800
   level: 1
   maxLevel: 3
-  costEachLevel: 00000000dc050000d007000000000000
+  costEachLevel: 00000000b00400000807000000000000
   sellCost: 0
 --- !u!114 &5021497698416723030
 MonoBehaviour:

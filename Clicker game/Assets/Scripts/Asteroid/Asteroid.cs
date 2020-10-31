@@ -169,6 +169,12 @@ public class Asteroid : MonoBehaviour
                 ruinScript.node = nodeLocationForRuin.gameObject;
                 ruinScript.buildingLevel = other.gameObject.GetComponent<BuildingLevel>().level;
                 ruinScript.repairCost = other.gameObject.GetComponent<BuildingLevel>().sellCost / 3;
+
+                // if it has a pop up than destroy the pop up
+                other.gameObject.GetComponent<Airport>().StopAllCoroutines();
+                GameObject tempPopUpData = other.gameObject.GetComponent<Airport>().airportPopUpREF;
+                Destroy(tempPopUpData, 0.1f);
+                other.gameObject.GetComponent<Airport>().airportPopUpREF = null;
             }
 
             // destroy building

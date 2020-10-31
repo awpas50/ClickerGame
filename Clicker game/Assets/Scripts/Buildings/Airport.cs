@@ -4,18 +4,21 @@ using UnityEngine;
 
 public class Airport : MonoBehaviour
 {
-    [Header("Airplane")]
     public GameObject airplane;
     [Header("Do not edit")]
     public Airplane airplaneScript;
     public GameObject airplaneREF;
+    public GameObject popupStorageCanvas;
     [Header("Airport landing point")]
     public Transform point1;
     public Transform point2;
     [Header("Auto generated pollution")]
     public float pollutionProduced_auto;
     public float pollutionInterval_auto;
-
+    [Header("What to instainate")]
+    public GameObject airportPopUp;
+    [Header("pop up (do not edit)")]
+    public GameObject airportPopUpREF;
     [HideInInspector] public BuildingLevel buildingLevel;
 
     void Start()
@@ -27,12 +30,28 @@ public class Airport : MonoBehaviour
         airplaneREF = Instantiate(airplane, point1.position, Quaternion.identity);
         airplaneREF.transform.SetParent(gameObject.transform);
         airplaneScript = airplaneREF.GetComponent<Airplane>();
-        airplaneScript.airportScriptREF = GetComponent<Airport>();
+
+        // assign ref to airplane
+        airplaneScript.airport = gameObject;
+        airplaneScript.airportScript = GetComponent<Airport>();
         airplaneScript.airport_point1 = point1;
         airplaneScript.airport_point2 = point2;
+
+        popupStorageCanvas = GameObject.FindGameObjectWithTag("StorageCanvas");
+
         StartCoroutine(Pollution_AUTOMATIC(pollutionProduced_auto, pollutionInterval_auto));
     }
 
+    private void Update()
+    {
+        // DEBUG
+        if(airportPopUpREF)
+        {
+            airportPopUpREF.GetComponent<AirportPopUp>().airportREF = gameObject;
+            airportPopUpREF.GetComponent<AirportPopUp>().airportREF_script = GetComponent<Airport>();
+        }
+        
+    }
     public IEnumerator Pollution_AUTOMATIC(float pollutionProduced, float interval)
     {
         while (true)
@@ -41,4 +60,27 @@ public class Airport : MonoBehaviour
             Pollution.POLLUTION += pollutionProduced;
         }
     }
+
+    public void SpawnPopUp()
+    {
+        //airportPopUpREF = Instantiate(airportPopUp, transform.position, Quaternion.identity);
+        //airportPopUpREF.GetComponent<AirportPopUp>().airportREF = gameObject;
+        //airportPopUpREF.transform.SetParent(popupStorageCanvas.transform);
+
+        GameObject temp = Instantiate(airportPopUp, transform.position, Quaternion.identity);
+        temp.GetComponent<AirportPopUp>().airportREF = gameObject;
+        temp.transform.SetParent(popupStorageCanvas.transform);
+        airportPopUpREF = temp;
+    }
+
+    //public void OnMouseOver()
+    //{
+    //    if(Input.GetMouseButtonDown(0) && airportPopUpREF == null)
+    //    {
+    //        GameObject temp = Instantiate(airportPopUp, transform.position, Quaternion.identity);
+    //        temp.GetComponent<AirportPopUp>().airportREF = gameObject;
+    //        temp.transform.SetParent(popupStorageCanvas.transform);
+    //        airportPopUpREF = temp;
+    //    }
+    //}
 }

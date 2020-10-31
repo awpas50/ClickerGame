@@ -9558,17 +9558,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waitTime_base: 4
-  waitTime_des: 10
+  waitTime_des: 60
   relativeSpeed: 0.02
   relativeSpeed_initial: 0
   destinations: []
   randomDestinationIndex: 0
   reachedHighPoint: 0
+  redeparture: 0
   airport_point1: {fileID: 0}
   airport_point2: {fileID: 0}
   factoryPopUp: {fileID: 7541951108901463549, guid: 8ae78f63db5315641ab5b8c13d25542c,
     type: 3}
-  airportScriptREF: {fileID: 0}
+  airport: {fileID: 0}
+  airportScript: {fileID: 0}
   state: 0
 --- !u!54 &709429141
 Rigidbody:

@@ -71,7 +71,7 @@ public class GameManager : MonoBehaviour
 
         buildingSelectedInUI = building1.building;
         buildingCost = building1.cost;
-        buildingInfo.text = "House ($60)- Higher population buffs the efficiency of nearby factorys and the parks will produce additional extra clear air.";
+        buildingInfo.text = "House ($60)- Buffs the efficiency of nearby factorys, whereas the nearby parks produces extra clear air.";
         if(buildingSelectedInScene)
         {
             buildingSelectedInScene.GetComponent<BuildingSelection>().indicator.SetActive(false);
@@ -116,7 +116,7 @@ public class GameManager : MonoBehaviour
         // A cat always lands on her feet whereas a bread with butter always fall buttered side down. 
         buildingSelectedInUI = building4.building;
         buildingCost = building4.cost;
-        buildingInfo.text = "Meteor defense ($400) - Build turrets to defend your city from the asteroids! Upgrading this building will increase its fire rate.";
+        buildingInfo.text = "Meteor defense ($400) - The powerful laser beams protect your base from asteroids.";
         if (buildingSelectedInScene)
         {
             buildingSelectedInScene.GetComponent<BuildingSelection>().indicator.SetActive(false);
@@ -131,7 +131,7 @@ public class GameManager : MonoBehaviour
         // A cat always lands on her feet whereas a bread with butter always fall buttered side down. 
         buildingSelectedInUI = building5.building;
         buildingCost = building5.cost;
-        buildingInfo.text = "Airport ($1000) - Build airplanes to explore the outside world - numerous treasures are waiting for you!";
+        buildingInfo.text = "Airport ($800) - Build airplanes to explore the outside world - numerous treasures are waiting for you!";
         if (buildingSelectedInScene)
         {
             buildingSelectedInScene.GetComponent<BuildingSelection>().indicator.SetActive(false);
@@ -309,7 +309,7 @@ public class GameManager : MonoBehaviour
             {
                 // Set building name in the UI
                 UIManager.i.Line1Text.text = "Copter speed: " + buildingSelectedInScene.GetComponent<Airport>().airplaneScript.relativeSpeed * 100;
-                UIManager.i.Line2Text.text = "Copter collect time:" + buildingSelectedInScene.GetComponent<Airport>().airplaneScript.waitTime_des + " seconds";
+                UIManager.i.Line2Text.text = "Time taken to collect resources: " + buildingSelectedInScene.GetComponent<Airport>().airplaneScript.waitTime_des + " seconds";
                 UIManager.i.Line3Text.text = "Auto Pollution: " +
                     (buildingSelectedInScene.GetComponent<Airport>().pollutionProduced_auto / buildingSelectedInScene.GetComponent<Airport>().pollutionInterval_auto) + " per second";
                 UIManager.i.Line4Text.text = "";
@@ -386,8 +386,7 @@ public class GameManager : MonoBehaviour
                         }
                     }
                     else if (hit.collider.gameObject.tag == "House" ||
-                    hit.collider.gameObject.tag == "Generator" ||
-                    hit.collider.gameObject.tag == "Airport")
+                    hit.collider.gameObject.tag == "Generator")
                     {
                         if(hit.collider.gameObject.tag == "House")
                         {
@@ -397,10 +396,6 @@ public class GameManager : MonoBehaviour
                         if (hit.collider.gameObject.tag == "Generator")
                         {
                             AudioManager.instance.Play(SoundList.SelectTurret);
-                        }
-                        if (hit.collider.gameObject.tag == "Airport")
-                        {
-                            AudioManager.instance.Play(SoundList.SelectAirport);
                         }
 
                         buildingSelectedInScene = hit.collider.gameObject;
@@ -414,6 +409,30 @@ public class GameManager : MonoBehaviour
                         // Animation
                         BuildingAnimation buildingAnimation = buildingSelectedInScene.GetComponent<BuildingAnimation>();
                         buildingAnimation.StartCoroutine(buildingAnimation.BuildingPopAnimation());
+                    }
+                    else if(hit.collider.gameObject.tag == "Airport")
+                    {
+                        if (hit.collider.gameObject.GetComponent<Airport>().airportPopUpREF)
+                        {
+                            hit.collider.gameObject.GetComponent<Airport>().airportPopUpREF.
+                                GetComponent<AirportPopUp>().ButtonEvent();
+                        }
+                        else
+                        {
+                            AudioManager.instance.Play(SoundList.SelectAirport);
+
+                            buildingSelectedInScene = hit.collider.gameObject;
+                            StartCoroutine(buildingSelectedInScene.GetComponent<BuildingSelection>().BuildingPopAnimation());
+                            buildingDetailsCanvas.SetActive(true);
+
+                            // Remove reference of builing selected in the UI
+                            GameManager.i.buildingSelectedInUI = null;
+                            GameManager.i.buildingCost = 0;
+
+                            // Animation
+                            BuildingAnimation buildingAnimation = buildingSelectedInScene.GetComponent<BuildingAnimation>();
+                            buildingAnimation.StartCoroutine(buildingAnimation.BuildingPopAnimation());
+                        }
                     }
                     // Click ruin to trigger event on the pop up (UI)
                     else if (hit.collider.gameObject.tag == "Ruin")

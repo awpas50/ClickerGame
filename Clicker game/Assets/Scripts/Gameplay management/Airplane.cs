@@ -14,7 +14,9 @@ public class Airplane : MonoBehaviour
     public GameObject[] destinations;
     public int randomDestinationIndex;
     // triggers
-    public bool reachedHighPoint = false;
+    [HideInInspector] public bool reachedHighPoint = false;
+    private bool isPopUpSpawned = false;
+    [HideInInspector] public bool redeparture = false;
 
     private float t1 = 0;
     private float t2 = 0;
@@ -24,7 +26,8 @@ public class Airplane : MonoBehaviour
     [Header("What to instantiate")]
     public GameObject factoryPopUp;
     // assigned automatically
-    [HideInInspector] public Airport airportScriptREF;
+    [HideInInspector] public GameObject airport;
+    [HideInInspector] public Airport airportScript;
 
     public enum State
     {
@@ -45,9 +48,13 @@ public class Airplane : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        waitTime_des = waitTIme_des_initial + (airportScriptREF.buildingLevel.level - 1) * -2.5f;
-        relativeSpeed = relativeSpeed_initial + (airportScriptREF.buildingLevel.level - 1) * 0.015f;
+        waitTime_des = waitTIme_des_initial + (airportScript.buildingLevel.level - 1) * -10f;
+        relativeSpeed = relativeSpeed_initial + (airportScript.buildingLevel.level - 1) * 0.015f;
 
+        if(redeparture)
+        {
+            ReachedBaseEvent();
+        }
         if (state == State.Idle)
         {
             return;
@@ -69,17 +76,10 @@ public class Airplane : MonoBehaviour
             if (Vector3.Distance(transform.position, airport_point2.position) <= 0.1f)
             {
                 reachedHighPoint = true;
+                isPopUpSpawned = false;
             }
             if (Vector3.Distance(transform.position, destinations[randomDestinationIndex].transform.position) <= 0.1f) {
-                // arrived
-                t1 += Time.deltaTime;
-                if(t1 >= waitTime_des)
-                {
-                    t1 = 0;
-                    reachedHighPoint = false;
-                    // go back to the base.
-                    state = State.Arrival;
-                }
+                ReachedDestinationEvent();
             }
         }
         else if (state == State.Arrival)
@@ -101,14 +101,10 @@ public class Airplane : MonoBehaviour
             if (Vector3.Distance(transform.position, airport_point1.transform.position) <= 0.1f)
             {
                 transform.eulerAngles = new Vector3(0, transform.rotation.y, transform.rotation.z);
-                // arrived back the base
-                t2 += Time.deltaTime;
-                if (t2 >= waitTime_base)
+                if(!isPopUpSpawned)
                 {
-                    t2 = 0;
-                    reachedHighPoint = false;
-                    // leave the base.
-                    state = State.Departure;
+                    airportScript.SpawnPopUp();
+                    isPopUpSpawned = true;
                 }
             }
         }
@@ -120,14 +116,31 @@ public class Airplane : MonoBehaviour
         yield return new WaitForSeconds(time);
         state = State.Departure;
     }
-    IEnumerator BackToSpawn()
+
+    void ReachedDestinationEvent()
     {
-        // move to position if the airplane hasn't reach destination
-        yield return new WaitForSeconds(0.05f);
-        while (Vector3.Distance(transform.position, airport_point1.transform.position) >= 0.2f)
+        // arrived
+        t1 += Time.deltaTime;
+        if (t1 >= waitTime_des)
         {
-            transform.LookAt(airport_point1);
-            transform.position = Vector3.MoveTowards(transform.position, airport_point1.transform.position, relativeSpeed);
+            t1 = 0;
+            reachedHighPoint = false;
+            // go back to the base.
+            state = State.Arrival;
+        }
+    }
+
+    void ReachedBaseEvent()
+    {
+        // arrived back the base
+        t2 += Time.deltaTime;
+        if (t2 >= waitTime_base)
+        {
+            t2 = 0;
+            reachedHighPoint = false;
+            // leave the base.
+            state = State.Departure;
+            redeparture = false;
         }
     }
 }
