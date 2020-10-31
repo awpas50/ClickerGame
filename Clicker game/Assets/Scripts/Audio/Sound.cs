@@ -19,8 +19,9 @@ public enum SoundList
     AsteroidPassBy,
     GetMoney,
     GetCleanAir,
-    Repair
-
+    Repair,
+    Error,
+    TurretShoot
 }
 
 [System.Serializable]

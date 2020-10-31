@@ -47,6 +47,21 @@ public class Asteroid : MonoBehaviour
             Destroy(particleEffect2.gameObject, 5f);
             if (!reachedDestination)
             {
+                // Audio
+                int seed = Random.Range(0, 3);
+                if (seed == 0)
+                {
+                    AudioManager.instance.Play(SoundList.explosion1);
+                }
+                else if (seed == 1)
+                {
+                    AudioManager.instance.Play(SoundList.explosion2);
+                }
+                else
+                {
+                    AudioManager.instance.Play(SoundList.explosion3);
+                }
+
                 GameObject effectPrefab = Instantiate(explosionEffect, transform.position, Quaternion.identity);
                 Destroy(effectPrefab, 3f);
                 Destroy(gameObject, 0.5f);

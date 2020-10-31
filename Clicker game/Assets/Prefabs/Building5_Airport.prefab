@@ -39,6 +39,8 @@ Transform:
   - {fileID: 1355364332781173775}
   - {fileID: 6855091757680820300}
   - {fileID: 3785561878270417722}
+  - {fileID: 2644036457247890185}
+  - {fileID: 3622753274027452090}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -164,6 +166,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 761dc6d087b4ba64b893196fbb72edc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  airplane: {fileID: 8887503176826465878, guid: d61f757604d0cd7428a0c11d2d5841ca,
+    type: 3}
+  point1: {fileID: 2644036457247890185}
+  point2: {fileID: 3622753274027452090}
+  pollutionProduced_auto: 0.05
+  pollutionInterval_auto: 1
 --- !u!114 &3608320347679923104
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -195,6 +203,66 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   repeatable: 0
   duration: 0.5
+--- !u!1 &4895711453646122916
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2644036457247890185}
+  m_Layer: 0
+  m_Name: landing point (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2644036457247890185
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4895711453646122916}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.38, y: 0.28, z: 0}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
+  m_Children: []
+  m_Father: {fileID: 3601285377672029180}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7257231153450876981
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3622753274027452090}
+  m_Layer: 0
+  m_Name: landing point (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3622753274027452090
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7257231153450876981}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.38, y: 4.5, z: 0}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
+  m_Children: []
+  m_Father: {fileID: 3601285377672029180}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8912725367087455923
 GameObject:
   m_ObjectHideFlags: 0

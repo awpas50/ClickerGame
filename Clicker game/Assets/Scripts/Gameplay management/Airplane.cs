@@ -4,55 +4,130 @@ using UnityEngine;
 
 public class Airplane : MonoBehaviour
 {
-    public float relativeSpeed = 0.1f;
-    public GameObject[] destinations;
-    public int index;
+    public float waitTime_base;
+    public float waitTime_des;
+    private float waitTIme_des_initial;
 
+    public float relativeSpeed;
+    public float relativeSpeed_initial;
+
+    public GameObject[] destinations;
+    public int randomDestinationIndex;
+    // triggers
+    public bool reachedHighPoint = false;
+
+    private float t1 = 0;
+    private float t2 = 0;
+    [Header("Assigned in script")]
+    public Transform airport_point1;
+    public Transform airport_point2;
     [Header("What to instantiate")]
     public GameObject factoryPopUp;
-    // Start is called before the first frame update
+    // assigned automatically
+    [HideInInspector] public Airport airportScriptREF;
+
+    public enum State
+    {
+        Idle,
+        Departure,
+        Arrival
+    }
+    public State state;
     void Start()
     {
-        index = 0;
+        waitTIme_des_initial = waitTime_des;
+        relativeSpeed_initial = relativeSpeed;
+        destinations = GameObject.FindGameObjectsWithTag("Destinations");
+
+        StartCoroutine(WaitAtApron(waitTime_base));
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.LookAt(destinations[index + 1].transform);
-        transform.position = Vector3.MoveTowards(transform.position, destinations[index + 1].transform.position, relativeSpeed);
+        waitTime_des = waitTIme_des_initial + (airportScriptREF.buildingLevel.level - 1) * -2.5f;
+        relativeSpeed = relativeSpeed_initial + (airportScriptREF.buildingLevel.level - 1) * 0.015f;
 
-        if (Vector3.Distance(transform.position, destinations[0].transform.position) <= 0.3f)
+        if (state == State.Idle)
         {
-            StartCoroutine(Stop());
+            return;
         }
-        if (Vector3.Distance(transform.position, destinations[index + 1].transform.position) <= 0.3f)
+        else if(state == State.Departure)
         {
-            if (index == destinations.Length - 2)
+            // high point = point 2
+            if(!reachedHighPoint)
             {
-                index = 0;
+                transform.LookAt(airport_point2);
+                transform.position = Vector3.MoveTowards(transform.position, airport_point2.position, relativeSpeed);
+                randomDestinationIndex = Random.Range(0, destinations.Length);
             }
-            else
+            if(reachedHighPoint)
             {
-                index++;
+                transform.LookAt(destinations[randomDestinationIndex].transform);
+                transform.position = Vector3.MoveTowards(transform.position, destinations[randomDestinationIndex].transform.position, relativeSpeed);
+            }
+            if (Vector3.Distance(transform.position, airport_point2.position) <= 0.1f)
+            {
+                reachedHighPoint = true;
+            }
+            if (Vector3.Distance(transform.position, destinations[randomDestinationIndex].transform.position) <= 0.1f) {
+                // arrived
+                t1 += Time.deltaTime;
+                if(t1 >= waitTime_des)
+                {
+                    t1 = 0;
+                    reachedHighPoint = false;
+                    // go back to the base.
+                    state = State.Arrival;
+                }
+            }
+        }
+        else if (state == State.Arrival)
+        {
+            if(!reachedHighPoint)
+            {
+                transform.LookAt(airport_point2);
+                transform.position = Vector3.MoveTowards(transform.position, airport_point2.transform.position, relativeSpeed);
+            }
+            if (reachedHighPoint)
+            {
+                transform.LookAt(airport_point1);
+                transform.position = Vector3.MoveTowards(transform.position, airport_point1.transform.position, relativeSpeed);
+            }
+            if (Vector3.Distance(transform.position, airport_point2.transform.position) <= 0.1f)
+            {
+                reachedHighPoint = true;
+            }
+            if (Vector3.Distance(transform.position, airport_point1.transform.position) <= 0.1f)
+            {
+                transform.eulerAngles = new Vector3(0, transform.rotation.y, transform.rotation.z);
+                // arrived back the base
+                t2 += Time.deltaTime;
+                if (t2 >= waitTime_base)
+                {
+                    t2 = 0;
+                    reachedHighPoint = false;
+                    // leave the base.
+                    state = State.Departure;
+                }
             }
         }
     }
 
-    IEnumerator Stop()
+    IEnumerator WaitAtApron(float time)
     {
-        bool isSpawned = false;
-        relativeSpeed = 0f;
-        yield return new WaitForSeconds(4f);
-        //if(!isSpawned)
-        //{
-        //    Instantiate(factoryPopUp, transform.position, Quaternion.identity);
-        //    Currency.MONEY += 10;
-        //    isSpawned = true;
-        //}
-        relativeSpeed = 0.1f;
-        StopCoroutine(Stop());
-
-        
+        state = State.Idle;
+        yield return new WaitForSeconds(time);
+        state = State.Departure;
+    }
+    IEnumerator BackToSpawn()
+    {
+        // move to position if the airplane hasn't reach destination
+        yield return new WaitForSeconds(0.05f);
+        while (Vector3.Distance(transform.position, airport_point1.transform.position) >= 0.2f)
+        {
+            transform.LookAt(airport_point1);
+            transform.position = Vector3.MoveTowards(transform.position, airport_point1.transform.position, relativeSpeed);
+        }
     }
 }

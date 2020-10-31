@@ -50,7 +50,7 @@ public class Turret : MonoBehaviour
     void Update()
     {
         // Level
-        fireRate = fireRate_initial + ((buildingLevel.level - 1) * 0.25f);
+        fireRate = fireRate_initial + ((buildingLevel.level - 1) * 0.15f);
         if (target == null)
         {
             state = State.Idle;
@@ -112,6 +112,7 @@ public class Turret : MonoBehaviour
 
     void Shoot()
     {
+        AudioManager.instance.Play(SoundList.TurretShoot);
         GameObject bulletPrefab = Instantiate(bullet, firePoint.position, firePoint.rotation);
         Bullet bulletScript = bulletPrefab.GetComponent<Bullet>();
 

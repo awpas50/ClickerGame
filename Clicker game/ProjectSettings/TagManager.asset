@@ -15,6 +15,7 @@ TagManager:
   - Asteroid
   - Ruin
   - Airport
+  - Destinations
   layers:
   - Default
   - TransparentFX

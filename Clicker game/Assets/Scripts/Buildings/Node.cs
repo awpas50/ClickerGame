@@ -33,6 +33,7 @@ public class Node : MonoBehaviour
     }
     private void OnMouseDown()
     {
+
         // prevent clicking through UI
         if (MouseOverUILayerObject.IsPointerOverUIObject())
         {
@@ -49,6 +50,10 @@ public class Node : MonoBehaviour
             return;
         }
         // EstimateCost: Precalculate the total cost needed
+        if (building_REF == null && GameManager.i.buildingSelectedInUI && Currency.MONEY < GameManager.i.buildingCost)
+        {
+            AudioManager.instance.Play(SoundList.Error);
+        }
         if (building_REF == null && GameManager.i.buildingSelectedInUI && Currency.MONEY >= GameManager.i.buildingCost && !building_ruin)
         {
             AddPlaceHolder();

@@ -202,18 +202,28 @@ public class GameManager : MonoBehaviour
         BuildingLevel buildingLevel = buildingSelectedInScene.GetComponent<BuildingLevel>();
         if (Currency.MONEY <= buildingLevel.costEachLevel[buildingLevel.level])
         {
+            AudioManager.instance.Play(SoundList.Error);
             return;
         }
         else
         {
-            buildingLevel.level += 1;
+            // level 1 --> 2
+            // buildingLevel.level = 1
+            
+            // level 2 --> 3
+            // buildingLevel.level = 2
+            AudioManager.instance.Play(SoundList.ButtonClicked);
             Currency.MONEY -= buildingLevel.costEachLevel[buildingLevel.level];
+            //Debug.Log("buildingLevel.costEachLevel[buildingLevel.level] = " + buildingLevel.costEachLevel[buildingLevel.level]);
+            buildingLevel.level += 1;
+            //Debug.Log("buildingLevel.level = " + buildingLevel.level);
         }
     }
 
     public void Sell()
     {
         // Remove ref on node properly
+        AudioManager.instance.Play(SoundList.Cancel);
         buildingSelectedInScene.GetComponent<BuildingState>().node.GetComponent<Node>().building_REF = null;
         Destroy(buildingSelectedInScene);
         Currency.MONEY += buildingSelectedInScene.GetComponent<BuildingLevel>().sellCost;
@@ -298,8 +308,8 @@ public class GameManager : MonoBehaviour
             if (buildingSelectedInScene.tag == "Airport")
             {
                 // Set building name in the UI
-                UIManager.i.Line1Text.text = "Copter speed: " + " per second";
-                UIManager.i.Line2Text.text = "Copter collect time:" + "seconds";
+                UIManager.i.Line1Text.text = "Copter speed: " + buildingSelectedInScene.GetComponent<Airport>().airplaneScript.relativeSpeed * 100;
+                UIManager.i.Line2Text.text = "Copter collect time:" + buildingSelectedInScene.GetComponent<Airport>().airplaneScript.waitTime_des + " seconds";
                 UIManager.i.Line3Text.text = "Auto Pollution: " +
                     (buildingSelectedInScene.GetComponent<Airport>().pollutionProduced_auto / buildingSelectedInScene.GetComponent<Airport>().pollutionInterval_auto) + " per second";
                 UIManager.i.Line4Text.text = "";

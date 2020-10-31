@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1992666108731948004}
   m_LocalRotation: {x: 1, y: 0, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 1.37, z: -0.94999963}
+  m_LocalPosition: {x: 0, y: 0.06, z: -0.94999963}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 8887503176826465833}
@@ -115,8 +115,8 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 1
-      minScalar: 0.75
+      scalar: 0.4
+      minScalar: 0.2
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -4780,7 +4780,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2072936704930129854}
   m_LocalRotation: {x: 1, y: 0, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 1.37, z: -0.95}
+  m_LocalPosition: {x: 0, y: 0.059999943, z: -0.95}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 8887503176826465833}
@@ -4869,8 +4869,8 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 1
-      minScalar: 0.75
+      scalar: 0.4
+      minScalar: 0.2
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -5619,7 +5619,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 20
+      scalar: 10
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -9519,6 +9519,7 @@ GameObject:
   - component: {fileID: 8887503176826465833}
   - component: {fileID: 8887503176826465832}
   - component: {fileID: 709429141}
+  - component: {fileID: 7888688610991488489}
   m_Layer: 0
   m_Name: Airplane
   m_TagString: Untagged
@@ -9535,7 +9536,7 @@ Transform:
   m_GameObject: {fileID: 8887503176826465878}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalScale: {x: 0.16249104, y: 0.16249104, z: 0.16249104}
   m_Children:
   - {fileID: 1661125913176520906}
   - {fileID: 4480085213077991876}
@@ -9556,24 +9557,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c688dc294be5e8f4d810c7e81fb647bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waitTime_base: 4
+  waitTime_des: 10
   relativeSpeed: 0.02
-  destinations:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  index: 0
+  relativeSpeed_initial: 0
+  destinations: []
+  randomDestinationIndex: 0
+  reachedHighPoint: 0
+  airport_point1: {fileID: 0}
+  airport_point2: {fileID: 0}
   factoryPopUp: {fileID: 7541951108901463549, guid: 8ae78f63db5315641ab5b8c13d25542c,
     type: 3}
+  airportScriptREF: {fileID: 0}
+  state: 0
 --- !u!54 &709429141
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -9590,6 +9586,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &7888688610991488489
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8887503176826465878}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &5942277577162658768
 PrefabInstance:
   m_ObjectHideFlags: 0
