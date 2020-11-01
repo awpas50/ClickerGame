@@ -133,7 +133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83007bfb679049546bdd2a64894b6504, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moneyProduced: 30
+  moneyProduced: 35
   pollutionProduced: 3
   interval: 20
   totalProduction: 0

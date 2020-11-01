@@ -30,8 +30,8 @@ public class ParkPopUp : MonoBehaviour
 
         Vector3 pos = Camera.main.WorldToScreenPoint(parkREF.transform.position + offset);
 
-        pos.x = Mathf.Clamp(pos.x, minX, maxX);
-        pos.y = Mathf.Clamp(pos.y, minY, maxY);
+        //pos.x = Mathf.Clamp(pos.x, minX, maxX);
+        //pos.y = Mathf.Clamp(pos.y, minY, maxY);
 
         img.transform.position = pos;
     }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Asteroid : MonoBehaviour
 {
-    private float speed;
+    public float speed;
     public float speedMin = 5f;
     public float speedMax = 10f;
     public GameObject[] targetList;
@@ -29,7 +29,6 @@ public class Asteroid : MonoBehaviour
         targetList = GameObject.FindGameObjectsWithTag("Node");
         target = targetList[Random.Range(0, targetList.Length)];
         transform.LookAt(target.transform);
-        speed = Random.Range(speedMin, speedMax);
     }
     
     void Update()
@@ -108,7 +107,7 @@ public class Asteroid : MonoBehaviour
                 // ruin needs to recongize node
                 ruinScript.node = nodeLocationForRuin.gameObject;
                 ruinScript.buildingLevel = other.gameObject.GetComponent<BuildingLevel>().level;
-                ruinScript.repairCost = other.gameObject.GetComponent<BuildingLevel>().sellCost / 3;
+                ruinScript.repairCost = other.gameObject.GetComponent<BuildingLevel>().sellCost / 1.25f;
             }
             if (other.gameObject.tag == "Factory")
             {
@@ -120,7 +119,7 @@ public class Asteroid : MonoBehaviour
                 // ruin needs to recongize node
                 ruinScript.node = nodeLocationForRuin.gameObject;
                 ruinScript.buildingLevel = other.gameObject.GetComponent<BuildingLevel>().level;
-                ruinScript.repairCost = other.gameObject.GetComponent<BuildingLevel>().sellCost / 3;
+                ruinScript.repairCost = other.gameObject.GetComponent<BuildingLevel>().sellCost / 1.25f;
 
                 // if it has a pop up than destroy the pop up
                 other.gameObject.GetComponent<Factory>().StopAllCoroutines();
@@ -138,7 +137,7 @@ public class Asteroid : MonoBehaviour
                 // ruin needs to recongize node
                 ruinScript.node = nodeLocationForRuin.gameObject;
                 ruinScript.buildingLevel = other.gameObject.GetComponent<BuildingLevel>().level;
-                ruinScript.repairCost = other.gameObject.GetComponent<BuildingLevel>().sellCost / 3;
+                ruinScript.repairCost = other.gameObject.GetComponent<BuildingLevel>().sellCost / 1.25f;
 
                 // if it has a pop up than destroy the pop up
                 other.gameObject.GetComponent<Park>().StopAllCoroutines();
@@ -156,7 +155,7 @@ public class Asteroid : MonoBehaviour
                 // ruin needs to recongize node
                 ruinScript.node = nodeLocationForRuin.gameObject;
                 ruinScript.buildingLevel = other.gameObject.GetComponent<BuildingLevel>().level;
-                ruinScript.repairCost = other.gameObject.GetComponent<BuildingLevel>().sellCost / 3;
+                ruinScript.repairCost = other.gameObject.GetComponent<BuildingLevel>().sellCost / 1.25f;
             }
             if (other.gameObject.tag == "Airport")
             {
@@ -168,7 +167,7 @@ public class Asteroid : MonoBehaviour
                 // ruin needs to recongize node
                 ruinScript.node = nodeLocationForRuin.gameObject;
                 ruinScript.buildingLevel = other.gameObject.GetComponent<BuildingLevel>().level;
-                ruinScript.repairCost = other.gameObject.GetComponent<BuildingLevel>().sellCost / 3;
+                ruinScript.repairCost = other.gameObject.GetComponent<BuildingLevel>().sellCost / 1.25f;
 
                 // if it has a pop up than destroy the pop up
                 other.gameObject.GetComponent<Airport>().StopAllCoroutines();

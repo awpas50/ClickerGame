@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3538288843759608511}
   - component: {fileID: 7897465590942935794}
   - component: {fileID: 2580063274675811900}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: RawImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -84,7 +84,7 @@ GameObject:
   - component: {fileID: 7541951108901463551}
   - component: {fileID: 7541951108901463546}
   - component: {fileID: 1307570065090839936}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: GetMoney (Factory)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -190,18 +190,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7541951108901463544}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7541951108901463546}
-        m_MethodName: ButtonEvent
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &7541951108901463546
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -215,7 +204,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   img: {fileID: 7541951108901463544}
-  offset: {x: 0, y: 1.2, z: 0}
+  offset: {x: 0, y: 1.1, z: 0}
   factoryREF: {fileID: 0}
   factoryREF_script: {fileID: 0}
   popupStorageCanvas: {fileID: 0}
@@ -251,7 +240,7 @@ GameObject:
   - component: {fileID: 7541951110133354669}
   - component: {fileID: 7541951110133354671}
   - component: {fileID: 7541951110133354670}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

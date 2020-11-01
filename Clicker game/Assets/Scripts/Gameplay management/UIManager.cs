@@ -26,6 +26,7 @@ public class UIManager : MonoBehaviour
     [Header("Top UI")]
     public TextMeshProUGUI moneyText;
     public TextMeshProUGUI pollutionText;
+    public TextMeshProUGUI objectiveText;
     public Image image;
     public GameObject MainMenuUI;
     public GameObject TopUI;

@@ -133,13 +133,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pollutionReduced_initial: 0
-  pollutionReduced: 10
+  pollutionReduced: 8
   interval: 20
   totalProduction: 0
   totalProduction_buff: 0
   extraProduction: 0
   CleanAirProduced_auto: 0.05
   CleanAirInterval_auto: 1
+  CleanAirProduced_auto_initial: 0
   parkPopUp: {fileID: 7911388053175523610, guid: cdb37538428dac8499949a5601d3fbea,
     type: 3}
   popupStorageCanvas: {fileID: 0}

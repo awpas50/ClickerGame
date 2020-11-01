@@ -24,5 +24,10 @@ public class Currency : MonoBehaviour
             MONEY = (float)Math.Round(MONEY, 1);
         }
         money = MONEY;
+
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            MONEY += 1000;
+        }
     }
 }

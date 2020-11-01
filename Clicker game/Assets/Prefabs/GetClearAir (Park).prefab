@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2860659624749096882}
   - component: {fileID: 1301150148927449221}
   - component: {fileID: 1557728951448232564}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: RawImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -81,7 +81,7 @@ GameObject:
   - component: {fileID: 7911388052859408642}
   - component: {fileID: 7911388052859408640}
   - component: {fileID: 7911388052859408641}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -241,7 +241,7 @@ GameObject:
   - component: {fileID: 7911388053175523608}
   - component: {fileID: 7911388053175523621}
   - component: {fileID: 499282699602606542}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: GetClearAir (Park)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -347,18 +347,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7911388053175523623}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7911388053175523621}
-        m_MethodName: ButtonEvent
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &7911388053175523621
 MonoBehaviour:
   m_ObjectHideFlags: 0

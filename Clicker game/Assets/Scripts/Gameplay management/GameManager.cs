@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -63,6 +64,10 @@ public class GameManager : MonoBehaviour
         i = this;
     }
 
+    private void Start()
+    {
+        Time.timeScale = 1;
+    }
     // Button event
     public void SelectBuilding1()
     {
@@ -231,6 +236,9 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        SaveData.current.money = Currency.MONEY;
+        SaveData.current.pollution = Pollution.POLLUTION;
+
         list_house = GameObject.FindGameObjectsWithTag("House");
         list_factory = GameObject.FindGameObjectsWithTag("Factory");
         list_park = GameObject.FindGameObjectsWithTag("Park");
@@ -343,9 +351,11 @@ public class GameManager : MonoBehaviour
                         }
                         else
                         {
-                            // Audio
-                            AudioManager.instance.Play(SoundList.SelectFactory);
-
+                            if(hit.collider.gameObject != buildingSelectedInScene)
+                            {
+                                // Audio
+                                AudioManager.instance.Play(SoundList.SelectFactory);
+                            }
                             buildingSelectedInScene = hit.collider.gameObject;
                             StartCoroutine(buildingSelectedInScene.GetComponent<BuildingSelection>().BuildingPopAnimation());
                             buildingDetailsCanvas.SetActive(true);
@@ -369,9 +379,11 @@ public class GameManager : MonoBehaviour
                         }
                         else
                         {
-                            // Audio
-                            AudioManager.instance.Play(SoundList.SelectPark);
-
+                            if (hit.collider.gameObject != buildingSelectedInScene)
+                            {
+                                // Audio
+                                AudioManager.instance.Play(SoundList.SelectPark);
+                            }
                             buildingSelectedInScene = hit.collider.gameObject;
                             StartCoroutine(buildingSelectedInScene.GetComponent<BuildingSelection>().BuildingPopAnimation());
                             buildingDetailsCanvas.SetActive(true);
@@ -385,16 +397,16 @@ public class GameManager : MonoBehaviour
                             buildingAnimation.StartCoroutine(buildingAnimation.BuildingPopAnimation());
                         }
                     }
-                    else if (hit.collider.gameObject.tag == "House" ||
-                    hit.collider.gameObject.tag == "Generator")
+                    else if (hit.collider.gameObject.tag == "House" || hit.collider.gameObject.tag == "Generator")
                     {
-                        if(hit.collider.gameObject.tag == "House")
+                        if (hit.collider.gameObject.tag == "House" && hit.collider.gameObject != buildingSelectedInScene)
                         {
                             // Audio
                             AudioManager.instance.Play(SoundList.SelectHouse);
                         }
-                        if (hit.collider.gameObject.tag == "Generator")
+                        if (hit.collider.gameObject.tag == "Generator" && hit.collider.gameObject != buildingSelectedInScene)
                         {
+                            // Audio
                             AudioManager.instance.Play(SoundList.SelectTurret);
                         }
 
@@ -587,11 +599,22 @@ public class GameManager : MonoBehaviour
     }
     public void Save()
     {
-        AudioManager.instance.Play(SoundList.ButtonClicked);
+        //AudioManager.instance.Play(SoundList.ButtonClicked);
+        //SerializationManager.Save("gameSave", SaveData.current);
+    }
+    public void Load()
+    {
+        //SaveData.current = (SaveData)SerializationManager.Load(Application.persistentDataPath + "/saves/gameSave.save");
     }
     public void SaveAndQuit()
     {
         AudioManager.instance.Play(SoundList.ButtonClicked);
+        SceneManager.LoadScene(0);
+    }
+
+    public void ResetCamera()
+    {
+        Camera.main.transform.position = new Vector3(4.25f, 6.5f, -5.2f);
     }
 
     void DisableGameUI()
@@ -607,5 +630,14 @@ public class GameManager : MonoBehaviour
         UIManager.i.TopUI.SetActive(true);
         UIManager.i.BottomUI.SetActive(true);
         UIManager.i.RightUI.SetActive(true);
+    }
+
+    public void CheatOne()
+    {
+        Currency.MONEY += 1000;
+    }
+    public void CheatTwo()
+    {
+        AsteroidSpawner.i.StartCoroutine(AsteroidSpawner.i.Spawn_DEBUG());
     }
 }

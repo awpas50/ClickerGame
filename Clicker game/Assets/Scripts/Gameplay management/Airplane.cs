@@ -49,7 +49,15 @@ public class Airplane : MonoBehaviour
     void Update()
     {
         waitTime_des = waitTIme_des_initial + (airportScript.buildingLevel.level - 1) * -10f;
-        relativeSpeed = relativeSpeed_initial + (airportScript.buildingLevel.level - 1) * 0.015f;
+        if(GameManager.i.isPaused)
+        {
+            relativeSpeed = 0;
+        }
+        else
+        {
+            relativeSpeed = relativeSpeed_initial + (airportScript.buildingLevel.level - 1) * 0.015f;
+        }
+        
 
         if(redeparture)
         {

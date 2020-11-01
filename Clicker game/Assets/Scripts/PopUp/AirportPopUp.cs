@@ -39,8 +39,8 @@ public class AirportPopUp : MonoBehaviour
 
         Vector3 pos = Camera.main.WorldToScreenPoint(airportREF.transform.position + offset);
 
-        pos.x = Mathf.Clamp(pos.x, minX, maxX);
-        pos.y = Mathf.Clamp(pos.y, minY, maxY);
+        //pos.x = Mathf.Clamp(pos.x, minX, maxX);
+        //pos.y = Mathf.Clamp(pos.y, minY, maxY);
 
         img.transform.position = pos;
     }
@@ -53,7 +53,7 @@ public class AirportPopUp : MonoBehaviour
         int seed = Random.Range(0, 2);
         if(seed == 0)
         {
-            float randomVal = Random.Range(25, 250);
+            float randomVal = Random.Range(5, 500);
             Currency.MONEY += randomVal;
 
             // Instantiate an additional pop up
@@ -64,13 +64,21 @@ public class AirportPopUp : MonoBehaviour
         }
         else if(seed == 1)
         {
-            float randomVal = Random.Range(5, 25);
+            float randomVal = Random.Range(-20, 10);
             Pollution.POLLUTION += randomVal;
             // Instantiate an additional pop up
             GameObject secondPopUpPrefab = Instantiate(secondPopUp, Camera.main.WorldToScreenPoint(airportREF.transform.position + offset), Quaternion.identity);
             secondPopUpPrefab.transform.SetParent(popupStorageCanvas.transform);
             secondPopUpPrefab.GetComponent<BuildingPopUp>().buildingREF = airportREF;
-            secondPopUpPrefab.GetComponent<BuildingPopUp>().resourceText.text = "+" + randomVal + " Pollution";
+            if(randomVal >= 0)
+            {
+                secondPopUpPrefab.GetComponent<BuildingPopUp>().resourceText.text = "+" + randomVal + " Pollution";
+            }
+            else
+            {
+                secondPopUpPrefab.GetComponent<BuildingPopUp>().resourceText.text = randomVal + " Pollution";
+            }
+            
         }
         
         // ** tell the airplane to leave the base.

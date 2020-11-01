@@ -154,7 +154,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   node: {fileID: 0}
-  isWorking: 1
 --- !u!114 &7333943512379084853
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -195,7 +194,7 @@ MonoBehaviour:
   targetID: 0
   target: {fileID: 0}
   isLocked: 0
-  fireRate: 0.5
+  fireRate: 0.35
   state: 0
 --- !u!114 &-8504143129427781751
 MonoBehaviour:
