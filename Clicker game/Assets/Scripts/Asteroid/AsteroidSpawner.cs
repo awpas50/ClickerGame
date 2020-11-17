@@ -91,7 +91,7 @@ public class AsteroidSpawner : MonoBehaviour
         while(true)
         {
             GameObject temp = Instantiate(asteroid, new Vector3(randomX, randomY, randomZ), Quaternion.identity);
-            temp.GetComponent<Asteroid>().speed = 15f;
+            temp.GetComponent<Asteroid>().speed = 6f;
             yield return new WaitForSeconds(20f);
         }
     }

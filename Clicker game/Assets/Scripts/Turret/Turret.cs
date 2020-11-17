@@ -42,7 +42,7 @@ public class Turret : MonoBehaviour
         fireRate_initial = fireRate;
         buildingState = GetComponent<BuildingState>();
         buildingLevel = GetComponent<BuildingLevel>();
-        InvokeRepeating("UpdateTarget", 0f, 0.2f);
+        InvokeRepeating("UpdateTarget", 0f, 0.15f);
         StartCoroutine(RandomAngleY());
         angleY_current = angleY_random;
     }

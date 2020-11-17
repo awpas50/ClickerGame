@@ -33,8 +33,8 @@ public class RepairPopUp : MonoBehaviour
 
         Vector3 pos = Camera.main.WorldToScreenPoint(ruinREF.transform.position + offset);
 
-        //pos.x = Mathf.Clamp(pos.x, minX, maxX);
-        //pos.y = Mathf.Clamp(pos.y, minY, maxY);
+        pos.x = Mathf.Clamp(pos.x, minX, maxX);
+        pos.y = Mathf.Clamp(pos.y, minY, maxY);
 
         img.transform.position = pos;
     }
@@ -45,6 +45,7 @@ public class RepairPopUp : MonoBehaviour
         // if enough repair cost
         if(Currency.MONEY >= ruinREF_script.repairCost)
         {
+            Currency.MONEY -= ruinREF_script.repairCost;
             // Audio
             AudioManager.instance.Play(SoundList.Repair);
 

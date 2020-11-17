@@ -478,10 +478,12 @@ public class GameManager : MonoBehaviour
         if (buildingSelectedInScene)
         {
             buildingDetailsCanvas.SetActive(true);
+            UIManager.i.BottomUI.SetActive(false);
         }
         else if(buildingSelectedInScene == null)
         {
             buildingDetailsCanvas.SetActive(false);
+            UIManager.i.BottomUI.SetActive(true);
         }
 
         // Check if the generator exists in the scene
