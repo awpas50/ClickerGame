@@ -51,13 +51,13 @@ public class Factory : MonoBehaviour
         buildingLevel = GetComponent<BuildingLevel>();
         buildingState = GetComponent<BuildingState>();
         StartCoroutine(Production_POP_UP(interval));
-        StartCoroutine(Production_AUTOMATIC(moneyProduced_auto, interval_auto));
-        StartCoroutine(Pollution_AUTOMATIC(pollutionProduced_auto, pollutionInterval_auto));
+        StartCoroutine(Production_AUTOMATIC(interval_auto));
+        StartCoroutine(Pollution_AUTOMATIC(pollutionInterval_auto));
     }
 
     private void Update()
     {
-        levelMultipiler = 1f + ((buildingLevel.level - 1) * 0.35f);
+        levelMultipiler = 1f + ((buildingLevel.level - 1) * 0.45f);
         // each house & main building nearby increase the efficiency by 25%.
         efficiency = 1 + buildingBuff.houseEfficiencyTotal + buildingBuff.nearbyMainBuilding * 0.25f;
 
@@ -71,7 +71,7 @@ public class Factory : MonoBehaviour
         extraProduction = (float)Math.Round(extraProduction, 1);
 
         //Pollution
-        totalPollution = pollutionProduced * levelMultipiler;
+        totalPollution = pollutionProduced * (levelMultipiler * 1.2f);
 
         // Auto production & pollution
         pollutionProduced_auto = pollutionProduced_auto_initial + (buildingLevel.level - 1) * 0.02f;
@@ -95,20 +95,20 @@ public class Factory : MonoBehaviour
         Pollution.POLLUTION += pollutionProduced;
     }
 
-    public IEnumerator Production_AUTOMATIC(float moneyProduced, float interval)
+    public IEnumerator Production_AUTOMATIC(float interval)
     {
         while(true)
         {
             yield return new WaitForSeconds(interval);
-            Currency.MONEY += moneyProduced;
+            Currency.MONEY += moneyProduced_auto;
         }
     }
-    public IEnumerator Pollution_AUTOMATIC(float pollutionProduced, float interval)
+    public IEnumerator Pollution_AUTOMATIC(float interval)
     {
         while (true)
         {
             yield return new WaitForSeconds(interval);
-            Pollution.POLLUTION += pollutionProduced;
+            Pollution.POLLUTION += pollutionProduced_auto;
         }
     }
 }

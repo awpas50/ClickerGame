@@ -19,6 +19,7 @@ TagManager:
   - PlatformPlaces
   - PlatformPlaces2
   - Platform
+  - NodeDestroyer
   layers:
   - Default
   - TransparentFX

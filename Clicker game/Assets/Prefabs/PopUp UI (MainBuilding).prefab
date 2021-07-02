@@ -132,7 +132,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   img: {fileID: 7541951108901463544}
-  flyingSpeed: 60
+  flyingSpeed: 120
   offset: {x: 0, y: 1.5, z: 0}
   moneyText: {fileID: 7541951110133354670}
 --- !u!1 &7541951110133354668
@@ -200,8 +200,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: +1
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
-  m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ff0249f5339e30247bc4ef9397fcacd2, type: 2}
+  m_sharedMaterial: {fileID: 1669447452766273251, guid: ff0249f5339e30247bc4ef9397fcacd2,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -227,9 +228,9 @@ MonoBehaviour:
     serializedVersion: 2
     rgba: 4278190080
   m_fontSize: 28
-  m_fontSizeBase: 16
+  m_fontSizeBase: 28
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 16
   m_fontSizeMax: 28
   m_fontStyle: 0

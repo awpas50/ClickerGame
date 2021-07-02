@@ -46,6 +46,10 @@ public class Node : MonoBehaviour
                 Destroy(other.gameObject);
             }
         }
+        if ((this.gameObject.tag == "PlatformPlaces" && other.gameObject.tag == "NodeDestroyer"))
+        {
+             Destroy(gameObject);
+        }
     }
     private void OnMouseDown()
     {

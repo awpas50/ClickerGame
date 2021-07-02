@@ -48,7 +48,7 @@ public class FactoryPopUp : MonoBehaviour
         GameObject secondPopUpPrefab = Instantiate(secondPopUp, Camera.main.WorldToScreenPoint(factoryREF.transform.position + offset), Quaternion.identity);
         secondPopUpPrefab.transform.SetParent(popupStorageCanvas.transform);
         secondPopUpPrefab.GetComponent<BuildingPopUp>().buildingREF = factoryREF;
-        secondPopUpPrefab.GetComponent<BuildingPopUp>().resourceText.text = "+" + (factoryREF_script.moneyProduced * factoryREF_script.efficiency * factoryREF_script.levelMultipiler).ToString();
+        secondPopUpPrefab.GetComponent<BuildingPopUp>().resourceText.text = "+" + (factoryREF_script.moneyProduced * factoryREF_script.efficiency * factoryREF_script.levelMultipiler).ToString("F2");
         // Remove reference
         factoryREF_script.factoryPopUpREF = null;
         // Restart coroutine

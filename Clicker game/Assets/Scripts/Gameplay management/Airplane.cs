@@ -6,6 +6,7 @@ public class Airplane : MonoBehaviour
 {
     public float waitTime_base;
     public float waitTime_des;
+    public float waitTime_des_actial;
     private float waitTime_des_initial;
 
     public float relativeSpeed;
@@ -41,7 +42,8 @@ public class Airplane : MonoBehaviour
     public State state;
     void Start()
     {
-        waitTime_des_initial = waitTime_des;
+        waitTime_des = waitTime_des_actial;
+        waitTime_des_initial = waitTime_des_actial;
         relativeSpeed_initial = relativeSpeed;
         destinations = GameObject.FindGameObjectsWithTag("Destinations");
 
@@ -53,7 +55,8 @@ public class Airplane : MonoBehaviour
     {
         // max efficiency: 0.76, min efficiency: 1.
         efficiency = 1 - ((airportScript.buildingBuff.nearbyHouse + airportScript.buildingBuff.nearbyMainBuilding) * 0.06f);
-        waitTime_des = (waitTime_des_initial + (airportScript.buildingLevel.level - 1) * -10f) * efficiency;
+        waitTime_des = (waitTime_des_initial + (airportScript.buildingLevel.level - 1) * -10f);
+        waitTime_des_actial = (waitTime_des_initial + (airportScript.buildingLevel.level - 1) * -10f) * efficiency;
         // I don't know why the airplanes are still moving even if the game is paused, so I manually stop their movement by writing this.
         if(GameManager.i.isPaused)
         {
@@ -135,7 +138,7 @@ public class Airplane : MonoBehaviour
     {
         // arrived
         t1 += Time.deltaTime;
-        if (t1 >= waitTime_des)
+        if (t1 >= waitTime_des_actial)
         {
             t1 = 0;
             reachedHighPoint = false;

@@ -26,7 +26,12 @@ public class Turret : MonoBehaviour
     private float fireRate_initial;
     public float fireRate = 1f;
     public float fireCountdown = 0f;
+    [Header("Pollution")]
+    public float pollutionProduced_auto;
+    public float pollutionInterval_auto;
+    public float pollutionProduced_auto_initial;
 
+    
     public enum State
     {
         Idle,
@@ -48,10 +53,17 @@ public class Turret : MonoBehaviour
         InvokeRepeating("UpdateTarget", 0f, 0.15f);
         StartCoroutine(RandomAngleY());
         angleY_current = angleY_random;
+
+        pollutionProduced_auto_initial = pollutionProduced_auto;
+        StartCoroutine(Pollution_AUTOMATIC(pollutionInterval_auto));
     }
     
     void Update()
     {
+        // Pollution
+        // Auto production & pollution
+        pollutionProduced_auto = pollutionProduced_auto_initial + (buildingLevel.level - 1) * 0.04f;
+
         // Level
         fireRate = fireRate_initial + ((buildingLevel.level - 1) * 0.15f);
         if (target == null)
@@ -94,6 +106,15 @@ public class Turret : MonoBehaviour
                 fireCountdown = 1f / fireRate;
             }
             
+        }
+    }
+
+    public IEnumerator Pollution_AUTOMATIC(float interval)
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(interval);
+            Pollution.POLLUTION += pollutionProduced_auto;
         }
     }
 

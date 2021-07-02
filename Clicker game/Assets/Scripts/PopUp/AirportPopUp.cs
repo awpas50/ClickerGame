@@ -51,9 +51,9 @@ public class AirportPopUp : MonoBehaviour
         // Audio
         AudioManager.instance.Play(SoundList.GetMoney);
         int seed = Random.Range(0, 100);
-        if(seed >= 12)
+        if(seed >= 24)
         {
-            float randomVal = Random.Range(5, 500);
+            float randomVal = Random.Range(50, 500);
             Currency.MONEY += randomVal;
 
             // Instantiate an additional pop up
@@ -62,9 +62,8 @@ public class AirportPopUp : MonoBehaviour
             secondPopUpPrefab.GetComponent<BuildingPopUp>().buildingREF = airportREF;
             secondPopUpPrefab.GetComponent<BuildingPopUp>().resourceText.text = "+" + randomVal;
         }
-        else if(seed < 12)
+        else if(seed < 24)
         {
-            float randomVal = Random.Range(-20, 10);
             SpecialBuildingCount.platform1Count += 1;
             // Instantiate an additional pop up
             GameObject secondPopUpPrefab = Instantiate(secondPopUp, Camera.main.WorldToScreenPoint(airportREF.transform.position + offset), Quaternion.identity);

@@ -46,7 +46,7 @@ public class Park : MonoBehaviour
         buildingLevel = GetComponent<BuildingLevel>();
         buildingState = GetComponent<BuildingState>();
         StartCoroutine(ReducePollution_POP_UP(pollutionReduced, interval));
-        StartCoroutine(ReducePollution_AUTOMATIC(CleanAirProduced_auto, CleanAirInterval_auto));
+        StartCoroutine(ReducePollution_AUTOMATIC(CleanAirInterval_auto));
     }
     private void Update()
     {
@@ -88,12 +88,12 @@ public class Park : MonoBehaviour
     {
         Pollution.POLLUTION -= pollutionReduced * efficiency * levelMultipiler;
     }
-    IEnumerator ReducePollution_AUTOMATIC(float cleanAirProduced, float interval)
+    IEnumerator ReducePollution_AUTOMATIC(float interval)
     {
         while (true)
         {
             yield return new WaitForSeconds(interval);
-            Pollution.POLLUTION -= cleanAirProduced;
+            Pollution.POLLUTION -= CleanAirProduced_auto;
         }
     }
 }

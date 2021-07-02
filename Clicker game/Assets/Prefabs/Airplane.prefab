@@ -9559,6 +9559,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waitTime_base: 4
   waitTime_des: 60
+  waitTime_des_actial: 60
   relativeSpeed: 0.02
   relativeSpeed_initial: 0
   destinations: []
@@ -9571,6 +9572,7 @@ MonoBehaviour:
     type: 3}
   airport: {fileID: 0}
   airportScript: {fileID: 0}
+  efficiency: 1
   state: 0
 --- !u!54 &709429141
 Rigidbody:

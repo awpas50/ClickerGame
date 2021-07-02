@@ -199,6 +199,9 @@ MonoBehaviour:
   targetLocked: 0
   fireRate: 0.35
   fireCountdown: 0
+  pollutionProduced_auto: 0.1
+  pollutionInterval_auto: 1
+  pollutionProduced_auto_initial: 0
   state: 0
 --- !u!114 &-8504143129427781751
 MonoBehaviour:

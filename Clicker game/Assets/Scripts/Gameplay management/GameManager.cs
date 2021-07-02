@@ -341,45 +341,46 @@ public class GameManager : MonoBehaviour
                 UIManager.i.Line1Text.text = "Production: " + buildingSelectedInScene.GetComponent<Factory>().totalProduction +
                     " + " + buildingSelectedInScene.GetComponent<Factory>().extraProduction;
                 UIManager.i.Line2Text.text = "Pollution: " + Math.Round(buildingSelectedInScene.GetComponent<Factory>().totalPollution, 2);
-                UIManager.i.Line3Text.text = "Auto Production: " + buildingSelectedInScene.GetComponent<Factory>().moneyProduced_auto + " per second";
+                UIManager.i.Line3Text.text = "Auto Production: " + buildingSelectedInScene.GetComponent<Factory>().moneyProduced_auto.ToString("F2") + " per second";
                 UIManager.i.Line4Text.text = "Auto Pollution: " + 
-                    (buildingSelectedInScene.GetComponent<Factory>().pollutionProduced_auto / buildingSelectedInScene.GetComponent<Factory>().pollutionInterval_auto) + " per second";
+                    (buildingSelectedInScene.GetComponent<Factory>().pollutionProduced_auto / buildingSelectedInScene.GetComponent<Factory>().pollutionInterval_auto).ToString("F2") + " per second";
             }
             if (buildingSelectedInScene.tag == "Park")
             {
                 // Set building name in the UI
                 if(buildingSelectedInScene.GetComponent<Park>().extraProduction >= 0)
                 {
-                    UIManager.i.Line1Text.text = "Pollution reduced: " + buildingSelectedInScene.GetComponent<Park>().totalProduction +
-                    " + " + buildingSelectedInScene.GetComponent<Park>().extraProduction;
+                    UIManager.i.Line1Text.text = "Pollution reduced: " + buildingSelectedInScene.GetComponent<Park>().totalProduction.ToString("F2") +
+                    " + " + buildingSelectedInScene.GetComponent<Park>().extraProduction.ToString("F2");
                 }
                 else
                 {
                     UIManager.i.Line1Text.color = UIManager.i.textWarningColor;
-                    UIManager.i.Line1Text.text = "Pollution reduced: " + buildingSelectedInScene.GetComponent<Park>().totalProduction +
-                    " - " + Mathf.Abs(buildingSelectedInScene.GetComponent<Park>().extraProduction);
+                    UIManager.i.Line1Text.text = "Pollution reduced: " + buildingSelectedInScene.GetComponent<Park>().totalProduction.ToString("F2") +
+                    " - " + Mathf.Abs(buildingSelectedInScene.GetComponent<Park>().extraProduction).ToString("F2");
                 }
                 
                 UIManager.i.Line2Text.text = "Auto Production: " 
-                    + (buildingSelectedInScene.GetComponent<Park>().CleanAirProduced_auto / buildingSelectedInScene.GetComponent<Park>().CleanAirInterval_auto) + " per second";
+                    + (buildingSelectedInScene.GetComponent<Park>().CleanAirProduced_auto / buildingSelectedInScene.GetComponent<Park>().CleanAirInterval_auto).ToString("F2") + " per second";
                 UIManager.i.Line3Text.text = "";
                 UIManager.i.Line4Text.text = "";
             }
             if (buildingSelectedInScene.tag == "Generator")
             {
                 // Set building name in the UI
-                UIManager.i.Line1Text.text = "Fire rate: " + buildingSelectedInScene.GetComponent<Turret>().fireRate + " per second";
+                UIManager.i.Line1Text.text = "Fire rate: " + buildingSelectedInScene.GetComponent<Turret>().fireRate.ToString("F2") + " per second";
                 UIManager.i.Line2Text.text = "";
-                UIManager.i.Line3Text.text = "";
+                UIManager.i.Line3Text.text = "Auto Pollution: " + (buildingSelectedInScene.GetComponent<Turret>().pollutionProduced_auto.ToString("F2"));
                 UIManager.i.Line4Text.text = "";
             }
             if (buildingSelectedInScene.tag == "Airport")
             {
                 // Set building name in the UI
                 UIManager.i.Line1Text.text = "Copter speed: " + buildingSelectedInScene.GetComponent<Airport>().airplaneScript.relativeSpeed * 100;
-                UIManager.i.Line2Text.text = "Time taken to collect resources: " + buildingSelectedInScene.GetComponent<Airport>().airplaneScript.waitTime_des + " seconds";
+                UIManager.i.Line2Text.text = "Time taken to collect resources: " + buildingSelectedInScene.GetComponent<Airport>().airplaneScript.waitTime_des + " - " + 
+                    (buildingSelectedInScene.GetComponent<Airport>().airplaneScript.waitTime_des - buildingSelectedInScene.GetComponent<Airport>().airplaneScript.waitTime_des_actial).ToString("F2") + " seconds";
                 UIManager.i.Line3Text.text = "Auto Pollution: " +
-                    (buildingSelectedInScene.GetComponent<Airport>().pollutionProduced_auto / buildingSelectedInScene.GetComponent<Airport>().pollutionInterval_auto) + " per second";
+                    (buildingSelectedInScene.GetComponent<Airport>().pollutionProduced_auto / buildingSelectedInScene.GetComponent<Airport>().pollutionInterval_auto).ToString("F2") + " per second";
                 UIManager.i.Line4Text.text = "";
             }
         }
@@ -651,12 +652,12 @@ public class GameManager : MonoBehaviour
         {
             for(int i = 0; i < allNodes.Length; i++)
             {
-                if(allNodes[i].transform.GetChild(0))
+                if(allNodes[i])
                     allNodes[i].transform.GetChild(0).gameObject.SetActive(true);
             }
             for (int i = 0; i < allPlatformNodes.Length; i++)
             {
-                if (allPlatformNodes[i].transform.GetChild(0))
+                if (allPlatformNodes[i])
                     allPlatformNodes[i].transform.GetChild(0).gameObject.SetActive(false);
             }
         }
@@ -664,12 +665,12 @@ public class GameManager : MonoBehaviour
         {
             for (int i = 0; i < allNodes.Length; i++)
             {
-                if (allNodes[i].transform.GetChild(0))
+                if (allNodes[i])
                     allNodes[i].transform.GetChild(0).gameObject.SetActive(false);
             }
             for (int i = 0; i < allPlatformNodes.Length; i++)
             {
-                if (allPlatformNodes[i].transform.GetChild(0))
+                if (allPlatformNodes[i])
                     allPlatformNodes[i].transform.GetChild(0).gameObject.SetActive(true);
             }
         }
@@ -677,12 +678,12 @@ public class GameManager : MonoBehaviour
         {
             for (int i = 0; i < allNodes.Length; i++)
             {
-                if (allNodes[i].transform.GetChild(0))
+                if (allNodes[i])
                     allNodes[i].transform.GetChild(0).gameObject.SetActive(false);
             }
             for (int i = 0; i < allPlatformNodes.Length; i++)
             {
-                if (allPlatformNodes[i].transform.GetChild(0))
+                if (allPlatformNodes[i])
                     allPlatformNodes[i].transform.GetChild(0).gameObject.SetActive(false);
             }
         }
