@@ -17,6 +17,10 @@ public class PlaceHolder : MonoBehaviour
         // **(GameManager - futureBuildingList)
         GameManager.i.nodeList.Remove(GameManager.i.nodeList[attachedNode.GetComponent<Node>().nodeIndex]);
         GameManager.i.futureBuildingList.Remove(GameManager.i.futureBuildingList[attachedNode.GetComponent<Node>().nodeIndex]);
+        if(attachedNode.tag == "PlatformPlaces")
+        {
+            SpecialBuildingCount.platform1Count += 1;
+        }
         // Give back the money.
         // **(GameManager - estimatedCostList)
         Currency.MONEY += GameManager.i.estimatedCostList[attachedNode.GetComponent<Node>().nodeIndex];

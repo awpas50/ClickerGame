@@ -50,8 +50,8 @@ public class AirportPopUp : MonoBehaviour
     {
         // Audio
         AudioManager.instance.Play(SoundList.GetMoney);
-        int seed = Random.Range(0, 2);
-        if(seed == 0)
+        int seed = Random.Range(0, 100);
+        if(seed >= 12)
         {
             float randomVal = Random.Range(5, 500);
             Currency.MONEY += randomVal;
@@ -62,23 +62,15 @@ public class AirportPopUp : MonoBehaviour
             secondPopUpPrefab.GetComponent<BuildingPopUp>().buildingREF = airportREF;
             secondPopUpPrefab.GetComponent<BuildingPopUp>().resourceText.text = "+" + randomVal;
         }
-        else if(seed == 1)
+        else if(seed < 12)
         {
             float randomVal = Random.Range(-20, 10);
-            Pollution.POLLUTION += randomVal;
+            SpecialBuildingCount.platform1Count += 1;
             // Instantiate an additional pop up
             GameObject secondPopUpPrefab = Instantiate(secondPopUp, Camera.main.WorldToScreenPoint(airportREF.transform.position + offset), Quaternion.identity);
             secondPopUpPrefab.transform.SetParent(popupStorageCanvas.transform);
             secondPopUpPrefab.GetComponent<BuildingPopUp>().buildingREF = airportREF;
-            if(randomVal >= 0)
-            {
-                secondPopUpPrefab.GetComponent<BuildingPopUp>().resourceText.text = "+" + randomVal + " Pollution";
-            }
-            else
-            {
-                secondPopUpPrefab.GetComponent<BuildingPopUp>().resourceText.text = randomVal + " Pollution";
-            }
-            
+            secondPopUpPrefab.GetComponent<BuildingPopUp>().resourceText.text = "+1 platform";
         }
         
         // ** tell the airplane to leave the base.

@@ -16,6 +16,9 @@ TagManager:
   - Ruin
   - Airport
   - Destinations
+  - PlatformPlaces
+  - PlatformPlaces2
+  - Platform
   layers:
   - Default
   - TransparentFX

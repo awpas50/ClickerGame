@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
     [Header("Canvas of building details (assign manually)")]
     public GameObject buildingDetailsCanvas;
     public TextMeshProUGUI buildingLevel;
+    //[Header("Indicate what size of platform is selected in UI (Do not edit)")]
+    //public GameObject platformSelectedInUI;
     [Header("Indicate what is selected in UI (Do not edit)")]
     public GameObject buildingSelectedInUI;
     public float buildingCost;
@@ -22,6 +24,8 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI buildingInfo;
     [Header("Indicate what is selected in scene (Do not edit)")]
     public GameObject buildingSelectedInScene;
+    // -1: null, 0: buildings, 1: platforms
+    public int buildingObjectType = -1;
     [Header("Indicate all the nodes selected in the scene (Do not edit)")]
     public List<GameObject> futureBuildingList;
     public List<GameObject> nodeList;
@@ -32,6 +36,9 @@ public class GameManager : MonoBehaviour
     public BuildingBluePrint building3;
     public BuildingBluePrint building4;
     public BuildingBluePrint building5;
+    public BuildingBluePrint platform1;
+    public BuildingBluePrint platform2;
+
     [Header("Building Buttons")]
     public Button buildingButton1;
     public Button buildingButton2;
@@ -51,6 +58,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Node animation")]
     public GameObject[] allNodes;
+    public GameObject[] allPlatformNodes;
     Touch touch;
 
     void Awake()
@@ -67,6 +75,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         Time.timeScale = 1;
+        InvokeRepeating("GetRefInvokeFunction", 0f, 0.05f);
     }
     // Button event
     public void SelectBuilding1()
@@ -76,6 +85,8 @@ public class GameManager : MonoBehaviour
 
         buildingSelectedInUI = building1.building;
         buildingCost = building1.cost;
+        buildingObjectType = 0;
+
         buildingInfo.text = "House ($60)- Buffs the efficiency of nearby factorys, whereas the nearby parks produces extra clear air.";
         if(buildingSelectedInScene)
         {
@@ -91,6 +102,8 @@ public class GameManager : MonoBehaviour
         // Named factory, but this is the dark market where drug dealer do transaction here...........
         buildingSelectedInUI = building2.building;
         buildingCost = building2.cost;
+        buildingObjectType = 0;
+
         buildingInfo.text = "Factory ($100) - Generate resources every 20 seconds. Gains efficiency buff from nearby houses, but will pollute nearby parks.";
         if (buildingSelectedInScene)
         {
@@ -105,6 +118,8 @@ public class GameManager : MonoBehaviour
 
         buildingSelectedInUI = building3.building;
         buildingCost = building3.cost;
+        buildingObjectType = 0;
+
         buildingInfo.text = "Park ($80) - The clear air generated every 20 seconds by plants can temporary keep out the pollution - But remember not to put it near factories";
         if (buildingSelectedInScene)
         {
@@ -121,6 +136,8 @@ public class GameManager : MonoBehaviour
         // A cat always lands on her feet whereas a bread with butter always fall buttered side down. 
         buildingSelectedInUI = building4.building;
         buildingCost = building4.cost;
+        buildingObjectType = 0;
+
         buildingInfo.text = "Meteor defense ($400) - The powerful laser beams protect your base from asteroids.";
         if (buildingSelectedInScene)
         {
@@ -136,6 +153,8 @@ public class GameManager : MonoBehaviour
         // A cat always lands on her feet whereas a bread with butter always fall buttered side down. 
         buildingSelectedInUI = building5.building;
         buildingCost = building5.cost;
+        buildingObjectType = 0;
+
         buildingInfo.text = "Airport ($800) - Build airplanes to explore the outside world - numerous treasures are waiting for you!";
         if (buildingSelectedInScene)
         {
@@ -143,6 +162,40 @@ public class GameManager : MonoBehaviour
         }
         buildingSelectedInScene = null;
     }
+    public void SelectPlatform()
+    {
+        // Audio
+        AudioManager.instance.Play(SoundList.ButtonClicked);
+
+        // A cat always lands on her feet whereas a bread with butter always fall buttered side down. 
+        buildingSelectedInUI = platform1.building;
+        buildingCost = platform1.cost;
+        buildingObjectType = 1;
+
+        buildingInfo.text = "Platform - Expand your territory! You will obtain additional platforms if you reach certain objectives or make some airplanes.";
+        if (buildingSelectedInScene)
+        {
+            buildingSelectedInScene.GetComponent<BuildingSelection>().indicator.SetActive(false);
+        }
+        buildingSelectedInScene = null;
+    }
+    //public void SelectPlatform2()
+    //{
+    //    // Audio
+    //    AudioManager.instance.Play(SoundList.ButtonClicked);
+
+    //    // A cat always lands on her feet whereas a bread with butter always fall buttered side down. 
+    //    buildingSelectedInUI = platform2.building;
+    //    buildingCost = platform2.cost;
+    //    buildingObjectType = 1;
+
+    //    buildingInfo.text = "Platform";
+    //    if (buildingSelectedInScene)
+    //    {
+    //        buildingSelectedInScene.GetComponent<BuildingSelection>().indicator.SetActive(false);
+    //    }
+    //    buildingSelectedInScene = null;
+    //}
     public void OK_PurchaseBuilding()
     {
         // Audio
@@ -179,6 +232,15 @@ public class GameManager : MonoBehaviour
         // Audio
         AudioManager.instance.Play(SoundList.Cancel);
 
+        // Add back the estimated number of platforms.
+        for (int i = 0; i < nodeList.Count; i++)
+        {
+            if (nodeList[i].tag == "PlatformPlaces")
+            {
+                SpecialBuildingCount.platform1Count += 1;
+            }
+        }
+
         // Remove all placeHolder
         for (int i = 0; i < nodeList.Count; i++)
         {
@@ -198,6 +260,7 @@ public class GameManager : MonoBehaviour
         }
         estimatedCostList.Clear();
 
+        
         // Remove reference
         buildingSelectedInUI = null;
         buildingCost = 0;
@@ -239,10 +302,7 @@ public class GameManager : MonoBehaviour
         SaveData.current.money = Currency.MONEY;
         SaveData.current.pollution = Pollution.POLLUTION;
 
-        list_house = GameObject.FindGameObjectsWithTag("House");
-        list_factory = GameObject.FindGameObjectsWithTag("Factory");
-        list_park = GameObject.FindGameObjectsWithTag("Park");
-        list_generator = GameObject.FindGameObjectsWithTag("Generator");
+        
 
         if(buildingSelectedInScene)
         {
@@ -323,7 +383,7 @@ public class GameManager : MonoBehaviour
                 UIManager.i.Line4Text.text = "";
             }
         }
-
+        // Make resources avaliable to collect even in building pruchasing mode.
         if (Input.GetMouseButtonUp(0))
         {
             // prevent clicking through UI
@@ -334,6 +394,62 @@ public class GameManager : MonoBehaviour
             if (TouchManager.instance.isDragging)
             {
                 return;
+            }
+            
+            if (buildingPurchasingState)
+            {
+                RaycastHit hit0;
+                Ray ray0 = Camera.main.ScreenPointToRay(Input.mousePosition);
+                if (Physics.Raycast(ray0, out hit0))
+                {
+                    if (hit0.collider.gameObject.tag == "Factory")
+                    {
+                        if (hit0.collider.gameObject.GetComponent<Factory>().factoryPopUpREF)
+                        {
+                            hit0.collider.gameObject.GetComponent<Factory>().factoryPopUpREF.
+                                GetComponent<FactoryPopUp>().ButtonEvent();
+                        }
+                        else
+                        {
+                            return;
+                        }
+                    }
+                    else if (hit0.collider.gameObject.tag == "Park")
+                    {
+                        if (hit0.collider.gameObject.GetComponent<Park>().parkPopUpREF)
+                        {
+                            hit0.collider.gameObject.GetComponent<Park>().parkPopUpREF.
+                                GetComponent<ParkPopUp>().ButtonEvent();
+                        }
+                        else
+                        {
+                            return;
+                        }
+                    }
+                    else if (hit0.collider.gameObject.tag == "Airport")
+                    {
+                        if (hit0.collider.gameObject.GetComponent<Airport>().airportPopUpREF)
+                        {
+                            hit0.collider.gameObject.GetComponent<Airport>().airportPopUpREF.
+                                GetComponent<AirportPopUp>().ButtonEvent();
+                        }
+                        else
+                        {
+                            return;
+                        }
+                    }
+                    // Click ruin to trigger event on the pop up (UI)
+                    else if (hit0.collider.gameObject.tag == "Ruin")
+                    {
+                        hit0.collider.gameObject.GetComponent<Ruin>().repairPopUp_REF.
+                                GetComponent<RepairPopUp>().ButtonEvent();
+                    }
+                    // not buildings
+                    else
+                    {
+                        return;
+                    }
+                }
             }
             // Mouse click detection
             if (!buildingPurchasingState)
@@ -531,18 +647,43 @@ public class GameManager : MonoBehaviour
         }
 
         // base on "buildingPurchasingState" the mesh on each node (the first child, GetChild(0) will be disabled)
-        if (buildingPurchasingState)
+        if (buildingPurchasingState && buildingSelectedInUI.gameObject.name != "Platform Small")
         {
             for(int i = 0; i < allNodes.Length; i++)
             {
-                allNodes[i].transform.GetChild(0).gameObject.SetActive(true);
+                if(allNodes[i].transform.GetChild(0))
+                    allNodes[i].transform.GetChild(0).gameObject.SetActive(true);
+            }
+            for (int i = 0; i < allPlatformNodes.Length; i++)
+            {
+                if (allPlatformNodes[i].transform.GetChild(0))
+                    allPlatformNodes[i].transform.GetChild(0).gameObject.SetActive(false);
+            }
+        }
+        else if(buildingPurchasingState && buildingSelectedInUI.gameObject.name == "Platform Small")
+        {
+            for (int i = 0; i < allNodes.Length; i++)
+            {
+                if (allNodes[i].transform.GetChild(0))
+                    allNodes[i].transform.GetChild(0).gameObject.SetActive(false);
+            }
+            for (int i = 0; i < allPlatformNodes.Length; i++)
+            {
+                if (allPlatformNodes[i].transform.GetChild(0))
+                    allPlatformNodes[i].transform.GetChild(0).gameObject.SetActive(true);
             }
         }
         else
         {
             for (int i = 0; i < allNodes.Length; i++)
             {
-                allNodes[i].transform.GetChild(0).gameObject.SetActive(false);
+                if (allNodes[i].transform.GetChild(0))
+                    allNodes[i].transform.GetChild(0).gameObject.SetActive(false);
+            }
+            for (int i = 0; i < allPlatformNodes.Length; i++)
+            {
+                if (allPlatformNodes[i].transform.GetChild(0))
+                    allPlatformNodes[i].transform.GetChild(0).gameObject.SetActive(false);
             }
         }
         if(isPaused)
@@ -556,8 +697,6 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 1;
         }
     }
-
-    
 
     // Check if the turret is on a plan to be built:
     //private bool IsGeneratorInPlanning()
@@ -579,15 +718,30 @@ public class GameManager : MonoBehaviour
     //    }
     //}
 
+    public void GetRefInvokeFunction()
+    {
+        allNodes = GetAllNodes();
+        allPlatformNodes = GetAllPlatformNodes();
+
+        list_house = GameObject.FindGameObjectsWithTag("House");
+        list_factory = GameObject.FindGameObjectsWithTag("Factory");
+        list_park = GameObject.FindGameObjectsWithTag("Park");
+        list_generator = GameObject.FindGameObjectsWithTag("Generator");
+    }
     public GameObject[] GetAllNodes()
     {
         return GameObject.FindGameObjectsWithTag("Node");
+    }
+    public GameObject[] GetAllPlatformNodes()
+    {
+        return GameObject.FindGameObjectsWithTag("PlatformPlaces");
     }
 
     public void PauseGameMenu()
     {
         AudioManager.instance.Play(SoundList.ButtonClicked);
         buildingSelectedInScene = null;
+        buildingObjectType = -1;
         buildingSelectedInUI = null;
         DisableGameUI();
         isPaused = true;

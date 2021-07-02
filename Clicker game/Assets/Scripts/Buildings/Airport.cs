@@ -19,12 +19,14 @@ public class Airport : MonoBehaviour
     public GameObject airportPopUp;
     [Header("pop up (do not edit)")]
     public GameObject airportPopUpREF;
+    [HideInInspector] public BuildingBuff buildingBuff;
     [HideInInspector] public BuildingLevel buildingLevel;
 
     void Start()
     {
-        // random point 2 (high point) location
-        point2.position = new Vector3(point2.position.x, Random.Range(4.5f, 7f), point2.position.z);
+        // random point 2 (peak) location
+        point2.position = new Vector3(Random.Range(0f, 1f), Random.Range(4.5f, 7f), Random.Range(-0.5f, 1f));
+        buildingBuff = GetComponent<BuildingBuff>();
         buildingLevel = GetComponent<BuildingLevel>();
 
         airplaneREF = Instantiate(airplane, point1.position, Quaternion.identity);

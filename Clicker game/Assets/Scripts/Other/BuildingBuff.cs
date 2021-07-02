@@ -11,6 +11,7 @@ public class BuildingBuff : MonoBehaviour
     public int nearbyPark;
     public int nearbyTurret;
     public int nearbyMainBuilding;
+    public int nearbyAirport;
     [Header("nearbyHouse properties")]
     public List<float> houseEfficiencyList;
     public float houseEfficiencyTotal;

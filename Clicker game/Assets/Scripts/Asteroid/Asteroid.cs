@@ -63,7 +63,7 @@ public class Asteroid : MonoBehaviour
 
                 GameObject effectPrefab = Instantiate(explosionEffect, transform.position, Quaternion.identity);
                 Destroy(effectPrefab, 3f);
-                Destroy(gameObject, 0.5f);
+                Destroy(gameObject, 0.05f);
                 reachedDestination = true;
             }
         }

@@ -11,7 +11,6 @@ public class Node : MonoBehaviour
     public List<GameObject> nearbyNode;
     [Header("Check neraby node with building (Don not edit)")]
     public List<GameObject> nearbyNode_building;
-    public GameObject[] nearbyNode_building_house;
     [Header("Node REF (Do not edit)")]
     public int nodeIndex = -1;
     public GameObject placeHolder;
@@ -20,20 +19,36 @@ public class Node : MonoBehaviour
     public GameObject building_ruin;
     public Vector3 offset;
 
-    private void Start()
-    {
-        nearbyNode_building_house = GameObject.FindGameObjectsWithTag("House");
-    }
+    //private bool isDestroyed = false;
     private void Update()
     {
-        if(building_REF)
+        if(gameObject.tag == "Node")
         {
-            CheckNearbyBuildingType();
+            if (building_REF)
+            {
+                CheckNearbyBuildingType();
+            }
+        }
+    }
+    // Only destroy one node when two nodes collide each other.
+    private void OnTriggerEnter(Collider other)
+    {
+        if ((this.gameObject.tag == "PlatformPlaces" && other.gameObject.tag == "PlatformPlaces"))
+        {
+            //Debug.Log(this.gameObject + " " + other.gameObject);
+            // Destroy one only.
+            if(this.gameObject.GetInstanceID() < other.gameObject.GetInstanceID())
+            {
+                Destroy(gameObject);
+            }
+            if (this.gameObject.GetInstanceID() >= other.gameObject.GetInstanceID())
+            {
+                Destroy(other.gameObject);
+            }
         }
     }
     private void OnMouseDown()
     {
-
         // prevent clicking through UI
         if (MouseOverUILayerObject.IsPointerOverUIObject())
         {
@@ -44,20 +59,44 @@ public class Node : MonoBehaviour
         {
             return;
         }
-        if (building_REF == null && GameManager.i.buildingSelectedInUI.name == "Building4_Generator" && GameManager.i.isTurretInPlanning)
+        if (gameObject.tag == "Node" && GameManager.i.buildingObjectType != 0)
         {
-            Debug.LogWarning("Generator is already in planning list");
+            AudioManager.instance.Play(SoundList.Error);
             return;
         }
+        if ((gameObject.tag == "PlatformPlaces" || gameObject.tag == "PlatformPlaces2") && GameManager.i.buildingObjectType != 1)
+        {
+            AudioManager.instance.Play(SoundList.Error);
+            return;
+        }
+        //if (building_REF == null && GameManager.i.buildingSelectedInUI.name == "Building4_Generator" && GameManager.i.isTurretInPlanning)
+        //{
+        //    Debug.LogWarning("Generator is already in planning list");
+        //    return;
+        //}
         // EstimateCost: Precalculate the total cost needed
         if (building_REF == null && GameManager.i.buildingSelectedInUI && Currency.MONEY < GameManager.i.buildingCost)
         {
             AudioManager.instance.Play(SoundList.Error);
         }
-        if (building_REF == null && GameManager.i.buildingSelectedInUI && Currency.MONEY >= GameManager.i.buildingCost && !building_ruin)
+        if (building_REF == null && GameManager.i.buildingSelectedInUI && GameManager.i.buildingObjectType == 0 && Currency.MONEY >= GameManager.i.buildingCost && !building_ruin)
         {
             AddPlaceHolder();
             EstimateCost();
+        }
+        if (building_REF == null && GameManager.i.buildingSelectedInUI && GameManager.i.buildingObjectType == 1 && Currency.MONEY >= GameManager.i.buildingCost)
+        {
+            if(SpecialBuildingCount.platform1Count > 0)
+            {
+                SpecialBuildingCount.platform1Count -= 1;
+                AddPlaceHolder();
+                EstimateCost();
+            }
+            else
+            {
+                AudioManager.instance.Play(SoundList.Error);
+                return;
+            }
         }
     }
 
@@ -94,12 +133,15 @@ public class Node : MonoBehaviour
     }
     public void ConfirmPlaceBuilding()
     {
-        // This is the actual process of generate a building
-        GameObject buildingPrefab = Instantiate(placeHolder_building_REF, transform.position, Quaternion.identity);
-        // Add reference (node recongize the building)
-        building_REF = buildingPrefab;
-        // Add reference (building recongize the node)
-        building_REF.GetComponent<BuildingState>().node = gameObject;
+        // This is the actual process of putting a building
+        GameObject buildingPrefab = Instantiate(placeHolder_building_REF, transform.position + placeHolder_building_REF.GetComponent<BuildingState>().offset, Quaternion.identity);
+        if(gameObject.tag == "Node")
+        {
+            // Add reference (node recongize the building)
+            building_REF = buildingPrefab;
+            // Add reference (building recongize the node)
+            building_REF.GetComponent<BuildingState>().node = gameObject;
+        }
         GameManager.i.estimatedCostList.Clear();
     }
     public void RemoveBuildingPlaceHolder()
@@ -116,6 +158,7 @@ public class Node : MonoBehaviour
         building_REF.GetComponent<BuildingBuff>().nearbyPark = 0;
         building_REF.GetComponent<BuildingBuff>().nearbyTurret = 0;
         building_REF.GetComponent<BuildingBuff>().nearbyMainBuilding = 0;
+        building_REF.GetComponent<BuildingBuff>().nearbyAirport = 0;
         building_REF.GetComponent<BuildingBuff>().houseEfficiencyList.Clear();
         building_REF.GetComponent<BuildingBuff>().houseEfficiencyTotal = 0;
 
@@ -150,6 +193,11 @@ public class Node : MonoBehaviour
             {
                 building_REF.GetComponent<BuildingBuff>().allBuildingList.Add(b.gameObject);
                 building_REF.GetComponent<BuildingBuff>().nearbyMainBuilding += 1;
+            }
+            else if (b.gameObject.tag == "Airport")
+            {
+                building_REF.GetComponent<BuildingBuff>().allBuildingList.Add(b.gameObject);
+                building_REF.GetComponent<BuildingBuff>().nearbyAirport += 1;
             }
         }
         for (int i = 0; i < building_REF.GetComponent<BuildingBuff>().houseEfficiencyList.Count; i++)

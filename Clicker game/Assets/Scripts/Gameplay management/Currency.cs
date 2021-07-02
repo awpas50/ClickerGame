@@ -25,9 +25,9 @@ public class Currency : MonoBehaviour
         }
         money = MONEY;
 
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            MONEY += 1000;
-        }
+        //if (Input.GetKeyDown(KeyCode.K))
+        //{
+        //    MONEY += 1000;
+        //}
     }
 }

@@ -4815,8 +4815,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 985f712debf655f439af598dff3204b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 0
   speedMin: 2.5
-  speedMax: 6
+  speedMax: 4.5
   targetList: []
   target: {fileID: 0}
   explosionEffect: {fileID: 4787146697146794734, guid: e9050f838eb01db44b8958e4d8266866,

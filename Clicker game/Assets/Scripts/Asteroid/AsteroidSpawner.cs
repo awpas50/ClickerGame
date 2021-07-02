@@ -35,13 +35,13 @@ public class AsteroidSpawner : MonoBehaviour
         randomY = Random.Range(15f, 20f);
         randomZ = Random.Range(-6f, 6f);
 
-        if(Input.GetKeyDown(KeyCode.L))
+        if (Input.GetKeyDown(KeyCode.L))
         {
             StartCoroutine(Spawn_DEBUG());
         }
 
-        
-        if(Pollution.POLLUTION == 0)
+
+        if (Pollution.POLLUTION == 0)
         {
             asteroidCount = 0;
             val = 1;
@@ -91,8 +91,8 @@ public class AsteroidSpawner : MonoBehaviour
         while(true)
         {
             GameObject temp = Instantiate(asteroid, new Vector3(randomX, randomY, randomZ), Quaternion.identity);
-            temp.GetComponent<Asteroid>().speed = 6f;
-            yield return new WaitForSeconds(20f);
+            temp.GetComponent<Asteroid>().speed = 4.5f;
+            yield return new WaitForSeconds(30f);
         }
     }
     public IEnumerator Spawn_DEBUG()

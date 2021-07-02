@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Turret : MonoBehaviour
 {
+    LineRenderer lr;
     BuildingLevel buildingLevel;
     BuildingState buildingState;
     [Header("Bullet props")]
@@ -20,11 +21,11 @@ public class Turret : MonoBehaviour
     public GameObject[] asteroids;
     public int targetID;
     public Transform target;
-    public bool isLocked = false;
+    public bool targetLocked = false;
     [Header("Shooting")]
     private float fireRate_initial;
     public float fireRate = 1f;
-    private float fireCountdown = 0f;
+    public float fireCountdown = 0f;
 
     public enum State
     {
@@ -39,6 +40,8 @@ public class Turret : MonoBehaviour
 
     void Start()
     {
+        lr = GetComponent<LineRenderer>();
+
         fireRate_initial = fireRate;
         buildingState = GetComponent<BuildingState>();
         buildingLevel = GetComponent<BuildingLevel>();
@@ -66,15 +69,23 @@ public class Turret : MonoBehaviour
                 angleY_current,
                 cannonBase.transform.rotation.z);
 
-            angleY_current = Mathf.Lerp(angleY_current, angleY_random, Time.deltaTime * 5);
+            angleY_current = Mathf.Lerp(angleY_current, angleY_random, Time.deltaTime * turnSpeed);
+
+            lr.SetPosition(0, transform.position);
+            lr.SetPosition(1, transform.position);
+
+            targetLocked = false;
         }
         if (state == State.Attack)
         {
+            lr.SetPosition(0, transform.position);
+            lr.SetPosition(1, target.transform.position);
+
             // only turn around if it has a target
-            Vector3 dir = target.position - transform.position;
-            Quaternion lookRotation = Quaternion.LookRotation(dir);
-            Vector3 rotation = Quaternion.Lerp(cannonBase.transform.rotation, lookRotation, Time.deltaTime * turnSpeed).eulerAngles;
-            cannonBase.transform.rotation = Quaternion.Euler(0, rotation.y, 0);
+            //Vector3 dir = target.position - transform.position;
+            //Quaternion lookRotation = Quaternion.LookRotation(dir);
+            //Vector3 rotation = Quaternion.Lerp(cannonBase.transform.rotation, lookRotation, Time.deltaTime * turnSpeed).eulerAngles;
+            //cannonBase.transform.rotation = Quaternion.Euler(0, rotation.y, 0);
 
             fireCountdown -= Time.deltaTime;
             if (fireCountdown <= 0f)
@@ -88,27 +99,46 @@ public class Turret : MonoBehaviour
 
     void UpdateTarget()
     {
-        isLocked = false;
+        float shortestDistance = Mathf.Infinity;
+        GameObject nearestTarget = null;
         asteroids = GameObject.FindGameObjectsWithTag(enemyTag);
-        if(asteroids.Length == 0)
+        // find out which enemy is the nearest.
+        foreach (GameObject asteroid in asteroids)
         {
-            return;
+            Vector3 posTurret = new Vector3(transform.position.x, 0, transform.position.z);
+            Vector3 posAsteroid = new Vector3(asteroid.transform.position.x, 0, asteroid.transform.position.z);
+
+            float distanceToAsteroid = Vector3.Distance(posTurret, posAsteroid);
+            Debug.Log(distanceToAsteroid);
+            //if (distanceToAsteroid < shortestDistance && distanceToAsteroid < range)
+            if (distanceToAsteroid < shortestDistance)
+            {
+                shortestDistance = distanceToAsteroid;
+                nearestTarget = asteroid;
+            }
         }
-        targetID = Random.Range(0, asteroids.Length);
-        if(!isLocked)
+        if (nearestTarget != null)
         {
-            target = asteroids[targetID].transform;
-            if (asteroids[targetID].GetComponent<Asteroid>().isLockedByTurret)
+            //Lock Target
+            if (!targetLocked)
             {
-                targetID = Random.Range(0, asteroids.Length);
+                target = nearestTarget.transform;
+                targetLocked = true;
             }
-            else
-            {
-                asteroids[targetID].GetComponent<Asteroid>().isLockedByTurret = true;
-                isLocked = true;
-            }
+        }
+        else
+        {
+            target = null;
         }
     }
+
+    //void ConfirmTarget()
+    //{
+    //    Debug.Log("ConfirmTarget");
+    //    target = asteroids[targetID].transform;
+    //    asteroids[targetID].GetComponent<Asteroid>().isLockedByTurret = true;
+    //    hasTarget = true;
+    //}
 
     void Shoot()
     {
@@ -132,7 +162,7 @@ public class Turret : MonoBehaviour
     {
         while(true)
         {
-            angleY_random = Random.Range(angleY_random - 200, angleY_random + 200);
+            angleY_random = Random.Range(angleY_random - 50, angleY_random + 50);
             yield return new WaitForSeconds(3f);
         }
     }

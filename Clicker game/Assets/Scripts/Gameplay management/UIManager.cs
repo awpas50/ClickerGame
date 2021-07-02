@@ -35,6 +35,17 @@ public class UIManager : MonoBehaviour
     public GameObject BuildingDetailsUI;
     public GameObject BuildingInstructionUI;
 
+    [Header("Bottom UI")]
+    public GameObject buildingPage1;
+    public GameObject buildingPage2;
+    public TextMeshProUGUI platform1Text;
+
+    public Button building1_button;
+    public Button building2_button;
+    public Button building3_button;
+    public Button building4_button;
+    public Button building5_button;
+
     void Awake()
     {
         //debug
@@ -50,5 +61,29 @@ public class UIManager : MonoBehaviour
     {
         moneyText.text = "RESOURCES " + Currency.MONEY;
         pollutionText.text = "POLLUTION " + Math.Round(Pollution.POLLUTION, 2).ToString();
+
+        platform1Text.text = "x" + SpecialBuildingCount.platform1Count;
+
+        if(Objective.townHallLevel < 2)
+        {
+            building4_button.interactable = false;
+            building5_button.interactable = false;
+        }
+        else
+        {
+            building4_button.interactable = true;
+            building5_button.interactable = true;
+        }
+    }
+
+    public void SelectBuildingList1()
+    {
+        buildingPage1.SetActive(true);
+        buildingPage2.SetActive(false);
+    }
+    public void SelectBuildingList2()
+    {
+        buildingPage1.SetActive(false);
+        buildingPage2.SetActive(true);
     }
 }
