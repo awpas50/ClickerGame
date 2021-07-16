@@ -44,11 +44,11 @@ public class GameManager : MonoBehaviour
     public Button buildingButton2;
     public Button buildingButton3;
     public Button buildingButton4;
-    [Header("buildingStats")]
-    public GameObject[] list_house;
-    public GameObject[] list_factory;
-    public GameObject[] list_park;
-    public GameObject[] list_generator;
+    //[Header("buildingStats")]
+    //public GameObject[] list_house;
+    //public GameObject[] list_factory;
+    //public GameObject[] list_park;
+    //public GameObject[] list_generator;
 
     public GameObject placeHolder;
 
@@ -724,10 +724,10 @@ public class GameManager : MonoBehaviour
         allNodes = GetAllNodes();
         allPlatformNodes = GetAllPlatformNodes();
 
-        list_house = GameObject.FindGameObjectsWithTag("House");
-        list_factory = GameObject.FindGameObjectsWithTag("Factory");
-        list_park = GameObject.FindGameObjectsWithTag("Park");
-        list_generator = GameObject.FindGameObjectsWithTag("Generator");
+        //list_house = GameObject.FindGameObjectsWithTag("House");
+        //list_factory = GameObject.FindGameObjectsWithTag("Factory");
+        //list_park = GameObject.FindGameObjectsWithTag("Park");
+        //list_generator = GameObject.FindGameObjectsWithTag("Generator");
     }
     public GameObject[] GetAllNodes()
     {

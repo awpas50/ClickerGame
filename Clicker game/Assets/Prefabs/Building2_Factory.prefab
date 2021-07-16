@@ -134,7 +134,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moneyProduced: 35
-  pollutionProduced: 4
+  pollutionProduced: 3.5
   interval: 20
   totalProduction: 0
   totalProduction_buff: 0

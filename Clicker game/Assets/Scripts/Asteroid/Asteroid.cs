@@ -27,7 +27,16 @@ public class Asteroid : MonoBehaviour
     void Start()
     {
         targetList = GameObject.FindGameObjectsWithTag("Node");
-        target = targetList[Random.Range(0, targetList.Length)];
+        List<GameObject> targetList_2 = new List<GameObject>();
+        for (int i = 0; i < targetList.Length; i++)
+        {
+            // != 10: MainBuildingNode
+            if(targetList[i].layer != 10)
+            {
+                targetList_2.Add(targetList[i]);
+            }
+        }
+        target = targetList_2[Random.Range(0, targetList_2.Count)];
         transform.LookAt(target.transform);
     }
     

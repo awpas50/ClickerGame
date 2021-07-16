@@ -11,7 +11,7 @@ public class AsteroidSpawner : MonoBehaviour
     public GameObject asteroid;
 
     public int asteroidCount = 0;
-    float val;
+    public float val;
 
     void Awake()
     {
@@ -35,14 +35,14 @@ public class AsteroidSpawner : MonoBehaviour
         randomY = Random.Range(15f, 20f);
         randomZ = Random.Range(-6f, 6f);
 
-        //if (Input.GetKeyDown(KeyCode.K))
-        //{
-        //    Currency.MONEY += 1000;
-        //}
-        //if (Input.GetKeyDown(KeyCode.L))
-        //{
-        //    StartCoroutine(Spawn_DEBUG());
-        //}
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            Currency.MONEY += 1000;
+        }
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            StartCoroutine(Spawn_DEBUG());
+        }
 
 
         if (Pollution.POLLUTION == 0)
@@ -58,11 +58,6 @@ public class AsteroidSpawner : MonoBehaviour
         {
             asteroidCount = (int)Mathf.Sqrt(val - 4);
         }
-        else
-        {
-            asteroidCount = 0;
-        }
-        
     }
 
     IEnumerator Spawn()
@@ -76,9 +71,9 @@ public class AsteroidSpawner : MonoBehaviour
             {
                 asteroidCount = 0;
             }
-            if (asteroidCount > 16)
+            if (asteroidCount > 32)
             {
-                asteroidCount = 16;
+                asteroidCount = 32;
             }
             //yield return null;
             for (int i = 0; i < asteroidCount; i++)
@@ -102,9 +97,9 @@ public class AsteroidSpawner : MonoBehaviour
     public IEnumerator Spawn_DEBUG()
     {
         // A formula to control the asteroid number
-        if (asteroidCount > 16)
+        if (asteroidCount > 32)
         {
-            asteroidCount = 16;
+            asteroidCount = 32;
         }
         //AudioManager.instance.Play(SoundList.AsteroidPassBy);
         GameObject temp = Instantiate(asteroid, new Vector3(randomX, randomY, randomZ), Quaternion.identity);

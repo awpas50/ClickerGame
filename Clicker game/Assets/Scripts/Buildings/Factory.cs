@@ -89,10 +89,10 @@ public class Factory : MonoBehaviour
             factoryPopUpREF.GetComponent<FactoryPopUp>().factoryREF = gameObject;
         }
     }
-    public void GetResources(float moneyProduced, float efficiency, float pollutionProduced, float levelMultipiler)
+    public void GetResources(float moneyProduced)
     {
         Currency.MONEY += moneyProduced * efficiency * levelMultipiler;
-        Pollution.POLLUTION += pollutionProduced;
+        Pollution.POLLUTION += totalPollution;
     }
 
     public IEnumerator Production_AUTOMATIC(float interval)

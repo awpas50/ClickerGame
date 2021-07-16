@@ -32,7 +32,7 @@ public class CameraRotation : MonoBehaviour
         //{
         //    isDragging = false;
         //}
-        #if UNITY_STANDALONE || UNITY_EDITOR_WIN
+        #if UNITY_STANDALONE || UNITY_EDITOR_WIN || UNITY_WEBGL
         // Scroll
         if (Input.GetAxis("Mouse ScrollWheel") < 0)
         {

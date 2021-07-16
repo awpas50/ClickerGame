@@ -53,7 +53,7 @@ public class TouchManager : MonoBehaviour
             timer = 0f;
             timerTrigger = false;
         }
-#if UNITY_EDITOR || UNITY_STANDALONE
+#if UNITY_EDITOR || UNITY_STANDALONE || UNITY_WEBGL
         // Mouse drag
         if (Input.GetMouseButtonDown(0))
         {
