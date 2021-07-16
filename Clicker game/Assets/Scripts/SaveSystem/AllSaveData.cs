@@ -31,6 +31,9 @@ public class AllSaveData
     public float saveData_pollution;
     public int saveData_townHallLevel;
     public bool[] saveData_townHall_objectiveTriggers;
+    [Header("Asteroids")]
+    public float saveData_timeElapsed;
+    public float[,] saveData_asteroidProps; // 0 ~ 2: position, 3 ~ 5: target position, 6: speed
     [Header("Building properties")]
     public float[] saveData_allFactories_timer;
     public float[] saveData_allParks_timer;
@@ -38,19 +41,14 @@ public class AllSaveData
     public float[,] saveData_allTurrets_missilePos;
     public string[] saveData_allAirports_state;
     public float[,] saveData_allAirports_planePos;
-
-    [Header("Asteroids")]
-    public float saveData_timeElapsed;
-    public float[][] saveData_allAsteroidPos;
-    public float[] saveData_allAsteroidSpeed;
-
     [Header("Ref")]
-    public GameObject[] allHouses;
-    public GameObject[] allFactories;
-    public GameObject[] allParks;
-    public GameObject[] allTurrets;
-    public GameObject[] allAirports;
-    public GameObject[] allPlatforms;
+    public int allHouses_int;
+    public int allFactories_int;
+    public int allParks_int;
+    public int allTurrets_int;
+    public int allAirports_int;
+    public int allPlatforms_int;
+    public int allAsteroids_int;
 
     public AllSaveData()
     {
@@ -59,14 +57,17 @@ public class AllSaveData
         StoreParkData();
         StoreTurretData();
         StoreAirportData();
+        StorePlatformData();
         StoreResourcesAndPollution();
         StoreTownHallRelated();
+        StoreAsteroids();
     }
 
     private void StoreHouseData()
     {
         // House data
-        allHouses = GameObject.FindGameObjectsWithTag("House");
+        GameObject[] allHouses = GameObject.FindGameObjectsWithTag("House");
+        allHouses_int = allHouses.Length;
         saveData_housePos = new float[allHouses.Length, 3];
         saveData_houseModelIndex = new int[allHouses.Length];
         saveData_houseLevel = new int[allHouses.Length];
@@ -82,7 +83,8 @@ public class AllSaveData
     private void StoreFactoryData()
     {
         // Factory data
-        allFactories = GameObject.FindGameObjectsWithTag("Factory");
+        GameObject[] allFactories = GameObject.FindGameObjectsWithTag("Factory");
+        allFactories_int = allFactories.Length;
         saveData_factoryPos = new float[allFactories.Length, 3];
         saveData_factoryModelIndex = new int[allFactories.Length];
         saveData_factoryLevel = new int[allFactories.Length];
@@ -98,7 +100,8 @@ public class AllSaveData
     private void StoreParkData()
     {
         // Park data
-        allParks = GameObject.FindGameObjectsWithTag("Park");
+        GameObject[] allParks = GameObject.FindGameObjectsWithTag("Park");
+        allParks_int = allParks.Length;
         saveData_parkPos = new float[allParks.Length, 3];
         saveData_parkModelIndex = new int[allParks.Length];
         saveData_parkLevel = new int[allParks.Length];
@@ -114,7 +117,8 @@ public class AllSaveData
     private void StoreTurretData()
     {
         // Turret data
-        allTurrets = GameObject.FindGameObjectsWithTag("Generator");
+        GameObject[] allTurrets = GameObject.FindGameObjectsWithTag("Generator");
+        allTurrets_int = allTurrets.Length;
         saveData_turretPos = new float[allTurrets.Length, 3];
         saveData_turretLevel = new int[allTurrets.Length];
         for (int i = 0; i < allTurrets.Length; i++)
@@ -128,7 +132,8 @@ public class AllSaveData
     private void StoreAirportData()
     {
         // Airport data
-        allAirports = GameObject.FindGameObjectsWithTag("Airport");
+        GameObject[] allAirports = GameObject.FindGameObjectsWithTag("Airport");
+        allAirports_int = allAirports.Length;
         saveData_airportPos = new float[allAirports.Length, 3];
         saveData_airportLevel = new int[allAirports.Length];
         for (int i = 0; i < allAirports.Length; i++)
@@ -137,6 +142,20 @@ public class AllSaveData
             saveData_airportPos[i, 1] = allAirports[i].transform.position.y;
             saveData_airportPos[i, 2] = allAirports[i].transform.position.z;
             saveData_airportLevel[i] = allAirports[i].GetComponent<BuildingLevel>().level;
+        }
+    }
+    private void StorePlatformData()
+    {
+        saveData_platformsInHand = SpecialBuildingCount.platform1Count;
+
+        GameObject[] allPlatforms = GameObject.FindGameObjectsWithTag("Platform");
+        allPlatforms_int = allPlatforms.Length;
+        saveData_platformPos = new float[allPlatforms.Length, 3];
+        for (int i = 0; i < allPlatforms.Length; i++)
+        {
+            saveData_platformPos[i, 0] = allPlatforms[i].transform.position.x;
+            saveData_platformPos[i, 1] = allPlatforms[i].transform.position.y;
+            saveData_platformPos[i, 2] = allPlatforms[i].transform.position.z;
         }
     }
     private void StoreResourcesAndPollution()
@@ -164,6 +183,22 @@ public class AllSaveData
             case 5:
                 saveData_townHall_objectiveTriggers = new bool[4] { true, true, true, true };
                 break;
+        }
+    }
+    private void StoreAsteroids()
+    {
+        GameObject[] allAsteroids = GameObject.FindGameObjectsWithTag("Asteroid");
+        allAsteroids_int = allAsteroids.Length;
+        saveData_asteroidProps = new float[allAsteroids.Length, 7];
+        for (int i = 0; i < allAsteroids.Length; i++)
+        {
+            saveData_asteroidProps[i, 0] = allAsteroids[i].transform.position.x;
+            saveData_asteroidProps[i, 1] = allAsteroids[i].transform.position.y;
+            saveData_asteroidProps[i, 2] = allAsteroids[i].transform.position.z;
+            saveData_asteroidProps[i, 3] = allAsteroids[i].GetComponent<Asteroid>().target_vector3.x;
+            saveData_asteroidProps[i, 4] = allAsteroids[i].GetComponent<Asteroid>().target_vector3.y;
+            saveData_asteroidProps[i, 5] = allAsteroids[i].GetComponent<Asteroid>().target_vector3.z;
+            saveData_asteroidProps[i, 6] = allAsteroids[i].GetComponent<Asteroid>().speed;
         }
     }
 }

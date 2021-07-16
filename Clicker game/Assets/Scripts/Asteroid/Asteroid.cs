@@ -9,13 +9,15 @@ public class Asteroid : MonoBehaviour
     public float speedMax = 10f;
     public GameObject[] targetList;
     public GameObject target;
+    public Vector3 target_vector3;
     public GameObject explosionEffect;
     public ParticleSystem particleEffect1;
     public ParticleSystem particleEffect2;
 
     public bool isLockedByTurret = false;
     public bool reachedDestination = false;
-
+    // this variable will be recorded by the save system, used to prevent reassigning targets when loading a game.
+    //public bool assignedTarget = false; 
     [Header("Building Ruins")]
     public GameObject ruin1;
     public GameObject ruin2;
@@ -23,29 +25,30 @@ public class Asteroid : MonoBehaviour
     public GameObject ruin4;
     public GameObject ruin5;
 
-    // Start is called before the first frame update
-    void Start()
+    // OnEnable(): initialize before Start();
+    void OnEnable()
     {
         targetList = GameObject.FindGameObjectsWithTag("Node");
         List<GameObject> targetList_2 = new List<GameObject>();
         for (int i = 0; i < targetList.Length; i++)
         {
             // != 10: MainBuildingNode
-            if(targetList[i].layer != 10)
+            if (targetList[i].layer != 10)
             {
                 targetList_2.Add(targetList[i]);
             }
         }
         target = targetList_2[Random.Range(0, targetList_2.Count)];
-        transform.LookAt(target.transform);
+        target_vector3 = target.transform.position;
+        transform.LookAt(target_vector3);
     }
     
     void Update()
     {
         //transform.position += Vector3.down * speed * Time.deltaTime;
-        transform.position = Vector3.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, target_vector3, speed * Time.deltaTime);
 
-        if(Vector3.Distance(transform.position, target.transform.position) <= 0.1f)
+        if(Vector3.Distance(transform.position, target_vector3) <= 0.1f)
         {
             particleEffect1.Stop();
             particleEffect2.Stop();

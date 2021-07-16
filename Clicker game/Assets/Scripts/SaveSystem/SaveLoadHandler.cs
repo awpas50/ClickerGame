@@ -20,16 +20,16 @@ public class SaveLoadHandler : MonoBehaviour
         LoadPlatforms(data);
         LoadResourcesAndPollution(data);
         LoadTownHallRelated(data);
+        LoadAsteroids(data);
     }
 
     private AllSaveData AccessSaveFile()
     {
         return SaveSystem.Load();
     }
-
     private void LoadHouses(AllSaveData data)
     {
-        for (int i = 0; i < data.allHouses.Length; i++)
+        for (int i = 0; i < data.allHouses_int; i++)
         {
             GameObject newHouse = Instantiate(GameManager.i.building1.building, 
                 new Vector3(data.saveData_housePos[i,0],
@@ -41,7 +41,7 @@ public class SaveLoadHandler : MonoBehaviour
     }
     private void LoadFactories(AllSaveData data)
     {
-        for (int i = 0; i < data.allFactories.Length; i++)
+        for (int i = 0; i < data.allFactories_int; i++)
         {
             GameObject newFactory = Instantiate(GameManager.i.building2.building,
                 new Vector3(data.saveData_factoryPos[i, 0],
@@ -53,7 +53,7 @@ public class SaveLoadHandler : MonoBehaviour
     }
     private void LoadParks(AllSaveData data)
     {
-        for (int i = 0; i < data.allParks.Length; i++)
+        for (int i = 0; i < data.allParks_int; i++)
         {
             GameObject newPark = Instantiate(GameManager.i.building3.building,
                 new Vector3(data.saveData_parkPos[i, 0],
@@ -65,7 +65,7 @@ public class SaveLoadHandler : MonoBehaviour
     }
     private void LoadTurrets(AllSaveData data)
     {
-        for (int i = 0; i < data.allTurrets.Length; i++)
+        for (int i = 0; i < data.allTurrets_int; i++)
         {
             GameObject newTurret = Instantiate(GameManager.i.building4.building,
                 new Vector3(data.saveData_turretPos[i, 0],
@@ -76,7 +76,7 @@ public class SaveLoadHandler : MonoBehaviour
     }
     private void LoadAirports(AllSaveData data)
     {
-        for (int i = 0; i < data.allAirports.Length; i++)
+        for (int i = 0; i < data.allAirports_int; i++)
         {
             GameObject newAirport = Instantiate(GameManager.i.building5.building,
                 new Vector3(data.saveData_airportPos[i, 0],
@@ -88,7 +88,7 @@ public class SaveLoadHandler : MonoBehaviour
     private void LoadPlatforms(AllSaveData data)
     {
         SpecialBuildingCount.platform1Count = data.saveData_platformsInHand;
-        for (int i = 0; i < data.allPlatforms.Length; i++)
+        for (int i = 0; i < data.allPlatforms_int; i++)
         {
             GameObject newPlatform = Instantiate(GameManager.i.platform1.building,
                 new Vector3(data.saveData_platformPos[i, 0],
@@ -109,5 +109,18 @@ public class SaveLoadHandler : MonoBehaviour
         objective.additionalTrigger2 = data.saveData_townHall_objectiveTriggers[1];
         objective.additionalTrigger3 = data.saveData_townHall_objectiveTriggers[2];
         objective.additionalTrigger4 = data.saveData_townHall_objectiveTriggers[3];
+    }
+    private void LoadAsteroids(AllSaveData data)
+    {
+        for (int i = 0; i < data.allAsteroids_int; i++)
+        {
+            GameObject newAsteroid = Instantiate(AsteroidSpawner.i.asteroid, new Vector3(data.saveData_asteroidProps[i, 0], 
+                data.saveData_asteroidProps[i, 1], 
+                data.saveData_asteroidProps[i, 2]), Quaternion.identity);
+            newAsteroid.GetComponent<Asteroid>().target_vector3 = new Vector3(data.saveData_asteroidProps[i, 3], 
+                data.saveData_asteroidProps[i, 4], 
+                data.saveData_asteroidProps[i, 5]);
+            newAsteroid.GetComponent<Asteroid>().speed = data.saveData_asteroidProps[i, 6];
+        }
     }
 }
