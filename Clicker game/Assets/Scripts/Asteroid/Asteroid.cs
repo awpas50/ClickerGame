@@ -115,6 +115,7 @@ public class Asteroid : MonoBehaviour
                 // Store building data for restoring
                 ruinScript = nodeLocationForRuin.building_ruin.GetComponent<Ruin>();
                 ruinScript.buildingData = GameManager.i.building1.building;
+                ruinScript.buildingType = 1;
 
                 // ruin needs to recongize node
                 ruinScript.node = nodeLocationForRuin.gameObject;
@@ -127,6 +128,7 @@ public class Asteroid : MonoBehaviour
                 // Store building data for restoring
                 ruinScript = nodeLocationForRuin.building_ruin.GetComponent<Ruin>();
                 ruinScript.buildingData = GameManager.i.building2.building;
+                ruinScript.buildingType = 2;
 
                 // ruin needs to recongize node
                 ruinScript.node = nodeLocationForRuin.gameObject;
@@ -145,6 +147,7 @@ public class Asteroid : MonoBehaviour
                 // Store building data for restoring
                 ruinScript = nodeLocationForRuin.building_ruin.GetComponent<Ruin>();
                 ruinScript.buildingData = GameManager.i.building3.building;
+                ruinScript.buildingType = 3;
 
                 // ruin needs to recongize node
                 ruinScript.node = nodeLocationForRuin.gameObject;
@@ -163,6 +166,7 @@ public class Asteroid : MonoBehaviour
                 // Store building data for restoring
                 ruinScript = nodeLocationForRuin.building_ruin.GetComponent<Ruin>();
                 ruinScript.buildingData = GameManager.i.building4.building;
+                ruinScript.buildingType = 4;
 
                 // ruin needs to recongize node
                 ruinScript.node = nodeLocationForRuin.gameObject;
@@ -175,6 +179,7 @@ public class Asteroid : MonoBehaviour
                 // Store building data for restoring
                 ruinScript = nodeLocationForRuin.building_ruin.GetComponent<Ruin>();
                 ruinScript.buildingData = GameManager.i.building5.building;
+                ruinScript.buildingType = 5;
 
                 // ruin needs to recongize node
                 ruinScript.node = nodeLocationForRuin.gameObject;

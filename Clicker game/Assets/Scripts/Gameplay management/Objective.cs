@@ -6,6 +6,7 @@ public class Objective : MonoBehaviour
 {
     [Header("TownHall")]
     public static int townHallLevel = 1;
+    public static float townHallEfficiency = 0.25f;
     private MainBuilding mainBuildingScript;
 
     public float objective1;
@@ -31,22 +32,27 @@ public class Objective : MonoBehaviour
         if (Currency.MONEY >= objective1)
         {
             townHallLevel = 2;
+            
         }
         if (Currency.MONEY >= objective2)
         {
             townHallLevel = 3;
+            
         }
         if (Currency.MONEY >= objective3)
         {
             townHallLevel = 4;
+            
         }
         if (Currency.MONEY >= objective4)
         {
             townHallLevel = 5;
+            
         }
         if (townHallLevel == 5)
         {
             mainBuildingScript.moneyEachClick = 10;
+            townHallEfficiency = 0.6f;
             UIManager.i.objectiveText.text = "";
             if (!additionalTrigger4)
             {
@@ -57,6 +63,7 @@ public class Objective : MonoBehaviour
         else if(townHallLevel == 4)
         {
             mainBuildingScript.moneyEachClick = 8;
+            townHallEfficiency = 0.45f;
             UIManager.i.objectiveText.text = "Reach 10000";
             if (!additionalTrigger3)
             {
@@ -67,6 +74,7 @@ public class Objective : MonoBehaviour
         else if(townHallLevel == 3)
         {
             mainBuildingScript.moneyEachClick = 6;
+            townHallEfficiency = 0.35f;
             UIManager.i.objectiveText.text = "Reach 6000";
             if (!additionalTrigger2)
             {
@@ -77,6 +85,7 @@ public class Objective : MonoBehaviour
         else if (townHallLevel == 2)
         {
             mainBuildingScript.moneyEachClick = 3;
+            townHallEfficiency = 0.3f;
             UIManager.i.objectiveText.text = "Reach 2500";
             if (!additionalTrigger1)
             {
@@ -87,6 +96,7 @@ public class Objective : MonoBehaviour
         else if (townHallLevel == 1)
         {
             mainBuildingScript.moneyEachClick = 1;
+            townHallEfficiency = 0.25f;
             UIManager.i.objectiveText.text = "Reach 1000";
         }
     }

@@ -38,6 +38,11 @@ public class GameManager : MonoBehaviour
     public BuildingBluePrint building5;
     public BuildingBluePrint platform1;
     public BuildingBluePrint platform2;
+    public GameObject ruin1;
+    public GameObject ruin2;
+    public GameObject ruin3;
+    public GameObject ruin4;
+    public GameObject ruin5;
 
     [Header("Building Buttons")]
     public Button buildingButton1;

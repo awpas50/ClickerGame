@@ -59,7 +59,7 @@ public class Factory : MonoBehaviour
     {
         levelMultipiler = 1f + ((buildingLevel.level - 1) * 0.45f);
         // each house & main building nearby increase the efficiency by 25%.
-        efficiency = 1 + buildingBuff.houseEfficiencyTotal + buildingBuff.nearbyMainBuilding * 0.25f;
+        efficiency = 1 + buildingBuff.houseEfficiencyTotal + buildingBuff.nearbyMainBuilding * Objective.townHallEfficiency;
 
         totalProduction = moneyProduced * levelMultipiler;
         totalProduction_buff = moneyProduced * levelMultipiler * efficiency;

@@ -26,6 +26,11 @@ public class AllSaveData
     [Header("Platforms")]
     public int saveData_platformsInHand;
     public float[,] saveData_platformPos;
+    [Header("Ruin")]
+    public int[] saveData_ruinType; // 1 ~ 5
+    public float[,] saveData_ruinPos;
+    public int[] saveData_ruinBuildingLevel;
+    public float[] saveData_ruinRepairCost;
     [Header("Miscellenous")]
     public float saveData_resources;
     public float saveData_pollution;
@@ -49,6 +54,7 @@ public class AllSaveData
     public int allAirports_int;
     public int allPlatforms_int;
     public int allAsteroids_int;
+    public int allRuins_int;
 
     public AllSaveData()
     {
@@ -58,6 +64,7 @@ public class AllSaveData
         StoreTurretData();
         StoreAirportData();
         StorePlatformData();
+        StoreRuinData();
         StoreResourcesAndPollution();
         StoreTownHallRelated();
         StoreAsteroids();
@@ -156,6 +163,46 @@ public class AllSaveData
             saveData_platformPos[i, 0] = allPlatforms[i].transform.position.x;
             saveData_platformPos[i, 1] = allPlatforms[i].transform.position.y;
             saveData_platformPos[i, 2] = allPlatforms[i].transform.position.z;
+        }
+    }
+    private void StoreRuinData()
+    {
+        GameObject[] allRuins = GameObject.FindGameObjectsWithTag("Ruin");
+
+        Debug.Log(allRuins.Length);
+        allRuins_int = allRuins.Length;
+        saveData_ruinPos = new float[allRuins.Length, 3];
+        saveData_ruinBuildingLevel = new int[allRuins.Length];
+        saveData_ruinRepairCost = new float[allRuins.Length];
+        saveData_ruinType = new int[allRuins.Length];
+
+        for (int i = 0; i < allRuins.Length; i++)
+        {
+            saveData_ruinPos[i, 0] = allRuins[i].transform.position.x;
+            saveData_ruinPos[i, 1] = allRuins[i].transform.position.y;
+            saveData_ruinPos[i, 2] = allRuins[i].transform.position.z;
+
+            saveData_ruinBuildingLevel[i] = allRuins[i].GetComponent<Ruin>().buildingLevel;
+            saveData_ruinRepairCost[i] = allRuins[i].GetComponent<Ruin>().repairCost;
+
+            switch(allRuins[i].GetComponent<Ruin>().buildingType)
+            {
+                case 1:
+                    saveData_ruinType[i] = 1;
+                    break;
+                case 2:
+                    saveData_ruinType[i] = 2;
+                    break;
+                case 3:
+                    saveData_ruinType[i] = 3;
+                    break;
+                case 4:
+                    saveData_ruinType[i] = 4;
+                    break;
+                case 5:
+                    saveData_ruinType[i] = 5;
+                    break;
+            }
         }
     }
     private void StoreResourcesAndPollution()

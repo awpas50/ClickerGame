@@ -7,6 +7,7 @@ public class SaveLoadHandler : MonoBehaviour
     public void SaveGame()
     {
         SaveSystem.Save();
+        Debug.Log("Save successful");
     }
 
     public void LoadGame()
@@ -18,9 +19,12 @@ public class SaveLoadHandler : MonoBehaviour
         LoadTurrets(data);
         LoadAirports(data);
         LoadPlatforms(data);
+        LoadRuins(data);
         LoadResourcesAndPollution(data);
         LoadTownHallRelated(data);
         LoadAsteroids(data);
+
+        Debug.Log("Load successful");
     }
 
     private AllSaveData AccessSaveFile()
@@ -96,6 +100,43 @@ public class SaveLoadHandler : MonoBehaviour
                 data.saveData_platformPos[i, 2]), Quaternion.identity);
         }
     }
+    private void LoadRuins(AllSaveData data)
+    {
+        for (int i = 0; i < data.allRuins_int; i++)
+        {
+            GameObject ruinToSpawn = GameManager.i.ruin1;
+
+            if(data.saveData_ruinType[i] == 1)
+            {
+                ruinToSpawn = GameManager.i.ruin1;
+            }
+            else if (data.saveData_ruinType[i] == 2)
+            {
+                ruinToSpawn = GameManager.i.ruin2;
+            }
+            else if(data.saveData_ruinType[i] == 3)
+            {
+                ruinToSpawn = GameManager.i.ruin3;
+            }
+            else if(data.saveData_ruinType[i] == 4)
+            {
+                ruinToSpawn = GameManager.i.ruin4;
+            }
+            else if(data.saveData_ruinType[i] == 5)
+            {
+                ruinToSpawn = GameManager.i.ruin5;
+            }
+            //newRuin.transform.position = new Vector3(data.saveData_ruinPos[i, 0], data.saveData_ruinPos[i, 1], data.saveData_ruinPos[i, 2]);
+            //newRuin.transform.rotation = Quaternion.identity;
+            GameObject newRuin = Instantiate(ruinToSpawn,
+                new Vector3(data.saveData_ruinPos[i, 0],
+                data.saveData_ruinPos[i, 1],
+                data.saveData_ruinPos[i, 2]), Quaternion.identity);
+            newRuin.GetComponent<Ruin>().buildingLevel = data.saveData_ruinBuildingLevel[i];
+            newRuin.GetComponent<Ruin>().buildingType = data.saveData_ruinType[i];
+            newRuin.GetComponent<Ruin>().repairCost = data.saveData_ruinRepairCost[i];
+        }
+    }
     private void LoadResourcesAndPollution(AllSaveData data)
     {
         Currency.MONEY = data.saveData_resources;
@@ -122,5 +163,11 @@ public class SaveLoadHandler : MonoBehaviour
                 data.saveData_asteroidProps[i, 5]);
             newAsteroid.GetComponent<Asteroid>().speed = data.saveData_asteroidProps[i, 6];
         }
+    }
+
+    // A special function used to reassign node (gameObject) reference of any building
+    private void ReassignNodeReference()
+    {
+
     }
 }

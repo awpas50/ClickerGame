@@ -54,7 +54,7 @@ public class Airplane : MonoBehaviour
     void Update()
     {
         // max efficiency: 0.76, min efficiency: 1.
-        efficiency = 1 - ((airportScript.buildingBuff.nearbyHouse + airportScript.buildingBuff.nearbyMainBuilding) * 0.06f);
+        efficiency = 1 - ((airportScript.buildingBuff.houseEfficiencyTotal + airportScript.buildingBuff.nearbyMainBuilding * Objective.townHallEfficiency) * 0.2f);
         waitTime_des = (waitTime_des_initial + (airportScript.buildingLevel.level - 1) * -10f);
         waitTime_des_actial = (waitTime_des_initial + (airportScript.buildingLevel.level - 1) * -10f) * efficiency;
         // I don't know why the airplanes are still moving even if the game is paused, so I manually stop their movement by writing this.

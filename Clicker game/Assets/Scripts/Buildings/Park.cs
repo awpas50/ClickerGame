@@ -54,7 +54,7 @@ public class Park : MonoBehaviour
         // each house increase the efficiency by 25%, whereas each factory nearby decrease the efficiency by 25%. Minimum 20% output.
         if (efficiency > 0.2f)
         {
-            efficiency = 1 + buildingBuff.houseEfficiencyTotal + buildingBuff.nearbyMainBuilding * 0.25f - buildingBuff.nearbyFactory * 0.4f;
+            efficiency = 1 + buildingBuff.houseEfficiencyTotal + buildingBuff.nearbyMainBuilding * Objective.townHallEfficiency - buildingBuff.nearbyFactory * 0.4f;
         }
         if(efficiency <= 0.2f)
         {

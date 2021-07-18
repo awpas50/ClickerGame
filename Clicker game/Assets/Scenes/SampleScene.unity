@@ -10537,6 +10537,11 @@ MonoBehaviour:
       type: 3}
     cost: 0
     image: {fileID: 21300000, guid: c46673252d05a6b428ff316fc14c4f32, type: 3}
+  ruin1: {fileID: 3783225562980481087, guid: 7fbcbead78fff0e4483ca56662940d9c, type: 3}
+  ruin2: {fileID: 748831722109352319, guid: 2a8aba11e89fece4c924f66e8be56b14, type: 3}
+  ruin3: {fileID: 8849886429793026977, guid: da71dd12e475d564ea9a6c65aad71e7a, type: 3}
+  ruin4: {fileID: 1194856955151848361, guid: e5ceeb0ebfc6d804b81bd52ff5ca4067, type: 3}
+  ruin5: {fileID: 6370818009092817997, guid: 8f7c195f7108c724d88cbbe984f83746, type: 3}
   buildingButton1: {fileID: 1411240765}
   buildingButton2: {fileID: 310472633}
   buildingButton3: {fileID: 169811195}
@@ -10560,17 +10565,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b04ec373267b14b49bb8507454be437b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Platform2: {fileID: 0}
-  Platform3: {fileID: 0}
-  Platform4: {fileID: 0}
   objective1: 1000
   objective2: 2500
   objective3: 5000
   objective4: 10000
-  objective1Reached: 0
-  objective2Reached: 0
-  objective3Reached: 0
-  objective4Reached: 0
+  additionalTrigger1: 0
+  additionalTrigger2: 0
+  additionalTrigger3: 0
+  additionalTrigger4: 0
 --- !u!114 &817795197
 MonoBehaviour:
   m_ObjectHideFlags: 0
