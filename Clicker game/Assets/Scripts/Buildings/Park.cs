@@ -8,9 +8,10 @@ public class Park : MonoBehaviour
 {
     
     [Header("Manual collected resources (Reduce pollution)")]
-    [HideInInspector] public float pollutionReduced_initial;
+    private float pollutionReduced_initial;
     public float pollutionReduced;
     public float interval;
+    public float intervalPassed = 0;
 
     public float totalProduction;
     public float totalProduction_buff;
@@ -45,7 +46,7 @@ public class Park : MonoBehaviour
         buildingBuff = GetComponent<BuildingBuff>();
         buildingLevel = GetComponent<BuildingLevel>();
         buildingState = GetComponent<BuildingState>();
-        StartCoroutine(ReducePollution_POP_UP(pollutionReduced, interval));
+        StartCoroutine(ReducePollution_POP_UP(interval - intervalPassed));
         StartCoroutine(ReducePollution_AUTOMATIC(CleanAirInterval_auto));
     }
     private void Update()
@@ -71,9 +72,16 @@ public class Park : MonoBehaviour
         extraProduction = (float)Math.Round(extraProduction, 1);
 
         CleanAirProduced_auto = CleanAirProduced_auto_initial + (buildingLevel.level - 1) * 0.02f;
+
+        // interval passed (indicates the current process of generating resources, used for the save system)
+        intervalPassed += Time.deltaTime;
+        if (intervalPassed >= interval)
+        {
+            intervalPassed = interval;
+        }
     }
 
-    public IEnumerator ReducePollution_POP_UP(float pollutionReduced, float interval)
+    public IEnumerator ReducePollution_POP_UP(float interval)
     {
         // Instaniate a pop up every few seconds. Next pop up won't be spawned unless the previous pop up has been collected
         while (parkPopUpREF == null)
@@ -95,5 +103,10 @@ public class Park : MonoBehaviour
             yield return new WaitForSeconds(interval);
             Pollution.POLLUTION -= CleanAirProduced_auto;
         }
+    }
+
+    public void ResetInterval()
+    {
+        intervalPassed = 0;
     }
 }

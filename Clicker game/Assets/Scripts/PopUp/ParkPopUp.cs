@@ -51,7 +51,9 @@ public class ParkPopUp : MonoBehaviour
         // Remove reference
         parkREF_script.parkPopUpREF = null;
         // Restart coroutine
-        parkREF_script.StartCoroutine(parkREF_script.ReducePollution_POP_UP(parkREF_script.pollutionReduced, parkREF_script.interval));
+        parkREF_script.StartCoroutine(parkREF_script.ReducePollution_POP_UP(parkREF_script.interval));
+        // Reset interval variable (used for the save system)
+        parkREF_script.ResetInterval();
         // Close this pop up.
         Destroy(gameObject);
     }

@@ -4,23 +4,23 @@ using UnityEngine;
 
 public class Airplane : MonoBehaviour
 {
-    public float waitTime_base;
+    [SerializeField] private float waitTime_base;
     public float waitTime_des;
     public float waitTime_des_actial;
-    private float waitTime_des_initial;
+    [SerializeField] private float waitTime_des_initial;
 
     public float relativeSpeed;
-    public float relativeSpeed_initial;
+    [SerializeField] private float relativeSpeed_initial;
 
     public GameObject[] destinations;
     public int randomDestinationIndex;
     // triggers
-    [HideInInspector] public bool reachedHighPoint = false;
-    private bool isPopUpSpawned = false;
+    [SerializeField] private bool reachedHighPoint = false;
+    [SerializeField] private bool isPopUpSpawned = false;
     [HideInInspector] public bool redeparture = false;
 
-    private float t1 = 0;
-    private float t2 = 0;
+    [SerializeField] private float t1 = 0;
+    [SerializeField] private float t2 = 0;
     [Header("Assigned in script")]
     public Transform airport_point1;
     public Transform airport_point2;

@@ -13,16 +13,21 @@ public class AllSaveData
     public float[,] saveData_factoryPos;
     public int[] saveData_factoryModelIndex; // 0 or 1
     public int[] saveData_factoryLevel;
+    public float[] saveData_factoryTimer;
     [Header("Park")]
     public float[,] saveData_parkPos;
     public int[] saveData_parkModelIndex; // 0 or 1
     public int[] saveData_parkLevel;
+    public float[] saveData_parkTimer;
     [Header("Turret")]
     public float[,] saveData_turretPos;
     public int[] saveData_turretLevel;
     [Header("Airport")]
     public float[,] saveData_airportPos;
     public int[] saveData_airportLevel;
+    public float[,] saveData_airplanePos;
+    public float[] saveData_airplaneTravelTime;
+    public string[] saveData_airplaneState;
     [Header("Platforms")]
     public int saveData_platformsInHand;
     public float[,] saveData_platformPos;
@@ -95,6 +100,7 @@ public class AllSaveData
         saveData_factoryPos = new float[allFactories.Length, 3];
         saveData_factoryModelIndex = new int[allFactories.Length];
         saveData_factoryLevel = new int[allFactories.Length];
+        saveData_factoryTimer = new float[allFactories.Length];
         for (int i = 0; i < allFactories.Length; i++)
         {
             saveData_factoryPos[i, 0] = allFactories[i].transform.position.x;
@@ -102,6 +108,7 @@ public class AllSaveData
             saveData_factoryPos[i, 2] = allFactories[i].transform.position.z;
             saveData_factoryModelIndex[i] = allFactories[i].GetComponent<BuildingRandomModel>().seed;
             saveData_factoryLevel[i] = allFactories[i].GetComponent<BuildingLevel>().level;
+            saveData_factoryTimer[i] = allFactories[i].GetComponent<Factory>().intervalPassed;
         }
     }
     private void StoreParkData()
@@ -112,6 +119,7 @@ public class AllSaveData
         saveData_parkPos = new float[allParks.Length, 3];
         saveData_parkModelIndex = new int[allParks.Length];
         saveData_parkLevel = new int[allParks.Length];
+        saveData_parkTimer = new float[allParks.Length];
         for (int i = 0; i < allParks.Length; i++)
         {
             saveData_parkPos[i, 0] = allParks[i].transform.position.x;
@@ -119,6 +127,7 @@ public class AllSaveData
             saveData_parkPos[i, 2] = allParks[i].transform.position.z;
             saveData_parkModelIndex[i] = allParks[i].GetComponent<BuildingRandomModel>().seed;
             saveData_parkLevel[i] = allParks[i].GetComponent<BuildingLevel>().level;
+            saveData_parkTimer[i] = allParks[i].GetComponent<Park>().intervalPassed;
         }
     }
     private void StoreTurretData()
@@ -143,12 +152,16 @@ public class AllSaveData
         allAirports_int = allAirports.Length;
         saveData_airportPos = new float[allAirports.Length, 3];
         saveData_airportLevel = new int[allAirports.Length];
+        saveData_airplanePos = new float[allAirports.Length, 3];
         for (int i = 0; i < allAirports.Length; i++)
         {
             saveData_airportPos[i, 0] = allAirports[i].transform.position.x;
             saveData_airportPos[i, 1] = allAirports[i].transform.position.y;
             saveData_airportPos[i, 2] = allAirports[i].transform.position.z;
             saveData_airportLevel[i] = allAirports[i].GetComponent<BuildingLevel>().level;
+            saveData_airplanePos[i, 0] = allAirports[i].GetComponent<Airport>().airplaneREF.transform.position.x;
+            saveData_airplanePos[i, 1] = allAirports[i].GetComponent<Airport>().airplaneREF.transform.position.y;
+            saveData_airplanePos[i, 2] = allAirports[i].GetComponent<Airport>().airplaneREF.transform.position.z;
         }
     }
     private void StorePlatformData()

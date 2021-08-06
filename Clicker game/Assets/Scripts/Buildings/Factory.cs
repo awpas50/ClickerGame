@@ -7,10 +7,11 @@ using UnityEngine.EventSystems;
 public class Factory : MonoBehaviour
 {
     [Header("Manual collected resources (money)")]
-    [HideInInspector] private float moneyProduced_initial;
+    private float moneyProduced_initial;
     public float moneyProduced;
     public float pollutionProduced;
     public float interval;
+    public float intervalPassed = 0;
 
     public float totalProduction;
     public float totalProduction_buff;
@@ -50,7 +51,7 @@ public class Factory : MonoBehaviour
         buildingBuff = GetComponent<BuildingBuff>();
         buildingLevel = GetComponent<BuildingLevel>();
         buildingState = GetComponent<BuildingState>();
-        StartCoroutine(Production_POP_UP(interval));
+        StartCoroutine(Production_POP_UP(interval - intervalPassed));
         StartCoroutine(Production_AUTOMATIC(interval_auto));
         StartCoroutine(Pollution_AUTOMATIC(pollutionInterval_auto));
     }
@@ -76,6 +77,13 @@ public class Factory : MonoBehaviour
         // Auto production & pollution
         pollutionProduced_auto = pollutionProduced_auto_initial + (buildingLevel.level - 1) * 0.02f;
         moneyProduced_auto = moneyProduced_auto_initial + (buildingLevel.level - 1) * 0.25f;
+
+        // interval passed (indicates the current process of generating resources, used for the save system)
+        intervalPassed += Time.deltaTime;
+        if(intervalPassed >= interval)
+        {
+            intervalPassed = interval;
+        }
     }
 
     public IEnumerator Production_POP_UP(float interval)
@@ -110,5 +118,9 @@ public class Factory : MonoBehaviour
             yield return new WaitForSeconds(interval);
             Pollution.POLLUTION += pollutionProduced_auto;
         }
+    }
+    public void ResetInterval()
+    {
+        intervalPassed = 0;
     }
 }

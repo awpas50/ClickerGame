@@ -64,6 +64,7 @@ public class SaveLoadHandler : MonoBehaviour
                 data.saveData_factoryPos[i, 2]), Quaternion.identity);
             newFactory.GetComponent<BuildingRandomModel>().seed = data.saveData_factoryModelIndex[i];
             newFactory.GetComponent<BuildingLevel>().level = data.saveData_factoryLevel[i];
+            newFactory.GetComponent<Factory>().intervalPassed = data.saveData_factoryTimer[i];
             // Node reference
             GameObject closestNode = GetClosestNode(newFactory, allNodes);
             SetNodeReference(newFactory, closestNode);
@@ -79,6 +80,7 @@ public class SaveLoadHandler : MonoBehaviour
                 data.saveData_parkPos[i, 2]), Quaternion.identity);
             newPark.GetComponent<BuildingRandomModel>().seed = data.saveData_parkModelIndex[i];
             newPark.GetComponent<BuildingLevel>().level = data.saveData_parkLevel[i];
+            newPark.GetComponent<Park>().intervalPassed = data.saveData_parkTimer[i];
             // Node reference
             GameObject closestNode = GetClosestNode(newPark, allNodes);
             SetNodeReference(newPark, closestNode);
@@ -187,7 +189,6 @@ public class SaveLoadHandler : MonoBehaviour
             newAsteroid.GetComponent<Asteroid>().speed = data.saveData_asteroidProps[i, 6];
         }
     }
-
     GameObject[] GetNodeRef()
     {
         return GameObject.FindGameObjectsWithTag("Node");

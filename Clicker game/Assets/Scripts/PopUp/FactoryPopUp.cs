@@ -53,6 +53,8 @@ public class FactoryPopUp : MonoBehaviour
         factoryREF_script.factoryPopUpREF = null;
         // Restart coroutine
         factoryREF_script.StartCoroutine(factoryREF_script.Production_POP_UP(factoryREF_script.interval));
+        // Reset interval variable (used for the save system)
+        factoryREF_script.ResetInterval();
         // Close this pop up.
         Destroy(gameObject);
     }
