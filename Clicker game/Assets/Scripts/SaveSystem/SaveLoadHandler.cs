@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SaveLoadHandler : MonoBehaviour
 {
@@ -10,14 +11,21 @@ public class SaveLoadHandler : MonoBehaviour
         Debug.Log("Save successful");
     }
 
+    public void CreateSceneLoader()
+    {
+        GameObject sceneLoader = new GameObject("SceneLoader");
+        DontDestroyOnLoad(sceneLoader);
+        sceneLoader.AddComponent<SceneLoader>();
+    }
     public void LoadGame()
     {
         AllSaveData data = AccessSaveFile();
-        LoadHouses(data);
-        LoadFactories(data);
-        LoadParks(data);
-        LoadTurrets(data);
-        LoadAirports(data);
+        GameObject[] allNodes = GetNodeRef();
+        LoadHouses(data, allNodes);
+        LoadFactories(data, allNodes);
+        LoadParks(data, allNodes);
+        LoadTurrets(data, allNodes);
+        LoadAirports(data, allNodes);
         LoadPlatforms(data);
         LoadRuins(data);
         LoadResourcesAndPollution(data);
@@ -31,7 +39,7 @@ public class SaveLoadHandler : MonoBehaviour
     {
         return SaveSystem.Load();
     }
-    private void LoadHouses(AllSaveData data)
+    private void LoadHouses(AllSaveData data, GameObject[] allNodes)
     {
         for (int i = 0; i < data.allHouses_int; i++)
         {
@@ -41,9 +49,12 @@ public class SaveLoadHandler : MonoBehaviour
                 data.saveData_housePos[i,2]), Quaternion.identity);
             newHouse.GetComponent<BuildingRandomModel>().seed = data.saveData_houseModelIndex[i];
             newHouse.GetComponent<BuildingLevel>().level = data.saveData_houseLevel[i];
+            // Node reference
+            GameObject closestNode = GetClosestNode(newHouse, allNodes);
+            SetNodeReference(newHouse, closestNode);
         }
     }
-    private void LoadFactories(AllSaveData data)
+    private void LoadFactories(AllSaveData data, GameObject[] allNodes)
     {
         for (int i = 0; i < data.allFactories_int; i++)
         {
@@ -53,9 +64,12 @@ public class SaveLoadHandler : MonoBehaviour
                 data.saveData_factoryPos[i, 2]), Quaternion.identity);
             newFactory.GetComponent<BuildingRandomModel>().seed = data.saveData_factoryModelIndex[i];
             newFactory.GetComponent<BuildingLevel>().level = data.saveData_factoryLevel[i];
+            // Node reference
+            GameObject closestNode = GetClosestNode(newFactory, allNodes);
+            SetNodeReference(newFactory, closestNode);
         }
     }
-    private void LoadParks(AllSaveData data)
+    private void LoadParks(AllSaveData data, GameObject[] allNodes)
     {
         for (int i = 0; i < data.allParks_int; i++)
         {
@@ -65,9 +79,12 @@ public class SaveLoadHandler : MonoBehaviour
                 data.saveData_parkPos[i, 2]), Quaternion.identity);
             newPark.GetComponent<BuildingRandomModel>().seed = data.saveData_parkModelIndex[i];
             newPark.GetComponent<BuildingLevel>().level = data.saveData_parkLevel[i];
+            // Node reference
+            GameObject closestNode = GetClosestNode(newPark, allNodes);
+            SetNodeReference(newPark, closestNode);
         }
     }
-    private void LoadTurrets(AllSaveData data)
+    private void LoadTurrets(AllSaveData data, GameObject[] allNodes)
     {
         for (int i = 0; i < data.allTurrets_int; i++)
         {
@@ -76,9 +93,12 @@ public class SaveLoadHandler : MonoBehaviour
                 data.saveData_turretPos[i, 1],
                 data.saveData_turretPos[i, 2]), Quaternion.identity);
             newTurret.GetComponent<BuildingLevel>().level = data.saveData_turretLevel[i];
+            // Node reference
+            GameObject closestNode = GetClosestNode(newTurret, allNodes);
+            SetNodeReference(newTurret, closestNode);
         }
     }
-    private void LoadAirports(AllSaveData data)
+    private void LoadAirports(AllSaveData data, GameObject[] allNodes)
     {
         for (int i = 0; i < data.allAirports_int; i++)
         {
@@ -87,6 +107,9 @@ public class SaveLoadHandler : MonoBehaviour
                 data.saveData_airportPos[i, 1],
                 data.saveData_airportPos[i, 2]), Quaternion.identity);
             newAirport.GetComponent<BuildingLevel>().level = data.saveData_airportLevel[i];
+            // Node reference
+            GameObject closestNode = GetClosestNode(newAirport, allNodes);
+            SetNodeReference(newAirport, closestNode);
         }
     }
     private void LoadPlatforms(AllSaveData data)
@@ -165,9 +188,32 @@ public class SaveLoadHandler : MonoBehaviour
         }
     }
 
-    // A special function used to reassign node (gameObject) reference of any building
-    private void ReassignNodeReference()
+    GameObject[] GetNodeRef()
     {
-
+        return GameObject.FindGameObjectsWithTag("Node");
+    }
+    GameObject GetClosestNode(GameObject building, GameObject[] nodes)
+    {
+        GameObject tMin = null;
+        float minDist = Mathf.Infinity;
+        Vector3 currentPos = building.transform.position;
+        foreach (GameObject n in nodes)
+        {
+            float dist = Vector3.Distance(n.transform.position, currentPos);
+            if (dist < minDist)
+            {
+                tMin = n;
+                minDist = dist;
+            }
+        }
+        return tMin;
+    }
+    // A special function used to reassign node (gameObject) reference of any building
+    void SetNodeReference(GameObject building, GameObject closestNode)
+    {
+        // assign node --> building
+        building.GetComponent<BuildingState>().node = closestNode;
+        // assign building --> node
+        closestNode.GetComponent<Node>().building_REF = building;
     }
 }

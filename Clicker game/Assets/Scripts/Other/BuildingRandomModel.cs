@@ -7,13 +7,12 @@ public class BuildingRandomModel : MonoBehaviour
     public int seed = -1;
     public GameObject model1;
     public GameObject model2;
-    // Start is called before the first frame update
-    void Start()
+
+    void Awake()
     {
         seed = Random.Range(0, 2);
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
         if(seed == 0)
@@ -21,7 +20,7 @@ public class BuildingRandomModel : MonoBehaviour
             model1.SetActive(true);
             model2.SetActive(false);
         }
-        else
+        else if(seed == 1)
         {
             model1.SetActive(false);
             model2.SetActive(true);

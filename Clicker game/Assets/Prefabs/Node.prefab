@@ -112,11 +112,11 @@ MonoBehaviour:
   boxCollider: {fileID: 4484925154965599189}
   nearbyNode: []
   nearbyNode_building: []
-  nearbyNode_building_house: []
   nodeIndex: -1
   placeHolder: {fileID: 0}
   placeHolder_building_REF: {fileID: 0}
   building_REF: {fileID: 0}
+  building_ruin: {fileID: 0}
   offset: {x: 0, y: 0, z: 0}
 --- !u!54 &7305602656101433537
 Rigidbody:
@@ -305,6 +305,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Model
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: d4d0d67f0ab6e7f4bba73983902576a4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d4d0d67f0ab6e7f4bba73983902576a4, type: 3}
