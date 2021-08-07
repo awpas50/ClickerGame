@@ -28,7 +28,7 @@ public class SaveLoadHandler : MonoBehaviour
         LoadTurrets(data, allNodes);
         LoadAirports(data, allNodes);
         LoadPlatforms(data);
-        LoadRuins(data);
+        LoadRuins(data, allNodes);
         LoadResourcesAndPollution(data);
         LoadTownHallRelated(data);
         LoadAsteroids(data);
@@ -140,41 +140,46 @@ public class SaveLoadHandler : MonoBehaviour
                 data.saveData_platformPos[i, 2]), Quaternion.identity);
         }
     }
-    private void LoadRuins(AllSaveData data)
+    private void LoadRuins(AllSaveData data, GameObject[] allNodes)
     {
         for (int i = 0; i < data.allRuins_int; i++)
         {
             GameObject ruinToSpawn = GameManager.i.ruin1;
 
             if(data.saveData_ruinType[i] == 1)
-            {
                 ruinToSpawn = GameManager.i.ruin1;
-            }
             else if (data.saveData_ruinType[i] == 2)
-            {
                 ruinToSpawn = GameManager.i.ruin2;
-            }
             else if(data.saveData_ruinType[i] == 3)
-            {
                 ruinToSpawn = GameManager.i.ruin3;
-            }
             else if(data.saveData_ruinType[i] == 4)
-            {
                 ruinToSpawn = GameManager.i.ruin4;
-            }
             else if(data.saveData_ruinType[i] == 5)
-            {
                 ruinToSpawn = GameManager.i.ruin5;
-            }
-            //newRuin.transform.position = new Vector3(data.saveData_ruinPos[i, 0], data.saveData_ruinPos[i, 1], data.saveData_ruinPos[i, 2]);
-            //newRuin.transform.rotation = Quaternion.identity;
+
             GameObject newRuin = Instantiate(ruinToSpawn,
                 new Vector3(data.saveData_ruinPos[i, 0],
                 data.saveData_ruinPos[i, 1],
                 data.saveData_ruinPos[i, 2]), Quaternion.identity);
+
+            if (data.saveData_ruinType[i] == 1)
+                newRuin.GetComponent<Ruin>().buildingData = GameManager.i.building1.building;
+            else if (data.saveData_ruinType[i] == 2)
+                newRuin.GetComponent<Ruin>().buildingData = GameManager.i.building2.building;
+            else if (data.saveData_ruinType[i] == 3)
+                newRuin.GetComponent<Ruin>().buildingData = GameManager.i.building3.building;
+            else if (data.saveData_ruinType[i] == 4)
+                newRuin.GetComponent<Ruin>().buildingData = GameManager.i.building4.building;
+            else if (data.saveData_ruinType[i] == 5)
+                newRuin.GetComponent<Ruin>().buildingData = GameManager.i.building5.building;
+            
             newRuin.GetComponent<Ruin>().buildingLevel = data.saveData_ruinBuildingLevel[i];
             newRuin.GetComponent<Ruin>().buildingType = data.saveData_ruinType[i];
             newRuin.GetComponent<Ruin>().repairCost = data.saveData_ruinRepairCost[i];
+
+            // Node reference
+            GameObject closestNode = GetClosestNode(newRuin, allNodes);
+            SetRuinNodeReference(newRuin, closestNode);
         }
     }
     private void LoadResourcesAndPollution(AllSaveData data)
@@ -231,5 +236,13 @@ public class SaveLoadHandler : MonoBehaviour
         building.GetComponent<BuildingState>().node = closestNode;
         // assign building --> node
         closestNode.GetComponent<Node>().building_REF = building;
+    }
+
+    void SetRuinNodeReference(GameObject building, GameObject closestNode)
+    {
+        // assign node --> building
+        building.GetComponent<Ruin>().node = closestNode;
+        // assign building --> node
+        closestNode.GetComponent<Node>().building_ruin = building;
     }
 }
