@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -109,6 +110,20 @@ public class SaveLoadHandler : MonoBehaviour
                 data.saveData_airportPos[i, 1],
                 data.saveData_airportPos[i, 2]), Quaternion.identity);
             newAirport.GetComponent<BuildingLevel>().level = data.saveData_airportLevel[i];
+            newAirport.GetComponent<Airport>().airplaneREF.transform.position = 
+                new Vector3(data.saveData_airplanePos[i, 0], 
+                data.saveData_airplanePos[i, 1], 
+                data.saveData_airplanePos[i, 2]);
+            newAirport.GetComponent<Airport>().airplaneScript.randomDestinationIndex = data.saveData_airplaneDesIndex[i];
+            newAirport.GetComponent<Airport>().airplaneScript.t1 = data.saveData_airplaneTravelTime[i, 0];
+            newAirport.GetComponent<Airport>().airplaneScript.t2 = data.saveData_airplaneTravelTime[i, 1];
+            newAirport.GetComponent<Airport>().airplaneScript.t3 = data.saveData_airplaneTravelTime[i, 2];
+            newAirport.GetComponent<Airport>().airplaneScript.reachedHighPoint = data.saveData_airplaneBoolState[i, 0];
+            newAirport.GetComponent<Airport>().airplaneScript.isPopUpSpawned = data.saveData_airplaneBoolState[i, 1];
+            newAirport.GetComponent<Airport>().airplaneScript.redeparture = data.saveData_airplaneBoolState[i, 2];
+            newAirport.GetComponent<Airport>().airplaneScript.isFinishedFirstTimeWaiting = data.saveData_airplaneBoolState[i, 3];
+            newAirport.GetComponent<Airport>().airplaneScript.state = (Airplane.State)Enum.Parse(typeof(Airplane.State), data.saveData_airplaneEnumState[i]); ;
+
             // Node reference
             GameObject closestNode = GetClosestNode(newAirport, allNodes);
             SetNodeReference(newAirport, closestNode);

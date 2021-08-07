@@ -24,7 +24,7 @@ public class Airport : MonoBehaviour
     [HideInInspector] public BuildingBuff buildingBuff;
     [HideInInspector] public BuildingLevel buildingLevel;
 
-    void Start()
+    void Awake()
     {
         pollutionProduced_auto_initial = pollutionProduced_auto;
         // random point 2 (peak) location

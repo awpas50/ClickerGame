@@ -15,12 +15,14 @@ public class Airplane : MonoBehaviour
     public GameObject[] destinations;
     public int randomDestinationIndex;
     // triggers
-    [SerializeField] private bool reachedHighPoint = false;
-    [SerializeField] private bool isPopUpSpawned = false;
-    [HideInInspector] public bool redeparture = false;
+    public bool reachedHighPoint = false;
+    public bool isPopUpSpawned = false;
+    public bool redeparture = false;
+    public bool isFinishedFirstTimeWaiting = false;
 
-    [SerializeField] private float t1 = 0;
-    [SerializeField] private float t2 = 0;
+    public float t1 = 0;
+    public float t2 = 0;
+    public float t3 = 0;
     [Header("Assigned in script")]
     public Transform airport_point1;
     public Transform airport_point2;
@@ -46,8 +48,6 @@ public class Airplane : MonoBehaviour
         waitTime_des_initial = waitTime_des_actial;
         relativeSpeed_initial = relativeSpeed;
         destinations = GameObject.FindGameObjectsWithTag("Destinations");
-
-        StartCoroutine(WaitAtApron(waitTime_base));
     }
 
     // Update is called once per frame
@@ -67,14 +67,24 @@ public class Airplane : MonoBehaviour
             relativeSpeed = relativeSpeed_initial + (airportScript.buildingLevel.level - 1) * 0.015f;
         }
         
-
-        if(redeparture)
+        
+        if (redeparture)
         {
             ReachedBaseEvent();
         }
+
         if (state == State.Idle)
         {
-            return;
+            if (!isFinishedFirstTimeWaiting)
+            {
+                t3 += Time.deltaTime;
+            }
+            if (t3 >= waitTime_base && !isFinishedFirstTimeWaiting)
+            {
+                t3 = 0;
+                state = State.Departure;
+                isFinishedFirstTimeWaiting = true;
+            }
         }
         else if(state == State.Departure)
         {
@@ -125,14 +135,21 @@ public class Airplane : MonoBehaviour
                 }
             }
         }
+
+        
+            
     }
 
-    IEnumerator WaitAtApron(float time)
-    {
-        state = State.Idle;
-        yield return new WaitForSeconds(time);
-        state = State.Departure;
-    }
+    //void WaitAtApron()
+    //{
+    //    t3 += Time.deltaTime;
+    //    if (t3 >= waitTime_base && !isFinishedFirstTimeWaiting)
+    //    {
+    //        t3 = 0;
+    //        state = State.Departure;
+    //        isFinishedFirstTimeWaiting = true;
+    //    }
+    //}
 
     void ReachedDestinationEvent()
     {

@@ -26,8 +26,10 @@ public class AllSaveData
     public float[,] saveData_airportPos;
     public int[] saveData_airportLevel;
     public float[,] saveData_airplanePos;
-    public float[] saveData_airplaneTravelTime;
-    public string[] saveData_airplaneState;
+    public int[] saveData_airplaneDesIndex;
+    public float[,] saveData_airplaneTravelTime;
+    public bool[,] saveData_airplaneBoolState;
+    public string[] saveData_airplaneEnumState;
     [Header("Platforms")]
     public int saveData_platformsInHand;
     public float[,] saveData_platformPos;
@@ -153,6 +155,11 @@ public class AllSaveData
         saveData_airportPos = new float[allAirports.Length, 3];
         saveData_airportLevel = new int[allAirports.Length];
         saveData_airplanePos = new float[allAirports.Length, 3];
+        saveData_airplaneDesIndex = new int[allAirports.Length];
+        saveData_airplaneTravelTime = new float[allAirports.Length, 3];
+        saveData_airplaneBoolState = new bool[allAirports.Length, 4];
+        saveData_airplaneEnumState = new string[allAirports.Length];
+
         for (int i = 0; i < allAirports.Length; i++)
         {
             saveData_airportPos[i, 0] = allAirports[i].transform.position.x;
@@ -162,6 +169,15 @@ public class AllSaveData
             saveData_airplanePos[i, 0] = allAirports[i].GetComponent<Airport>().airplaneREF.transform.position.x;
             saveData_airplanePos[i, 1] = allAirports[i].GetComponent<Airport>().airplaneREF.transform.position.y;
             saveData_airplanePos[i, 2] = allAirports[i].GetComponent<Airport>().airplaneREF.transform.position.z;
+            saveData_airplaneDesIndex[i] = allAirports[i].GetComponent<Airport>().airplaneScript.randomDestinationIndex;
+            saveData_airplaneTravelTime[i, 0] = allAirports[i].GetComponent<Airport>().airplaneScript.t1;
+            saveData_airplaneTravelTime[i, 1] = allAirports[i].GetComponent<Airport>().airplaneScript.t2;
+            saveData_airplaneTravelTime[i, 2] = allAirports[i].GetComponent<Airport>().airplaneScript.t3;
+            saveData_airplaneBoolState[i, 0] = allAirports[i].GetComponent<Airport>().airplaneScript.reachedHighPoint;
+            saveData_airplaneBoolState[i, 1] = allAirports[i].GetComponent<Airport>().airplaneScript.isPopUpSpawned;
+            saveData_airplaneBoolState[i, 2] = allAirports[i].GetComponent<Airport>().airplaneScript.redeparture;
+            saveData_airplaneBoolState[i, 3] = allAirports[i].GetComponent<Airport>().airplaneScript.isFinishedFirstTimeWaiting;
+            saveData_airplaneEnumState[i] = allAirports[i].GetComponent<Airport>().airplaneScript.state.ToString();
         }
     }
     private void StorePlatformData()
