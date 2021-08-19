@@ -6,13 +6,14 @@ public class Bullet : MonoBehaviour
 {
     bool isSpawnedEffect = false;
     public GameObject explosionEffect;
-    private Transform target;
-    public float speed;
+    public Transform target;
+    private float initialSpeed;
+    [SerializeField] private float speed;
 
     public ParticleSystem particleEffect1;
     public ParticleSystem particleEffect2;
 
-    private Vector3 dir;
+    public Vector3 dir;
     
     public void Seek(Transform _target)
     {
@@ -21,7 +22,12 @@ public class Bullet : MonoBehaviour
 
     public void Start()
     {
-        dir = (transform.position - target.transform.position).normalized;
+        initialSpeed = speed;
+
+        if (target != null)
+        {
+            dir = (transform.position - target.transform.position).normalized;
+        }
     }
     void Update()
     {
@@ -30,14 +36,25 @@ public class Bullet : MonoBehaviour
 
     void FollowTarget()
     {
-        
-        if (target == null)
+        if (Time.timeScale == 0 && target == null)
         {
+            speed = 0;
+            transform.position -= dir * 0f;
+        }
+        else if(Time.timeScale == 0 && target != null)
+        {
+            speed = 0;
+            transform.position = Vector3.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime);
+        }
+        else if (target == null)
+        {
+            speed = initialSpeed;
             transform.position -= dir * 0.2f;
             Destroy(gameObject, 2f);
         }
-        if (target != null)
+        else if (target != null)
         {
+            speed = initialSpeed;
             transform.position = Vector3.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime);
             if (Vector3.Distance(transform.position, target.transform.position) <= 0.25f)
             {

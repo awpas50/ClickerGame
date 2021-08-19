@@ -5,6 +5,8 @@ using UnityEngine;
 public class AsteroidSpawner : MonoBehaviour
 {
     public static AsteroidSpawner i;
+    // This number will increments by 1 each time when an asteroid is spawned.
+    public int asteroidID = 0;
     private float randomX;
     private float randomY;
     private float randomZ;
@@ -79,6 +81,8 @@ public class AsteroidSpawner : MonoBehaviour
             for (int i = 0; i < asteroidCount; i++)
             {
                 GameObject temp = Instantiate(asteroid, new Vector3(randomX, randomY, randomZ), Quaternion.identity);
+                temp.GetComponent<Asteroid>().uniqueID = asteroidID;
+                asteroidID++;
                 temp.GetComponent<Asteroid>().speed = Random.Range(asteroid.GetComponent<Asteroid>().speedMin, asteroid.GetComponent<Asteroid>().speedMax);
                 yield return new WaitForSeconds(Random.Range(0.3f, 2f));
             }
@@ -90,6 +94,8 @@ public class AsteroidSpawner : MonoBehaviour
         while(true)
         {
             GameObject temp = Instantiate(asteroid, new Vector3(randomX, randomY, randomZ), Quaternion.identity);
+            temp.GetComponent<Asteroid>().uniqueID = asteroidID;
+            asteroidID++;
             temp.GetComponent<Asteroid>().speed = 4.5f;
             yield return new WaitForSeconds(30f);
         }
@@ -102,7 +108,10 @@ public class AsteroidSpawner : MonoBehaviour
             asteroidCount = 32;
         }
         //AudioManager.instance.Play(SoundList.AsteroidPassBy);
+        asteroidID++;
         GameObject temp = Instantiate(asteroid, new Vector3(randomX, randomY, randomZ), Quaternion.identity);
+        temp.GetComponent<Asteroid>().uniqueID = asteroidID;
+        asteroidID++;
         temp.GetComponent<Asteroid>().speed = Random.Range(asteroid.GetComponent<Asteroid>().speedMin, asteroid.GetComponent<Asteroid>().speedMax);
         StopCoroutine(Spawn_DEBUG());
         yield return null;

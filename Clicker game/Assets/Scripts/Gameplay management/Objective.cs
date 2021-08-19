@@ -53,10 +53,11 @@ public class Objective : MonoBehaviour
         {
             mainBuildingScript.moneyEachClick = 10;
             townHallEfficiency = 0.6f;
-            UIManager.i.objectiveText.text = "";
+            
             if (!additionalTrigger4)
             {
                 SpecialBuildingCount.platform1Count += 5;
+                UIManager.i.objectiveText.text = "";
                 additionalTrigger4 = true;
             }
         }
@@ -64,10 +65,11 @@ public class Objective : MonoBehaviour
         {
             mainBuildingScript.moneyEachClick = 8;
             townHallEfficiency = 0.45f;
-            UIManager.i.objectiveText.text = "Reach 10000";
+            
             if (!additionalTrigger3)
             {
                 SpecialBuildingCount.platform1Count += 5;
+                UIManager.i.objectiveText.text = "Reach 10000";
                 additionalTrigger3 = true;
             }
         }
@@ -75,10 +77,11 @@ public class Objective : MonoBehaviour
         {
             mainBuildingScript.moneyEachClick = 6;
             townHallEfficiency = 0.35f;
-            UIManager.i.objectiveText.text = "Reach 6000";
+            
             if (!additionalTrigger2)
             {
                 SpecialBuildingCount.platform1Count += 4;
+                UIManager.i.objectiveText.text = "Reach 6000";
                 additionalTrigger2 = true;
             }
         }
@@ -86,10 +89,11 @@ public class Objective : MonoBehaviour
         {
             mainBuildingScript.moneyEachClick = 3;
             townHallEfficiency = 0.3f;
-            UIManager.i.objectiveText.text = "Reach 2500";
+            
             if (!additionalTrigger1)
             {
                 SpecialBuildingCount.platform1Count += 4;
+                UIManager.i.objectiveText.text = "Reach 2500";
                 additionalTrigger1 = true;
             }
         }

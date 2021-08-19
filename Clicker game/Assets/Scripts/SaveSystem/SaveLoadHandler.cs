@@ -22,23 +22,34 @@ public class SaveLoadHandler : MonoBehaviour
     {
         AllSaveData data = AccessSaveFile();
         GameObject[] allNodes = GetNodeRef();
+        LoadPlatforms(data);
         LoadHouses(data, allNodes);
         LoadFactories(data, allNodes);
         LoadParks(data, allNodes);
         LoadTurrets(data, allNodes);
         LoadAirports(data, allNodes);
-        LoadPlatforms(data);
         LoadRuins(data, allNodes);
         LoadResourcesAndPollution(data);
         LoadTownHallRelated(data);
         LoadAsteroids(data);
-
+        LoadBullets(data);
         Debug.Log("Load successful");
     }
 
     private AllSaveData AccessSaveFile()
     {
         return SaveSystem.Load();
+    }
+    private void LoadPlatforms(AllSaveData data)
+    {
+        SpecialBuildingCount.platform1Count = data.saveData_platformsInHand;
+        for (int i = 0; i < data.allPlatforms_int; i++)
+        {
+            GameObject newPlatform = Instantiate(GameManager.i.platform1.building,
+                new Vector3(data.saveData_platformPos[i, 0],
+                data.saveData_platformPos[i, 1],
+                data.saveData_platformPos[i, 2]), Quaternion.identity);
+        }
     }
     private void LoadHouses(AllSaveData data, GameObject[] allNodes)
     {
@@ -96,6 +107,7 @@ public class SaveLoadHandler : MonoBehaviour
                 data.saveData_turretPos[i, 1],
                 data.saveData_turretPos[i, 2]), Quaternion.identity);
             newTurret.GetComponent<BuildingLevel>().level = data.saveData_turretLevel[i];
+            newTurret.GetComponent<Turret>().fireCountdown = data.saveData_turretFireCountdown[i];
             // Node reference
             GameObject closestNode = GetClosestNode(newTurret, allNodes);
             SetNodeReference(newTurret, closestNode);
@@ -129,17 +141,7 @@ public class SaveLoadHandler : MonoBehaviour
             SetNodeReference(newAirport, closestNode);
         }
     }
-    private void LoadPlatforms(AllSaveData data)
-    {
-        SpecialBuildingCount.platform1Count = data.saveData_platformsInHand;
-        for (int i = 0; i < data.allPlatforms_int; i++)
-        {
-            GameObject newPlatform = Instantiate(GameManager.i.platform1.building,
-                new Vector3(data.saveData_platformPos[i, 0],
-                data.saveData_platformPos[i, 1],
-                data.saveData_platformPos[i, 2]), Quaternion.identity);
-        }
-    }
+    
     private void LoadRuins(AllSaveData data, GameObject[] allNodes)
     {
         for (int i = 0; i < data.allRuins_int; i++)
@@ -207,8 +209,37 @@ public class SaveLoadHandler : MonoBehaviour
                 data.saveData_asteroidProps[i, 4], 
                 data.saveData_asteroidProps[i, 5]);
             newAsteroid.GetComponent<Asteroid>().speed = data.saveData_asteroidProps[i, 6];
+            newAsteroid.GetComponent<Asteroid>().uniqueID = data.saveData_asteroidUniqueID[i];
+        }
+        AsteroidSpawner.i.asteroidID = data.saveData_asteroidSpawnID;
+    }
+    private void LoadBullets(AllSaveData data)
+    {
+        GameObject[] allAsteroids = GameObject.FindGameObjectsWithTag("Asteroid");
+        for (int i = 0; i < data.allBullets_int; i++)
+        {
+            GameObject newBullet = Instantiate(GameManager.i.bullet,
+                new Vector3(data.saveData_bulletPos[i, 0],
+                data.saveData_bulletPos[i, 1],
+                data.saveData_bulletPos[i, 2]), Quaternion.identity);
+            newBullet.GetComponent<Bullet>().dir = new Vector3(data.saveData_bulletDir[i, 0], data.saveData_bulletDir[i, 1], data.saveData_bulletDir[i, 2]);
+            // Get target
+            for (int j = 0; j < allAsteroids.Length; j++)
+            {
+                // if saveData_bulletTargetID[i] == -1 (Can't find any target)
+                if (data.saveData_bulletTargetID[i] == -1)
+                {
+                    return;
+                }
+                if (allAsteroids[j].GetComponent<Asteroid>().uniqueID == data.saveData_bulletTargetID[i])
+                {
+                    newBullet.GetComponent<Bullet>().target = allAsteroids[j].transform;
+                }
+            }
+            
         }
     }
+
     GameObject[] GetNodeRef()
     {
         return GameObject.FindGameObjectsWithTag("Node");
@@ -237,7 +268,6 @@ public class SaveLoadHandler : MonoBehaviour
         // assign building --> node
         closestNode.GetComponent<Node>().building_REF = building;
     }
-
     void SetRuinNodeReference(GameObject building, GameObject closestNode)
     {
         // assign node --> building

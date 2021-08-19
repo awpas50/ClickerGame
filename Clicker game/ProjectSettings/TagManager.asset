@@ -20,6 +20,7 @@ TagManager:
   - PlatformPlaces2
   - Platform
   - NodeDestroyer
+  - Bullet
   layers:
   - Default
   - TransparentFX

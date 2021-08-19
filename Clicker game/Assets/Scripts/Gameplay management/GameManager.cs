@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviour
     public GameObject ruin3;
     public GameObject ruin4;
     public GameObject ruin5;
+    public GameObject bullet;
 
     [Header("Building Buttons")]
     public Button buildingButton1;
@@ -335,7 +336,7 @@ public class GameManager : MonoBehaviour
             if (buildingSelectedInScene.tag == "House")
             {
                 // Set building name in the UI
-                UIManager.i.Line1Text.text = "Efficiency: " + buildingSelectedInScene.GetComponent<House>().efficiency * 100 + "%";
+                UIManager.i.Line1Text.text = "Efficiency: " + buildingSelectedInScene.GetComponent<House>().baseEfficiency * 100 + "% + " + buildingSelectedInScene.GetComponent<House>().extraEfficiency * 100 + "%";
                 UIManager.i.Line2Text.text = "";
                 UIManager.i.Line3Text.text = "";
                 UIManager.i.Line4Text.text = "";
@@ -373,7 +374,16 @@ public class GameManager : MonoBehaviour
             if (buildingSelectedInScene.tag == "Generator")
             {
                 // Set building name in the UI
-                UIManager.i.Line1Text.text = "Fire rate: " + buildingSelectedInScene.GetComponent<Turret>().fireRate.ToString("F2") + " per second";
+                if(buildingSelectedInScene.GetComponent<Turret>().efficiency <= 1)
+                {
+                    UIManager.i.Line1Text.text = "Fire rate: " + buildingSelectedInScene.GetComponent<Turret>().fireRate.ToString("F2") + " per second";
+                }
+                else if(buildingSelectedInScene.GetComponent<Turret>().efficiency > 1)
+                {
+                    UIManager.i.Line1Text.text = "Fire rate: " + buildingSelectedInScene.GetComponent<Turret>().fireRate.ToString("F2") + " + " +
+                    (buildingSelectedInScene.GetComponent<Turret>().efficiency - 1).ToString("F2") + " per second";
+                }
+                
                 UIManager.i.Line2Text.text = "";
                 UIManager.i.Line3Text.text = "Auto Pollution: " + (buildingSelectedInScene.GetComponent<Turret>().pollutionProduced_auto.ToString("F2"));
                 UIManager.i.Line4Text.text = "";

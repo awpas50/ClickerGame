@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Asteroid : MonoBehaviour
 {
+    // Assigned in asteroid spawner
+    public int uniqueID;
     public float speed;
     public float speedMin = 5f;
     public float speedMax = 10f;

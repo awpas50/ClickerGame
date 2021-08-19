@@ -22,6 +22,11 @@ public class AllSaveData
     [Header("Turret")]
     public float[,] saveData_turretPos;
     public int[] saveData_turretLevel;
+    public float[] saveData_turretFireCountdown;
+    [Header("Bullet")]
+    public float[,] saveData_bulletPos;
+    public int[] saveData_bulletTargetID;
+    public float[,] saveData_bulletDir;
     [Header("Airport")]
     public float[,] saveData_airportPos;
     public int[] saveData_airportLevel;
@@ -44,8 +49,10 @@ public class AllSaveData
     public int saveData_townHallLevel;
     public bool[] saveData_townHall_objectiveTriggers;
     [Header("Asteroids")]
+    public int saveData_asteroidSpawnID;
     public float saveData_timeElapsed;
     public float[,] saveData_asteroidProps; // 0 ~ 2: position, 3 ~ 5: target position, 6: speed
+    public int[] saveData_asteroidUniqueID;
     [Header("Building properties")]
     public float[] saveData_allFactories_timer;
     public float[] saveData_allParks_timer;
@@ -58,6 +65,7 @@ public class AllSaveData
     public int allFactories_int;
     public int allParks_int;
     public int allTurrets_int;
+    public int allBullets_int;
     public int allAirports_int;
     public int allPlatforms_int;
     public int allAsteroids_int;
@@ -65,18 +73,33 @@ public class AllSaveData
 
     public AllSaveData()
     {
+        StorePlatformData();
         StoreHouseData();
         StoreFactoryData();
         StoreParkData();
         StoreTurretData();
         StoreAirportData();
-        StorePlatformData();
         StoreRuinData();
         StoreResourcesAndPollution();
         StoreTownHallRelated();
-        StoreAsteroids();
+        StoreAsteroidsData();
+        StoreBulletData();
     }
 
+    private void StorePlatformData()
+    {
+        saveData_platformsInHand = SpecialBuildingCount.platform1Count;
+
+        GameObject[] allPlatforms = GameObject.FindGameObjectsWithTag("Platform");
+        allPlatforms_int = allPlatforms.Length;
+        saveData_platformPos = new float[allPlatforms.Length, 3];
+        for (int i = 0; i < allPlatforms.Length; i++)
+        {
+            saveData_platformPos[i, 0] = allPlatforms[i].transform.position.x;
+            saveData_platformPos[i, 1] = allPlatforms[i].transform.position.y;
+            saveData_platformPos[i, 2] = allPlatforms[i].transform.position.z;
+        }
+    }
     private void StoreHouseData()
     {
         // House data
@@ -136,15 +159,20 @@ public class AllSaveData
     {
         // Turret data
         GameObject[] allTurrets = GameObject.FindGameObjectsWithTag("Generator");
+        
         allTurrets_int = allTurrets.Length;
         saveData_turretPos = new float[allTurrets.Length, 3];
         saveData_turretLevel = new int[allTurrets.Length];
+        saveData_turretFireCountdown = new float[allTurrets.Length];
+        
         for (int i = 0; i < allTurrets.Length; i++)
         {
             saveData_turretPos[i, 0] = allTurrets[i].transform.position.x;
             saveData_turretPos[i, 1] = allTurrets[i].transform.position.y;
             saveData_turretPos[i, 2] = allTurrets[i].transform.position.z;
             saveData_turretLevel[i] = allTurrets[i].GetComponent<BuildingLevel>().level;
+            saveData_turretFireCountdown[i] = allTurrets[i].GetComponent<Turret>().fireCountdown;
+            
         }
     }
     private void StoreAirportData()
@@ -178,20 +206,6 @@ public class AllSaveData
             saveData_airplaneBoolState[i, 2] = allAirports[i].GetComponent<Airport>().airplaneScript.redeparture;
             saveData_airplaneBoolState[i, 3] = allAirports[i].GetComponent<Airport>().airplaneScript.isFinishedFirstTimeWaiting;
             saveData_airplaneEnumState[i] = allAirports[i].GetComponent<Airport>().airplaneScript.state.ToString();
-        }
-    }
-    private void StorePlatformData()
-    {
-        saveData_platformsInHand = SpecialBuildingCount.platform1Count;
-
-        GameObject[] allPlatforms = GameObject.FindGameObjectsWithTag("Platform");
-        allPlatforms_int = allPlatforms.Length;
-        saveData_platformPos = new float[allPlatforms.Length, 3];
-        for (int i = 0; i < allPlatforms.Length; i++)
-        {
-            saveData_platformPos[i, 0] = allPlatforms[i].transform.position.x;
-            saveData_platformPos[i, 1] = allPlatforms[i].transform.position.y;
-            saveData_platformPos[i, 2] = allPlatforms[i].transform.position.z;
         }
     }
     private void StoreRuinData()
@@ -261,11 +275,12 @@ public class AllSaveData
                 break;
         }
     }
-    private void StoreAsteroids()
+    private void StoreAsteroidsData()
     {
         GameObject[] allAsteroids = GameObject.FindGameObjectsWithTag("Asteroid");
         allAsteroids_int = allAsteroids.Length;
         saveData_asteroidProps = new float[allAsteroids.Length, 7];
+        saveData_asteroidUniqueID = new int[allAsteroids.Length];
         for (int i = 0; i < allAsteroids.Length; i++)
         {
             saveData_asteroidProps[i, 0] = allAsteroids[i].transform.position.x;
@@ -275,6 +290,34 @@ public class AllSaveData
             saveData_asteroidProps[i, 4] = allAsteroids[i].GetComponent<Asteroid>().target_vector3.y;
             saveData_asteroidProps[i, 5] = allAsteroids[i].GetComponent<Asteroid>().target_vector3.z;
             saveData_asteroidProps[i, 6] = allAsteroids[i].GetComponent<Asteroid>().speed;
+            saveData_asteroidUniqueID[i] = allAsteroids[i].GetComponent<Asteroid>().uniqueID;
+        }
+        saveData_asteroidSpawnID = AsteroidSpawner.i.asteroidID;
+    }
+    private void StoreBulletData()
+    {
+        GameObject[] allBullets = GameObject.FindGameObjectsWithTag("Bullet");
+
+        allBullets_int = allBullets.Length;
+        saveData_bulletPos = new float[allBullets.Length, 3];
+        saveData_bulletTargetID = new int[allBullets.Length];
+        saveData_bulletDir = new float[allBullets.Length, 3];
+        for (int i = 0; i < allBullets.Length; i++)
+        {
+            saveData_bulletPos[i, 0] = allBullets[i].transform.position.x;
+            saveData_bulletPos[i, 1] = allBullets[i].transform.position.y;
+            saveData_bulletPos[i, 2] = allBullets[i].transform.position.z;
+            if(allBullets[i].GetComponent<Bullet>().target)
+            {
+                saveData_bulletTargetID[i] = allBullets[i].GetComponent<Bullet>().target.gameObject.GetComponent<Asteroid>().uniqueID;
+            }
+            else
+            {
+                saveData_bulletTargetID[i] = -1;
+            }
+            saveData_bulletDir[i, 0] = allBullets[i].GetComponent<Bullet>().dir.x;
+            saveData_bulletDir[i, 1] = allBullets[i].GetComponent<Bullet>().dir.y;
+            saveData_bulletDir[i, 2] = allBullets[i].GetComponent<Bullet>().dir.z;
         }
     }
 }

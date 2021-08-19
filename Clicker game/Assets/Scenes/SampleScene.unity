@@ -10552,6 +10552,7 @@ MonoBehaviour:
   ruin3: {fileID: 8849886429793026977, guid: da71dd12e475d564ea9a6c65aad71e7a, type: 3}
   ruin4: {fileID: 1194856955151848361, guid: e5ceeb0ebfc6d804b81bd52ff5ca4067, type: 3}
   ruin5: {fileID: 6370818009092817997, guid: 8f7c195f7108c724d88cbbe984f83746, type: 3}
+  bullet: {fileID: 5690579362627345571, guid: d9c57067b29bf7545b1d536d9913f129, type: 3}
   buildingButton1: {fileID: 1411240765}
   buildingButton2: {fileID: 310472633}
   buildingButton3: {fileID: 169811195}
@@ -15729,6 +15730,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcb0dfe9e4709d04295438a90ec8d37f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  asteroidID: 0
   asteroid: {fileID: 6927566403291967668, guid: 09f686b57e950544e9f5eb719d602829,
     type: 3}
   asteroidCount: 0

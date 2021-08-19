@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class Turret : MonoBehaviour
 {
-    LineRenderer lr;
-    BuildingLevel buildingLevel;
-    BuildingState buildingState;
+    private LineRenderer lr;
+    private BuildingLevel buildingLevel;
+    private BuildingState buildingState;
+    private BuildingBuff buildingBuff;
     [Header("Bullet props")]
-    public GameObject bullet;
-    public Transform firePoint;
+    [SerializeField] private GameObject bullet;
+    [SerializeField] private Transform firePoint;
 
     [Header("Turret props")]
     public GameObject cannonBase;
@@ -20,17 +21,18 @@ public class Turret : MonoBehaviour
     [Header("Target")]
     public GameObject[] asteroids;
     public int targetID;
-    public Transform target;
-    public bool targetLocked = false;
+    [SerializeField] private Transform target;
+    [SerializeField] private bool targetLocked = false;
     [Header("Shooting")]
     private float fireRate_initial;
-    public float fireRate = 1f;
+    public float fireRate = 0.35f;
     public float fireCountdown = 0f;
+    [Header("Efficiency")]
+    public float efficiency;
     [Header("Pollution")]
     public float pollutionProduced_auto;
     public float pollutionInterval_auto;
     public float pollutionProduced_auto_initial;
-
     
     public enum State
     {
@@ -50,22 +52,28 @@ public class Turret : MonoBehaviour
         fireRate_initial = fireRate;
         buildingState = GetComponent<BuildingState>();
         buildingLevel = GetComponent<BuildingLevel>();
+        buildingBuff = GetComponent<BuildingBuff>();
         InvokeRepeating("UpdateTarget", 0f, 0.15f);
         StartCoroutine(RandomAngleY());
         angleY_current = angleY_random;
+        fireCountdown = 1f / fireRate;
 
         pollutionProduced_auto_initial = pollutionProduced_auto;
         StartCoroutine(Pollution_AUTOMATIC(pollutionInterval_auto));
     }
-    
+
     void Update()
     {
+        // Efficiency
+        // Each house nearby grants 5% efficiency (+1% every level)
+        // houseEfficiencyTotal will be multiplied by 0.2 as the original efficiency of a level 1 house is 25%. Multiply by 0.2 makes it 5%.
+        efficiency = 1 + buildingBuff.houseEfficiencyTotal * 0.2f;
         // Pollution
         // Auto production & pollution
         pollutionProduced_auto = pollutionProduced_auto_initial + (buildingLevel.level - 1) * 0.04f;
 
         // Level
-        fireRate = fireRate_initial + ((buildingLevel.level - 1) * 0.15f);
+        fireRate = (fireRate_initial + (((buildingLevel.level - 1) * 0.15f)) ) * efficiency;
         if (target == null)
         {
             state = State.Idle;
@@ -130,7 +138,7 @@ public class Turret : MonoBehaviour
             Vector3 posAsteroid = new Vector3(asteroid.transform.position.x, 0, asteroid.transform.position.z);
 
             float distanceToAsteroid = Vector3.Distance(posTurret, posAsteroid);
-            Debug.Log(distanceToAsteroid);
+            //Debug.Log(distanceToAsteroid);
             //if (distanceToAsteroid < shortestDistance && distanceToAsteroid < range)
             if (distanceToAsteroid < shortestDistance)
             {
