@@ -19,13 +19,15 @@ public class Turret : MonoBehaviour
     public string enemyTag = "Asteroid";
     public float range;
     [Header("Target")]
-    public GameObject[] asteroids;
-    public int targetID;
+    private GameObject[] asteroids;
+    private List<GameObject> asteroids_list;
     [SerializeField] private Transform target;
     [SerializeField] private bool targetLocked = false;
     [Header("Shooting")]
     private float fireRate_initial;
-    public float fireRate = 0.35f;
+    public float fireRate_real = 0.35f;
+    [HideInInspector] public float fireRate_original;
+    [HideInInspector] public float fireRate_additional;
     public float fireCountdown = 0f;
     [Header("Efficiency")]
     public float efficiency;
@@ -49,14 +51,14 @@ public class Turret : MonoBehaviour
     {
         lr = GetComponent<LineRenderer>();
 
-        fireRate_initial = fireRate;
+        fireRate_initial = fireRate_real;
         buildingState = GetComponent<BuildingState>();
         buildingLevel = GetComponent<BuildingLevel>();
         buildingBuff = GetComponent<BuildingBuff>();
-        InvokeRepeating("UpdateTarget", 0f, 0.15f);
+        //InvokeRepeating("UpdateTarget", 0f, 0.15f);
         StartCoroutine(RandomAngleY());
         angleY_current = angleY_random;
-        fireCountdown = 1f / fireRate;
+        fireCountdown = 1f / fireRate_real;
 
         pollutionProduced_auto_initial = pollutionProduced_auto;
         StartCoroutine(Pollution_AUTOMATIC(pollutionInterval_auto));
@@ -64,6 +66,8 @@ public class Turret : MonoBehaviour
 
     void Update()
     {
+        
+
         // Efficiency
         // Each house nearby grants 5% efficiency (+1% every level)
         // houseEfficiencyTotal will be multiplied by 0.2 as the original efficiency of a level 1 house is 25%. Multiply by 0.2 makes it 5%.
@@ -73,7 +77,9 @@ public class Turret : MonoBehaviour
         pollutionProduced_auto = pollutionProduced_auto_initial + (buildingLevel.level - 1) * 0.04f;
 
         // Level
-        fireRate = (fireRate_initial + (((buildingLevel.level - 1) * 0.15f)) ) * efficiency;
+        fireRate_real = (fireRate_initial + (buildingLevel.level - 1) * 0.15f ) * efficiency;
+        fireRate_original = fireRate_initial + (buildingLevel.level - 1) * 0.15f;
+        fireRate_additional = (fireRate_initial + (buildingLevel.level - 1) * 0.15f) * (efficiency - 1);
         if (target == null)
         {
             state = State.Idle;
@@ -85,6 +91,8 @@ public class Turret : MonoBehaviour
         
         if(state == State.Idle)
         {
+            UpdateTarget();
+
             cannonBase.transform.eulerAngles = new Vector3(cannonBase.transform.rotation.x,
                 angleY_current,
                 cannonBase.transform.rotation.z);
@@ -111,7 +119,7 @@ public class Turret : MonoBehaviour
             if (fireCountdown <= 0f)
             {
                 Shoot();
-                fireCountdown = 1f / fireRate;
+                fireCountdown = 1f / fireRate_real;
             }
             
         }
@@ -131,9 +139,32 @@ public class Turret : MonoBehaviour
         float shortestDistance = Mathf.Infinity;
         GameObject nearestTarget = null;
         asteroids = GameObject.FindGameObjectsWithTag(enemyTag);
-        // find out which enemy is the nearest.
-        foreach (GameObject asteroid in asteroids)
+        if(asteroids.Length == 0)
         {
+            target = null;
+            return;
+        }
+        List<GameObject> asteroids_list = new List<GameObject>();
+        // Array --> list
+        for (int i = 0; i < asteroids.Length; i++)
+        {
+            asteroids_list.Add(asteroids[i]);
+        }
+        // Remove unnecessary
+        for (int i = 0; i < asteroids_list.Count; i++)
+        {
+            if(asteroids_list[i].GetComponent<Asteroid>().isLockedByTurret)
+            {
+                asteroids_list[i] = null;
+            }
+        }
+        // find out which asteroid is the nearest.
+        foreach (GameObject asteroid in asteroids_list)
+        {
+            if(asteroid == null)
+            {
+                continue;
+            }
             Vector3 posTurret = new Vector3(transform.position.x, 0, transform.position.z);
             Vector3 posAsteroid = new Vector3(asteroid.transform.position.x, 0, asteroid.transform.position.z);
 
@@ -142,8 +173,16 @@ public class Turret : MonoBehaviour
             //if (distanceToAsteroid < shortestDistance && distanceToAsteroid < range)
             if (distanceToAsteroid < shortestDistance)
             {
-                shortestDistance = distanceToAsteroid;
-                nearestTarget = asteroid;
+                if(!asteroid.GetComponent<Asteroid>().isLockedByTurret)
+                {
+                    shortestDistance = distanceToAsteroid;
+                    nearestTarget = asteroid;
+                    nearestTarget.GetComponent<Asteroid>().isLockedByTurret = true;
+                }
+                else if(asteroid.GetComponent<Asteroid>().isLockedByTurret)
+                {
+                    UpdateTarget();
+                }
             }
         }
         if (nearestTarget != null)
@@ -152,22 +191,15 @@ public class Turret : MonoBehaviour
             if (!targetLocked)
             {
                 target = nearestTarget.transform;
+                
                 targetLocked = true;
             }
         }
-        else
+        else if(nearestTarget == null)
         {
             target = null;
         }
     }
-
-    //void ConfirmTarget()
-    //{
-    //    Debug.Log("ConfirmTarget");
-    //    target = asteroids[targetID].transform;
-    //    asteroids[targetID].GetComponent<Asteroid>().isLockedByTurret = true;
-    //    hasTarget = true;
-    //}
 
     void Shoot()
     {

@@ -29,25 +29,24 @@ public class Objective : MonoBehaviour
     void Update()
     {
         //GameManager.i.allNodes = GameManager.i.GetAllNodes();
-        if (Currency.MONEY >= objective1)
+        if (Currency.MONEY >= objective1 && !additionalTrigger1)
         {
             townHallLevel = 2;
             
         }
-        if (Currency.MONEY >= objective2)
+        if (Currency.MONEY >= objective2 && !additionalTrigger2)
         {
             townHallLevel = 3;
             
         }
-        if (Currency.MONEY >= objective3)
+        if (Currency.MONEY >= objective3 && !additionalTrigger3)
         {
             townHallLevel = 4;
             
         }
-        if (Currency.MONEY >= objective4)
+        if (Currency.MONEY >= objective4 && !additionalTrigger4)
         {
             townHallLevel = 5;
-            
         }
         if (townHallLevel == 5)
         {

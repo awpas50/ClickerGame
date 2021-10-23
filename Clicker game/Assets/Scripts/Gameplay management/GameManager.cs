@@ -185,23 +185,6 @@ public class GameManager : MonoBehaviour
         }
         buildingSelectedInScene = null;
     }
-    //public void SelectPlatform2()
-    //{
-    //    // Audio
-    //    AudioManager.instance.Play(SoundList.ButtonClicked);
-
-    //    // A cat always lands on her feet whereas a bread with butter always fall buttered side down. 
-    //    buildingSelectedInUI = platform2.building;
-    //    buildingCost = platform2.cost;
-    //    buildingObjectType = 1;
-
-    //    buildingInfo.text = "Platform";
-    //    if (buildingSelectedInScene)
-    //    {
-    //        buildingSelectedInScene.GetComponent<BuildingSelection>().indicator.SetActive(false);
-    //    }
-    //    buildingSelectedInScene = null;
-    //}
     public void OK_PurchaseBuilding()
     {
         // Audio
@@ -293,7 +276,6 @@ public class GameManager : MonoBehaviour
             //Debug.Log("buildingLevel.level = " + buildingLevel.level);
         }
     }
-
     public void Sell()
     {
         // Remove ref on node properly
@@ -302,13 +284,10 @@ public class GameManager : MonoBehaviour
         Destroy(buildingSelectedInScene);
         Currency.MONEY += buildingSelectedInScene.GetComponent<BuildingLevel>().sellCost;
     }
-
     private void Update()
     {
         SaveData.current.money = Currency.MONEY;
         SaveData.current.pollution = Pollution.POLLUTION;
-
-        
 
         if(buildingSelectedInScene)
         {
@@ -335,10 +314,12 @@ public class GameManager : MonoBehaviour
             // Building detail text
             if (buildingSelectedInScene.tag == "House")
             {
+                // Turret shooting speed buff = building production buff * 0.2
+                // therefore it needs to be mutiplied by 20 instead of 100.
                 // Set building name in the UI
-                UIManager.i.Line1Text.text = "Efficiency: " + buildingSelectedInScene.GetComponent<House>().baseEfficiency * 100 + "% + " + buildingSelectedInScene.GetComponent<House>().extraEfficiency * 100 + "%";
-                UIManager.i.Line2Text.text = "";
-                UIManager.i.Line3Text.text = "";
+                UIManager.i.Line1Text.text = "Nearby resources production +" + buildingSelectedInScene.GetComponent<House>().baseEfficiency * 100 + "%";
+                UIManager.i.Line2Text.text = "Nearby turret shooting speed +" + buildingSelectedInScene.GetComponent<House>().baseEfficiency * 20 + "%";
+                UIManager.i.Line3Text.text = "Nearby airplane travel time -" + buildingSelectedInScene.GetComponent<House>().baseEfficiency * 20 + "%";
                 UIManager.i.Line4Text.text = "";
             }
             if (buildingSelectedInScene.tag == "Factory")
@@ -354,12 +335,16 @@ public class GameManager : MonoBehaviour
             if (buildingSelectedInScene.tag == "Park")
             {
                 // Set building name in the UI
-                if(buildingSelectedInScene.GetComponent<Park>().extraProduction >= 0)
+                if(buildingSelectedInScene.GetComponent<Park>().extraProduction > 0)
                 {
                     UIManager.i.Line1Text.text = "Pollution reduced: " + buildingSelectedInScene.GetComponent<Park>().totalProduction.ToString("F2") +
                     " + " + buildingSelectedInScene.GetComponent<Park>().extraProduction.ToString("F2");
                 }
-                else
+                else if(buildingSelectedInScene.GetComponent<Park>().extraProduction == 0)
+                {
+                    UIManager.i.Line1Text.text = "Pollution reduced: " + buildingSelectedInScene.GetComponent<Park>().totalProduction.ToString("F2");
+                }
+                else if(buildingSelectedInScene.GetComponent<Park>().extraProduction < 0)
                 {
                     UIManager.i.Line1Text.color = UIManager.i.textWarningColor;
                     UIManager.i.Line1Text.text = "Pollution reduced: " + buildingSelectedInScene.GetComponent<Park>().totalProduction.ToString("F2") +
@@ -376,12 +361,12 @@ public class GameManager : MonoBehaviour
                 // Set building name in the UI
                 if(buildingSelectedInScene.GetComponent<Turret>().efficiency <= 1)
                 {
-                    UIManager.i.Line1Text.text = "Fire rate: " + buildingSelectedInScene.GetComponent<Turret>().fireRate.ToString("F2") + " per second";
+                    UIManager.i.Line1Text.text = "Fire rate: " + buildingSelectedInScene.GetComponent<Turret>().fireRate_original.ToString("F2") + " per second";
                 }
                 else if(buildingSelectedInScene.GetComponent<Turret>().efficiency > 1)
                 {
-                    UIManager.i.Line1Text.text = "Fire rate: " + buildingSelectedInScene.GetComponent<Turret>().fireRate.ToString("F2") + " + " +
-                    (buildingSelectedInScene.GetComponent<Turret>().efficiency - 1).ToString("F2") + " per second";
+                    UIManager.i.Line1Text.text = "Fire rate: " + buildingSelectedInScene.GetComponent<Turret>().fireRate_original.ToString("F2") + " + " +
+                    (buildingSelectedInScene.GetComponent<Turret>().fireRate_additional).ToString("F2") + " per second";
                 }
                 
                 UIManager.i.Line2Text.text = "";
@@ -391,8 +376,8 @@ public class GameManager : MonoBehaviour
             if (buildingSelectedInScene.tag == "Airport")
             {
                 // Set building name in the UI
-                UIManager.i.Line1Text.text = "Copter speed: " + buildingSelectedInScene.GetComponent<Airport>().airplaneScript.relativeSpeed * 100;
-                UIManager.i.Line2Text.text = "Time taken to collect resources: " + buildingSelectedInScene.GetComponent<Airport>().airplaneScript.waitTime_des + " - " + 
+                UIManager.i.Line1Text.text = "Airplane speed: " + buildingSelectedInScene.GetComponent<Airport>().airplaneScript.relativeSpeed * 100;
+                UIManager.i.Line2Text.text = "Travel time: " + buildingSelectedInScene.GetComponent<Airport>().airplaneScript.waitTime_des + " - " + 
                     (buildingSelectedInScene.GetComponent<Airport>().airplaneScript.waitTime_des - buildingSelectedInScene.GetComponent<Airport>().airplaneScript.waitTime_des_actial).ToString("F2") + " seconds";
                 UIManager.i.Line3Text.text = "Auto Pollution: " +
                     (buildingSelectedInScene.GetComponent<Airport>().pollutionProduced_auto / buildingSelectedInScene.GetComponent<Airport>().pollutionInterval_auto).ToString("F2") + " per second";

@@ -53,7 +53,6 @@ public class Airplane : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // max efficiency: 0.76, min efficiency: 1.
         efficiency = 1 - ((airportScript.buildingBuff.houseEfficiencyTotal + airportScript.buildingBuff.nearbyMainBuilding * Objective.townHallEfficiency) * 0.2f);
         waitTime_des = (waitTime_des_initial + (airportScript.buildingLevel.level - 1) * -10f);
         waitTime_des_actial = (waitTime_des_initial + (airportScript.buildingLevel.level - 1) * -10f) * efficiency;

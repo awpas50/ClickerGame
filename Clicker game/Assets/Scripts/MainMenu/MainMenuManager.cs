@@ -20,16 +20,27 @@ public class MainMenuManager : MonoBehaviour
     {
         Time.timeScale = 1;
     }
+    public void ContinueGame()
+    {
+        AudioManager.instance.Play(SoundList.ButtonClicked);
+        SceneManager.LoadScene(1);
+    }
     public void StartGame()
     {
         AudioManager.instance.Play(SoundList.ButtonClicked);
         SceneManager.LoadScene(1);
-        Debug.Log("StartGame");
+    }
+    public void Settings()
+    {
+
+    }
+    public void Credit()
+    {
+
     }
     public void QuitGame()
     {
         AudioManager.instance.Play(SoundList.ButtonClicked);
         Application.Quit();
-        Debug.Log("QuitGame");
     }
 }

@@ -53,7 +53,7 @@ public class AirportPopUp : MonoBehaviour
         int seed = Random.Range(0, 100);
         if(seed >= 24)
         {
-            float randomVal = Random.Range(50, 500);
+            float randomVal = Random.Range(150, 750);
             Currency.MONEY += randomVal;
 
             // Instantiate an additional pop up
