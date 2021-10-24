@@ -13,10 +13,7 @@ public class Objective : MonoBehaviour
     public float objective2;
     public float objective3;
     public float objective4;
-    //public bool objective1Reached;
-    //public bool objective2Reached;
-    //public bool objective3Reached;
-    //public bool objective4Reached;
+
     public bool additionalTrigger1 = false;
     public bool additionalTrigger2 = false;
     public bool additionalTrigger3 = false;
@@ -48,51 +45,50 @@ public class Objective : MonoBehaviour
         {
             townHallLevel = 5;
         }
+
         if (townHallLevel == 5)
         {
             mainBuildingScript.moneyEachClick = 10;
             townHallEfficiency = 0.6f;
-            
+            UIManager.i.objectiveText.text = "";
+
             if (!additionalTrigger4)
             {
                 SpecialBuildingCount.platform1Count += 5;
-                UIManager.i.objectiveText.text = "";
+                
                 additionalTrigger4 = true;
             }
         }
         else if(townHallLevel == 4)
         {
-            mainBuildingScript.moneyEachClick = 8;
+            mainBuildingScript.moneyEachClick = 6;
             townHallEfficiency = 0.45f;
-            
+            UIManager.i.objectiveText.text = "Reach 10000";
             if (!additionalTrigger3)
             {
                 SpecialBuildingCount.platform1Count += 5;
-                UIManager.i.objectiveText.text = "Reach 10000";
                 additionalTrigger3 = true;
             }
         }
         else if(townHallLevel == 3)
         {
-            mainBuildingScript.moneyEachClick = 6;
+            mainBuildingScript.moneyEachClick = 4;
             townHallEfficiency = 0.35f;
-            
+            UIManager.i.objectiveText.text = "Reach 6000";
             if (!additionalTrigger2)
             {
                 SpecialBuildingCount.platform1Count += 4;
-                UIManager.i.objectiveText.text = "Reach 6000";
                 additionalTrigger2 = true;
             }
         }
         else if (townHallLevel == 2)
         {
-            mainBuildingScript.moneyEachClick = 3;
+            mainBuildingScript.moneyEachClick = 2.5f;
             townHallEfficiency = 0.3f;
-            
+            UIManager.i.objectiveText.text = "Reach 2500";
             if (!additionalTrigger1)
             {
                 SpecialBuildingCount.platform1Count += 4;
-                UIManager.i.objectiveText.text = "Reach 2500";
                 additionalTrigger1 = true;
             }
         }

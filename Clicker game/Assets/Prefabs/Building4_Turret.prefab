@@ -193,12 +193,13 @@ MonoBehaviour:
   turnSpeed: 1.5
   enemyTag: Asteroid
   range: 2.35
-  asteroids: []
-  targetID: 0
   target: {fileID: 0}
   targetLocked: 0
-  fireRate: 0.35
+  fireRate_real: 0.3
+  fireRate_original: 0
+  fireRate_additional: 0
   fireCountdown: 0
+  efficiency: 0
   pollutionProduced_auto: 0.1
   pollutionInterval_auto: 1
   pollutionProduced_auto_initial: 0

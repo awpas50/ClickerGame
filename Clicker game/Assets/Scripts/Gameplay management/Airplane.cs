@@ -132,11 +132,14 @@ public class Airplane : MonoBehaviour
                     airportScript.SpawnPopUp();
                     isPopUpSpawned = true;
                 }
+                // For save system Debug:
+                if (isPopUpSpawned && !redeparture && airportScript.airportPopUpREF == null)
+                {
+                    airportScript.SpawnPopUp();
+                }
             }
-        }
-
-        
             
+        }
     }
 
     //void WaitAtApron()

@@ -82,15 +82,4 @@ public class Airport : MonoBehaviour
         temp.transform.SetParent(popupStorageCanvas.transform);
         airportPopUpREF = temp;
     }
-
-    //public void OnMouseOver()
-    //{
-    //    if(Input.GetMouseButtonDown(0) && airportPopUpREF == null)
-    //    {
-    //        GameObject temp = Instantiate(airportPopUp, transform.position, Quaternion.identity);
-    //        temp.GetComponent<AirportPopUp>().airportREF = gameObject;
-    //        temp.transform.SetParent(popupStorageCanvas.transform);
-    //        airportPopUpREF = temp;
-    //    }
-    //}
 }

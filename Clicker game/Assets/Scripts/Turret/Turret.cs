@@ -66,8 +66,6 @@ public class Turret : MonoBehaviour
 
     void Update()
     {
-        
-
         // Efficiency
         // Each house nearby grants 5% efficiency (+1% every level)
         // houseEfficiencyTotal will be multiplied by 0.2 as the original efficiency of a level 1 house is 25%. Multiply by 0.2 makes it 5%.
@@ -169,7 +167,6 @@ public class Turret : MonoBehaviour
             Vector3 posAsteroid = new Vector3(asteroid.transform.position.x, 0, asteroid.transform.position.z);
 
             float distanceToAsteroid = Vector3.Distance(posTurret, posAsteroid);
-            //Debug.Log(distanceToAsteroid);
             //if (distanceToAsteroid < shortestDistance && distanceToAsteroid < range)
             if (distanceToAsteroid < shortestDistance)
             {

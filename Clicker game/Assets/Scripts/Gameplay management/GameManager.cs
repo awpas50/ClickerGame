@@ -21,7 +21,6 @@ public class GameManager : MonoBehaviour
     public float buildingCost;
     [Header("Indicate what is selected in UI (assign manually)")]
     public GameObject buildingInfoCanvas;
-    public TextMeshProUGUI buildingInfo;
     [Header("Indicate what is selected in scene (Do not edit)")]
     public GameObject buildingSelectedInScene;
     // -1: null, 0: buildings, 1: platforms
@@ -93,7 +92,9 @@ public class GameManager : MonoBehaviour
         buildingCost = building1.cost;
         buildingObjectType = 0;
 
-        buildingInfo.text = "House ($60)- Buffs the efficiency of nearby factorys, whereas the nearby parks produces extra clear air.";
+        UIManager.i.buildingInfo_name.text = "House";
+        UIManager.i.buildingInfo_price.text = "$60";
+        UIManager.i.buildingInfo.text = "Buffs the efficiency of the closest 4 nearby buildings.";
         if(buildingSelectedInScene)
         {
             buildingSelectedInScene.GetComponent<BuildingSelection>().indicator.SetActive(false);
@@ -110,7 +111,9 @@ public class GameManager : MonoBehaviour
         buildingCost = building2.cost;
         buildingObjectType = 0;
 
-        buildingInfo.text = "Factory ($100) - Generate resources every 20 seconds. Gains efficiency buff from nearby houses, but will pollute nearby parks.";
+        UIManager.i.buildingInfo_name.text = "Factory";
+        UIManager.i.buildingInfo_price.text = "$100";
+        UIManager.i.buildingInfo.text = "Generate resources every 20 seconds. Gains efficiency buff from nearby houses, but will pollute nearby parks.";
         if (buildingSelectedInScene)
         {
             buildingSelectedInScene.GetComponent<BuildingSelection>().indicator.SetActive(false);
@@ -126,7 +129,9 @@ public class GameManager : MonoBehaviour
         buildingCost = building3.cost;
         buildingObjectType = 0;
 
-        buildingInfo.text = "Park ($80) - The clear air generated every 20 seconds by plants can temporary keep out the pollution - But remember not to put it near factories";
+        UIManager.i.buildingInfo_name.text = "Park";
+        UIManager.i.buildingInfo_price.text = "$80";
+        UIManager.i.buildingInfo.text = "The clear air generated every 20 seconds can temporary keep out the pollution. Gains efficiency buff from nearby houses, but remember not to put near factories.";
         if (buildingSelectedInScene)
         {
             buildingSelectedInScene.GetComponent<BuildingSelection>().indicator.SetActive(false);
@@ -144,7 +149,9 @@ public class GameManager : MonoBehaviour
         buildingCost = building4.cost;
         buildingObjectType = 0;
 
-        buildingInfo.text = "Meteor defense ($400) - The powerful laser beams protect your base from asteroids.";
+        UIManager.i.buildingInfo_name.text = "Meteor defense";
+        UIManager.i.buildingInfo_price.text = "$400";
+        UIManager.i.buildingInfo.text = "Powerful laser beams protect your base from asteroids. Gains shooting speed buff from nearby houses.";
         if (buildingSelectedInScene)
         {
             buildingSelectedInScene.GetComponent<BuildingSelection>().indicator.SetActive(false);
@@ -161,7 +168,9 @@ public class GameManager : MonoBehaviour
         buildingCost = building5.cost;
         buildingObjectType = 0;
 
-        buildingInfo.text = "Airport ($800) - Build airplanes to explore the outside world - numerous treasures are waiting for you!";
+        UIManager.i.buildingInfo_name.text = "Airport";
+        UIManager.i.buildingInfo_price.text = "$800";
+        UIManager.i.buildingInfo.text = "Build airplanes to explore the outside world, treasures are waiting for you! Gains airplane travel speed buff from nearby houses.";
         if (buildingSelectedInScene)
         {
             buildingSelectedInScene.GetComponent<BuildingSelection>().indicator.SetActive(false);
@@ -178,7 +187,9 @@ public class GameManager : MonoBehaviour
         buildingCost = platform1.cost;
         buildingObjectType = 1;
 
-        buildingInfo.text = "Platform - Expand your territory! You will obtain additional platforms if you reach certain objectives or make some airplanes.";
+        UIManager.i.buildingInfo_name.text = "Platform";
+        UIManager.i.buildingInfo_price.text = "$150";
+        UIManager.i.buildingInfo.text = "Expand your territory! You can obtain additional platforms if you reach certain objectives or after a airplane travel.";
         if (buildingSelectedInScene)
         {
             buildingSelectedInScene.GetComponent<BuildingSelection>().indicator.SetActive(false);
@@ -337,21 +348,21 @@ public class GameManager : MonoBehaviour
                 // Set building name in the UI
                 if(buildingSelectedInScene.GetComponent<Park>().extraProduction > 0)
                 {
-                    UIManager.i.Line1Text.text = "Pollution reduced: " + buildingSelectedInScene.GetComponent<Park>().totalProduction.ToString("F2") +
+                    UIManager.i.Line1Text.text = "Pollution reduction: " + buildingSelectedInScene.GetComponent<Park>().totalProduction.ToString("F2") +
                     " + " + buildingSelectedInScene.GetComponent<Park>().extraProduction.ToString("F2");
                 }
                 else if(buildingSelectedInScene.GetComponent<Park>().extraProduction == 0)
                 {
-                    UIManager.i.Line1Text.text = "Pollution reduced: " + buildingSelectedInScene.GetComponent<Park>().totalProduction.ToString("F2");
+                    UIManager.i.Line1Text.text = "Pollution reduction: " + buildingSelectedInScene.GetComponent<Park>().totalProduction.ToString("F2");
                 }
                 else if(buildingSelectedInScene.GetComponent<Park>().extraProduction < 0)
                 {
                     UIManager.i.Line1Text.color = UIManager.i.textWarningColor;
-                    UIManager.i.Line1Text.text = "Pollution reduced: " + buildingSelectedInScene.GetComponent<Park>().totalProduction.ToString("F2") +
+                    UIManager.i.Line1Text.text = "Pollution reduction: " + buildingSelectedInScene.GetComponent<Park>().totalProduction.ToString("F2") +
                     " - " + Mathf.Abs(buildingSelectedInScene.GetComponent<Park>().extraProduction).ToString("F2");
                 }
                 
-                UIManager.i.Line2Text.text = "Auto Production: " 
+                UIManager.i.Line2Text.text = "Auto Production: -" 
                     + (buildingSelectedInScene.GetComponent<Park>().CleanAirProduced_auto / buildingSelectedInScene.GetComponent<Park>().CleanAirInterval_auto).ToString("F2") + " per second";
                 UIManager.i.Line3Text.text = "";
                 UIManager.i.Line4Text.text = "";

@@ -23,6 +23,11 @@ public class UIManager : MonoBehaviour
     public Button upgradeButton;
     public Button OKButton;
 
+    [Header("Building Info")]
+    public TextMeshProUGUI buildingInfo_name;
+    public TextMeshProUGUI buildingInfo_price;
+    public TextMeshProUGUI buildingInfo;
+
     [Header("Top UI")]
     public TextMeshProUGUI moneyText;
     public TextMeshProUGUI pollutionText;
@@ -60,6 +65,17 @@ public class UIManager : MonoBehaviour
     void Update()
     {
         moneyText.text = "RESOURCES " + Currency.MONEY;
+
+        if (Currency.MONEY >= 1000)
+        {
+            float temp = Mathf.RoundToInt(Currency.MONEY);
+            moneyText.text = "RESOURCES " + temp;
+        }
+        else if (Currency.MONEY < 1000)
+        {
+            float temp = (float)Math.Round(Currency.MONEY, 1);
+            moneyText.text = "RESOURCES " + temp;
+        }
         pollutionText.text = "POLLUTION " + Math.Round(Pollution.POLLUTION, 2).ToString();
 
         platform1Text.text = "x" + SpecialBuildingCount.platform1Count;

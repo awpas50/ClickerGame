@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 public class MainBuilding : MonoBehaviour
 {
-    public int moneyEachClick;
+    public float moneyEachClick;
     [Header("What to instantiate")]
     public GameObject mainBuildingPopUp;
     [Header("Where to instantiate (Do not edit)")]

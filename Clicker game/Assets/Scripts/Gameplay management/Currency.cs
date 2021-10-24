@@ -15,14 +15,14 @@ public class Currency : MonoBehaviour
 
     void Update()
     {
-        if(MONEY >= 1000)
-        {
-            MONEY = Mathf.RoundToInt(MONEY);
-        }
-        else if(MONEY < 1000)
-        {
-            MONEY = (float)Math.Round(MONEY, 1);
-        }
+        //if(MONEY >= 1000)
+        //{
+        //    MONEY = Mathf.RoundToInt(MONEY);
+        //}
+        //else if(MONEY < 1000)
+        //{
+        //    MONEY = (float)Math.Round(MONEY, 1);
+        //}
         money = MONEY;
 
         //if (Input.GetKeyDown(KeyCode.K))
