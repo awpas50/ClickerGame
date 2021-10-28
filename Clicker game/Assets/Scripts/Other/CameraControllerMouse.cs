@@ -6,8 +6,10 @@ public class CameraControllerMouse : MonoBehaviour
 {
     [Header("Move")]
     [SerializeField] private Vector3 newPosition;
+    [SerializeField] private float maxPosition;
     [SerializeField] private float movementSpeed;
     [SerializeField] private float movementTime;
+
     [Header("Rotate")]
     [SerializeField] private Quaternion newRotation;
     [SerializeField] private float rotationAmount;
@@ -15,6 +17,8 @@ public class CameraControllerMouse : MonoBehaviour
     [SerializeField] private Transform cameraTransform;
     [SerializeField] private Vector3 newZoom;
     [SerializeField] private Vector3 zoomAmount;
+    [SerializeField] private float minZoomY;
+    [SerializeField] private float maxZoomY;
 
     void Start()
     {
@@ -30,23 +34,44 @@ public class CameraControllerMouse : MonoBehaviour
 
     void HandleMovementInput()
     {
-        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
+        if (Mathf.Abs(newPosition.x) + Mathf.Abs(newPosition.z) <= maxPosition)
         {
-            newPosition += transform.forward * movementSpeed;
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
+            {
+                newPosition += transform.forward * movementSpeed * Time.deltaTime;
+            }
+            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+            {
+                newPosition += transform.right * -movementSpeed * Time.deltaTime;
+            }
+            if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
+            {
+                newPosition += transform.forward * -movementSpeed * Time.deltaTime;
+            }
+            if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+            {
+                newPosition += transform.right * movementSpeed * Time.deltaTime;
+            }
         }
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+        if (Mathf.Abs(newPosition.x) + Mathf.Abs(newPosition.z) > maxPosition)
         {
-            newPosition += transform.right *-movementSpeed;
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
+            {
+                newPosition -= transform.forward * movementSpeed * Time.deltaTime;
+            }
+            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+            {
+                newPosition -= transform.right * -movementSpeed * Time.deltaTime;
+            }
+            if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
+            {
+                newPosition -= transform.forward * -movementSpeed * Time.deltaTime;
+            }
+            if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+            {
+                newPosition -= transform.right * movementSpeed * Time.deltaTime;
+            }
         }
-        if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
-        {
-            newPosition += transform.forward * -movementSpeed;
-        }
-        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
-        {
-            newPosition += transform.right * movementSpeed;
-        }
-
         //if(Input.GetKey(KeyCode.Q))
         //{
         //    newRotation *= Quaternion.Euler(Vector3.up * -rotationAmount);
@@ -56,13 +81,13 @@ public class CameraControllerMouse : MonoBehaviour
         //    newRotation *= Quaternion.Euler(Vector3.up * rotationAmount);
         //}
 
-        if(Input.GetKey(KeyCode.F))
+        if (newZoom.y >= minZoomY && (Input.GetKey(KeyCode.F) || Input.GetKey(KeyCode.PageDown)))
         {
-            newZoom += zoomAmount;
+            newZoom += zoomAmount * Time.deltaTime;
         }
-        if (Input.GetKey(KeyCode.R))
+        if (newZoom.y <= maxZoomY && (Input.GetKey(KeyCode.R) || Input.GetKey(KeyCode.PageUp)))
         {
-            newZoom -= zoomAmount;
+            newZoom -= zoomAmount * Time.deltaTime;
         }
         // Moving the camera
         transform.position = Vector3.Lerp(transform.position, newPosition, Time.deltaTime * movementTime);

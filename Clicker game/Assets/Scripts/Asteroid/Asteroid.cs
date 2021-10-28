@@ -8,7 +8,7 @@ public class Asteroid : MonoBehaviour
     public int uniqueID;
     public float speed;
     public float speedMin = 5f;
-    public float speedMax = 10f;
+    public float speedMax = 7f;
     public GameObject[] targetList;
     public GameObject target;
     public Vector3 target_vector3;
@@ -191,7 +191,7 @@ public class Asteroid : MonoBehaviour
                 // if it has a pop up than destroy the pop up
                 other.gameObject.GetComponent<Airport>().StopAllCoroutines();
                 GameObject tempPopUpData = other.gameObject.GetComponent<Airport>().airportPopUpREF;
-                Destroy(tempPopUpData, 0.1f);
+                Destroy(tempPopUpData);
                 other.gameObject.GetComponent<Airport>().airportPopUpREF = null;
             }
 

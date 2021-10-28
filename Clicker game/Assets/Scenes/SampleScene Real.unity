@@ -1714,6 +1714,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newPosition: {x: 0, y: 0, z: 0}
+  maxPosition: 0
   movementSpeed: 1
   movementTime: 3
   newRotation: {x: 0, y: 0, z: 0, w: 0}
@@ -1721,6 +1722,8 @@ MonoBehaviour:
   cameraTransform: {fileID: 963194228}
   newZoom: {x: 0, y: 0, z: 0}
   zoomAmount: {x: 0, y: 0, z: 0}
+  minZoomY: 0
+  maxZoomY: 0
 --- !u!1001 &158936291
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4988,7 +4991,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.05, y: 0.2, z: 30}
+  m_Size: {x: 0.2, y: 0.2, z: 30}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &325564115
 Transform:
@@ -13017,7 +13020,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.05, y: 0.2, z: 30}
+  m_Size: {x: 0.2, y: 0.2, z: 30}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &920983850
 Transform:
@@ -13838,13 +13841,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newPosition: {x: 0, y: 0, z: 0}
-  movementSpeed: 0.05
+  maxPosition: 15
+  movementSpeed: 4
   movementTime: 10
   newRotation: {x: 0, y: 0, z: 0, w: 0}
   rotationAmount: 1.5
   cameraTransform: {fileID: 960861817}
   newZoom: {x: 0, y: 0, z: 0}
-  zoomAmount: {x: 0, y: -0.1, z: 0.1}
+  zoomAmount: {x: 0, y: -4, z: 4}
+  minZoomY: 5
+  maxZoomY: 20
 --- !u!4 &939662067
 Transform:
   m_ObjectHideFlags: 0
@@ -20294,7 +20300,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 30, y: 0.2, z: 0.05}
+  m_Size: {x: 30, y: 0.2, z: 0.2}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &1514341165
 Transform:
@@ -25425,7 +25431,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 30, y: 0.2, z: 0.05}
+  m_Size: {x: 30, y: 0.2, z: 0.2}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &1960983109
 Transform:

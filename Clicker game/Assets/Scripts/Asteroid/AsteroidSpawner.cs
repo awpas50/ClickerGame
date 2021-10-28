@@ -73,9 +73,9 @@ public class AsteroidSpawner : MonoBehaviour
             {
                 asteroidCount = 0;
             }
-            if (asteroidCount > 32)
+            if (asteroidCount > 40)
             {
-                asteroidCount = 32;
+                asteroidCount = 40;
             }
             //yield return null;
             for (int i = 0; i < asteroidCount; i++)
@@ -84,7 +84,7 @@ public class AsteroidSpawner : MonoBehaviour
                 temp.GetComponent<Asteroid>().uniqueID = asteroidID;
                 asteroidID++;
                 temp.GetComponent<Asteroid>().speed = Random.Range(asteroid.GetComponent<Asteroid>().speedMin, asteroid.GetComponent<Asteroid>().speedMax);
-                yield return new WaitForSeconds(Random.Range(0.3f, 2f));
+                yield return new WaitForSeconds(Random.Range(0.3f, 1.5f));
             }
         }
     }
@@ -96,7 +96,7 @@ public class AsteroidSpawner : MonoBehaviour
             GameObject temp = Instantiate(asteroid, new Vector3(randomX, randomY, randomZ), Quaternion.identity);
             temp.GetComponent<Asteroid>().uniqueID = asteroidID;
             asteroidID++;
-            temp.GetComponent<Asteroid>().speed = 4.5f;
+            temp.GetComponent<Asteroid>().speed = 6f;
             yield return new WaitForSeconds(30f);
         }
     }

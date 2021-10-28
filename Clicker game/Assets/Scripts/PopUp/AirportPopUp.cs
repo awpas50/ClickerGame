@@ -24,9 +24,11 @@ public class AirportPopUp : MonoBehaviour
     }
     void Update()
     {
+        //DEBUG: destroy this pop up if airport is destroyed.
         //DEBUG, and I don't know why this bug happened (NullReference)
         if(!airportREF)
         {
+            Destroy(gameObject);
             return;
         }
         airportREF_script = airportREF.GetComponent<Airport>();
@@ -53,7 +55,7 @@ public class AirportPopUp : MonoBehaviour
         int seed = Random.Range(0, 100);
         if(seed >= 24)
         {
-            float randomVal = Random.Range(150, 750);
+            float randomVal = Random.Range(100, 500);
             Currency.MONEY += randomVal;
 
             // Instantiate an additional pop up
