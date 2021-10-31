@@ -33,7 +33,7 @@ public class MainBuilding : MonoBehaviour
         //{
         //    return;
         //}
-        if (Input.GetMouseButtonUp(0) && !GameManager.i.buildingSelectedInScene && !GameManager.i.isPaused)
+        if (Input.GetMouseButtonUp(0) && !GameManager.i.isPaused)
         {
             AudioManager.instance.Play(SoundList.ButtonClicked);
             MainBuildingClickEvent();

@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class CameraControllerMouse : MonoBehaviour
 {
+    [Header("State")]
+    [SerializeField] private bool canInput;
     [Header("Move")]
     [SerializeField] private Vector3 newPosition;
     [SerializeField] private float maxPosition;
     [SerializeField] private float movementSpeed;
     [SerializeField] private float movementTime;
-
     [Header("Rotate")]
     [SerializeField] private Quaternion newRotation;
     [SerializeField] private float rotationAmount;
@@ -19,19 +20,45 @@ public class CameraControllerMouse : MonoBehaviour
     [SerializeField] private Vector3 zoomAmount;
     [SerializeField] private float minZoomY;
     [SerializeField] private float maxZoomY;
-
+    [Header("Animator")]
+    [SerializeField] private Animator anim;
+    [Header("Pop up canvas")]
+    [SerializeField] private GameObject popUpCanvas;
     void Start()
     {
+        StartCoroutine(DeleteAnimation());
+        StartCoroutine(TemperaryDisablePopupCanvas());
+        StartCoroutine(TemperaryDisableInput());
+
         newPosition = transform.position;
         newRotation = transform.rotation;
         newZoom = cameraTransform.localPosition;
     }
-
     void Update()
     {
-        HandleMovementInput();
+        if(canInput)
+        {
+            HandleMovementInput();
+        }
     }
-
+    IEnumerator DeleteAnimation()
+    {
+        yield return new WaitForSeconds(2.51f);
+        Destroy(anim);
+    }
+    IEnumerator TemperaryDisablePopupCanvas()
+    {
+        yield return new WaitForSeconds(0.01f);
+        popUpCanvas.SetActive(false);
+        yield return new WaitForSeconds(2.51f);
+        popUpCanvas.SetActive(true);
+    }
+    IEnumerator TemperaryDisableInput()
+    {
+        canInput = false;
+        yield return new WaitForSeconds(2.51f);
+        canInput = true;
+    }
     void HandleMovementInput()
     {
         if (Mathf.Abs(newPosition.x) + Mathf.Abs(newPosition.z) <= maxPosition)

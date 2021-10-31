@@ -26,6 +26,7 @@ public class Asteroid : MonoBehaviour
     public GameObject ruin3;
     public GameObject ruin4;
     public GameObject ruin5;
+    public GameObject ruin6;
 
     // OnEnable(): initialize before Start();
     void OnEnable()
@@ -88,7 +89,8 @@ public class Asteroid : MonoBehaviour
             other.gameObject.tag == "Factory" ||
             other.gameObject.tag == "Park" ||
             other.gameObject.tag == "Generator" ||
-            other.gameObject.tag == "Airport")
+            other.gameObject.tag == "Airport" ||
+            other.gameObject.tag == "LogisticCenter")
         {
             // Audio
             int seed = Random.Range(0, 3);
@@ -193,6 +195,19 @@ public class Asteroid : MonoBehaviour
                 GameObject tempPopUpData = other.gameObject.GetComponent<Airport>().airportPopUpREF;
                 Destroy(tempPopUpData);
                 other.gameObject.GetComponent<Airport>().airportPopUpREF = null;
+            }
+            if(other.gameObject.tag == "LogisticCenter")
+            {
+                nodeLocationForRuin.building_ruin = Instantiate(ruin6, nodeLocationForRuin.gameObject.transform.position, Quaternion.identity);
+                // Store building data for restoring
+                ruinScript = nodeLocationForRuin.building_ruin.GetComponent<Ruin>();
+                ruinScript.buildingData = GameManager.i.building6.building;
+                ruinScript.buildingType = 6;
+
+                // ruin needs to recongize node
+                ruinScript.node = nodeLocationForRuin.gameObject;
+                ruinScript.buildingLevel = other.gameObject.GetComponent<BuildingLevel>().level;
+                ruinScript.repairCost = other.gameObject.GetComponent<BuildingLevel>().sellCost / 1.25f;
             }
 
             // destroy building

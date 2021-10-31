@@ -43,7 +43,7 @@ public class FactoryPopUp : MonoBehaviour
         AudioManager.instance.Play(SoundList.GetMoney);
 
         factoryREF_script.moneyProduced = (float)Math.Round(factoryREF_script.moneyProduced, 1);
-        factoryREF_script.GetResources(factoryREF_script.moneyProduced);
+        factoryREF_script.GetResourcesAndAddPollution(factoryREF_script.moneyProduced);
         // Instantiate an additional pop up
         GameObject secondPopUpPrefab = Instantiate(secondPopUp, Camera.main.WorldToScreenPoint(factoryREF.transform.position + offset), Quaternion.identity);
         secondPopUpPrefab.transform.SetParent(popupStorageCanvas.transform);

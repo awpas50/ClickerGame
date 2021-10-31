@@ -12,10 +12,13 @@ public class Airport : MonoBehaviour
     [Header("Airport landing point")]
     public Transform point1;
     public Transform point2;
+    [Header("Manual generated pollution")]
+    public float pollutionProduced;
+    [HideInInspector] public float pollutionProduced_initial;
     [Header("Auto generated pollution")]
     public float pollutionProduced_auto;
     public float pollutionInterval_auto;
-    public float pollutionProduced_auto_initial;
+    [HideInInspector] public float pollutionProduced_auto_initial;
 
     [Header("What to instainate")]
     public GameObject airportPopUp;
@@ -28,6 +31,7 @@ public class Airport : MonoBehaviour
 
     void Awake()
     {
+        pollutionProduced_initial = pollutionProduced;
         pollutionProduced_auto_initial = pollutionProduced_auto;
         // random point 2 (peak) location
         point2.position = new Vector3(Random.Range(0f, 1f), Random.Range(4.5f, 7f), Random.Range(-0.5f, 1f));
@@ -59,7 +63,8 @@ public class Airport : MonoBehaviour
         }
 
         // Auto production & pollution
-        pollutionProduced_auto = pollutionProduced_auto_initial + (buildingLevel.level - 1) * 0.02f;
+        pollutionProduced_auto = pollutionProduced_auto_initial + (buildingLevel.level - 1) * 0.04f;
+        pollutionProduced = pollutionProduced_initial + ((buildingLevel.level - 1) * 2f);
 
     }
     public IEnumerator Pollution_AUTOMATIC(float interval)
@@ -73,10 +78,6 @@ public class Airport : MonoBehaviour
 
     public void SpawnPopUp()
     {
-        //airportPopUpREF = Instantiate(airportPopUp, transform.position, Quaternion.identity);
-        //airportPopUpREF.GetComponent<AirportPopUp>().airportREF = gameObject;
-        //airportPopUpREF.transform.SetParent(popupStorageCanvas.transform);
-
         GameObject temp = Instantiate(airportPopUp, transform.position, Quaternion.identity);
         temp.GetComponent<AirportPopUp>().airportREF = gameObject;
         temp.transform.SetParent(popupStorageCanvas.transform);

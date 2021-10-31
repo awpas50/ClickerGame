@@ -35,6 +35,8 @@ public class GameManager : MonoBehaviour
     public BuildingBluePrint building3;
     public BuildingBluePrint building4;
     public BuildingBluePrint building5;
+    public BuildingBluePrint building6;
+    public BuildingBluePrint building7;
     public BuildingBluePrint platform1;
     public BuildingBluePrint platform2;
     public GameObject ruin1;
@@ -42,6 +44,8 @@ public class GameManager : MonoBehaviour
     public GameObject ruin3;
     public GameObject ruin4;
     public GameObject ruin5;
+    public GameObject ruin6;
+    public GameObject ruin7;
     public GameObject bullet;
 
     [Header("Building Buttons")]
@@ -150,7 +154,7 @@ public class GameManager : MonoBehaviour
         buildingObjectType = 0;
 
         UIManager.i.buildingInfo_name.text = "Meteor defense";
-        UIManager.i.buildingInfo_price.text = "$400";
+        UIManager.i.buildingInfo_price.text = "$600";
         UIManager.i.buildingInfo.text = "Powerful laser beams protect your base from asteroids. Gains shooting speed buff from nearby houses.";
         if (buildingSelectedInScene)
         {
@@ -171,6 +175,44 @@ public class GameManager : MonoBehaviour
         UIManager.i.buildingInfo_name.text = "Airport";
         UIManager.i.buildingInfo_price.text = "$800";
         UIManager.i.buildingInfo.text = "Build airplanes to explore the outside world, treasures are waiting for you! Gains airplane travel speed buff from nearby houses.";
+        if (buildingSelectedInScene)
+        {
+            buildingSelectedInScene.GetComponent<BuildingSelection>().indicator.SetActive(false);
+        }
+        buildingSelectedInScene = null;
+    }
+    public void SelectBuilding6()
+    {
+        // Audio
+        AudioManager.instance.Play(SoundList.ButtonClicked);
+
+        // A cat always lands on her feet whereas a bread with butter always fall buttered side down. 
+        buildingSelectedInUI = building6.building;
+        buildingCost = building6.cost;
+        buildingObjectType = 0;
+
+        UIManager.i.buildingInfo_name.text = "Logistic center";
+        UIManager.i.buildingInfo_price.text = "$1500";
+        UIManager.i.buildingInfo.text = "Auto collect nearby resources from buildings.";
+        if (buildingSelectedInScene)
+        {
+            buildingSelectedInScene.GetComponent<BuildingSelection>().indicator.SetActive(false);
+        }
+        buildingSelectedInScene = null;
+    }
+    public void SelectBuilding7()
+    {
+        // Audio
+        AudioManager.instance.Play(SoundList.ButtonClicked);
+
+        // A cat always lands on her feet whereas a bread with butter always fall buttered side down. 
+        buildingSelectedInUI = building7.building;
+        buildingCost = building7.cost;
+        buildingObjectType = 0;
+
+        UIManager.i.buildingInfo_name.text = "Perpetual machine";
+        UIManager.i.buildingInfo_price.text = "$3000";
+        UIManager.i.buildingInfo.text = "Do you know what will happen if you tie a buttered bread with cat? (Significantly increase the efficiency of factories.)";
         if (buildingSelectedInScene)
         {
             buildingSelectedInScene.GetComponent<BuildingSelection>().indicator.SetActive(false);
@@ -339,9 +381,9 @@ public class GameManager : MonoBehaviour
                 UIManager.i.Line1Text.text = "Production: " + buildingSelectedInScene.GetComponent<Factory>().totalProduction +
                     " + " + buildingSelectedInScene.GetComponent<Factory>().extraProduction;
                 UIManager.i.Line2Text.text = "Pollution: " + Math.Round(buildingSelectedInScene.GetComponent<Factory>().totalPollution, 2);
-                UIManager.i.Line3Text.text = "Auto Production: " + buildingSelectedInScene.GetComponent<Factory>().moneyProduced_auto.ToString("F2") + " per second";
-                UIManager.i.Line4Text.text = "Auto Pollution: " + 
-                    (buildingSelectedInScene.GetComponent<Factory>().pollutionProduced_auto / buildingSelectedInScene.GetComponent<Factory>().pollutionInterval_auto).ToString("F2") + " per second";
+                UIManager.i.Line3Text.text = "Auto Production: " + buildingSelectedInScene.GetComponent<Factory>().moneyProduced_auto.ToString("F2") + "/s";
+                UIManager.i.Line4Text.text = "Environmental pollution: " + 
+                    (buildingSelectedInScene.GetComponent<Factory>().pollutionProduced_auto / buildingSelectedInScene.GetComponent<Factory>().pollutionInterval_auto).ToString("F2") + "/s";
             }
             if (buildingSelectedInScene.tag == "Park")
             {
@@ -362,8 +404,8 @@ public class GameManager : MonoBehaviour
                     " - " + Mathf.Abs(buildingSelectedInScene.GetComponent<Park>().extraProduction).ToString("F2");
                 }
                 
-                UIManager.i.Line2Text.text = "Auto Production: -" 
-                    + (buildingSelectedInScene.GetComponent<Park>().CleanAirProduced_auto / buildingSelectedInScene.GetComponent<Park>().CleanAirInterval_auto).ToString("F2") + " per second";
+                UIManager.i.Line2Text.text = "Environmental pollution: -"
+                    + (buildingSelectedInScene.GetComponent<Park>().CleanAirProduced_auto / buildingSelectedInScene.GetComponent<Park>().CleanAirInterval_auto).ToString("F2") + "/s";
                 UIManager.i.Line3Text.text = "";
                 UIManager.i.Line4Text.text = "";
             }
@@ -372,16 +414,15 @@ public class GameManager : MonoBehaviour
                 // Set building name in the UI
                 if(buildingSelectedInScene.GetComponent<Turret>().efficiency <= 1)
                 {
-                    UIManager.i.Line1Text.text = "Fire rate: " + buildingSelectedInScene.GetComponent<Turret>().fireRate_original.ToString("F2") + " per second";
+                    UIManager.i.Line1Text.text = "Fire rate: " + buildingSelectedInScene.GetComponent<Turret>().fireRate_original.ToString("F2") + "/s";
                 }
                 else if(buildingSelectedInScene.GetComponent<Turret>().efficiency > 1)
                 {
                     UIManager.i.Line1Text.text = "Fire rate: " + buildingSelectedInScene.GetComponent<Turret>().fireRate_original.ToString("F2") + " + " +
                     (buildingSelectedInScene.GetComponent<Turret>().fireRate_additional).ToString("F2") + " per second";
                 }
-                
-                UIManager.i.Line2Text.text = "";
-                UIManager.i.Line3Text.text = "Auto Pollution: " + (buildingSelectedInScene.GetComponent<Turret>().pollutionProduced_auto.ToString("F2"));
+                UIManager.i.Line2Text.text = "Environmental pollution: " + (buildingSelectedInScene.GetComponent<Turret>().pollutionProduced_auto.ToString("F2")) + "/s";
+                UIManager.i.Line3Text.text = "";
                 UIManager.i.Line4Text.text = "";
             }
             if (buildingSelectedInScene.tag == "Airport")
@@ -389,9 +430,25 @@ public class GameManager : MonoBehaviour
                 // Set building name in the UI
                 UIManager.i.Line1Text.text = "Airplane speed: " + buildingSelectedInScene.GetComponent<Airport>().airplaneScript.relativeSpeed * 100;
                 UIManager.i.Line2Text.text = "Travel time: " + buildingSelectedInScene.GetComponent<Airport>().airplaneScript.waitTime_des + " - " + 
-                    (buildingSelectedInScene.GetComponent<Airport>().airplaneScript.waitTime_des - buildingSelectedInScene.GetComponent<Airport>().airplaneScript.waitTime_des_actial).ToString("F2") + " seconds";
-                UIManager.i.Line3Text.text = "Auto Pollution: " +
-                    (buildingSelectedInScene.GetComponent<Airport>().pollutionProduced_auto / buildingSelectedInScene.GetComponent<Airport>().pollutionInterval_auto).ToString("F2") + " per second";
+                    (buildingSelectedInScene.GetComponent<Airport>().airplaneScript.waitTime_des - buildingSelectedInScene.GetComponent<Airport>().airplaneScript.waitTime_des_actial).ToString("F2") + "s";
+                UIManager.i.Line3Text.text = "Pollution: " + buildingSelectedInScene.GetComponent<Airport>().pollutionProduced.ToString("F2");
+                UIManager.i.Line4Text.text = "Environmental pollution: " +
+                    (buildingSelectedInScene.GetComponent<Airport>().pollutionProduced_auto / buildingSelectedInScene.GetComponent<Airport>().pollutionInterval_auto).ToString("F2") + "/s";
+                
+            }
+            if (buildingSelectedInScene.tag == "LogisticCenter")
+            {
+                // Set building name in the UI
+                UIManager.i.Line1Text.text = "Collection interval: " + buildingSelectedInScene.GetComponent<LogisticCenter>().collectionSpeed + "s";
+                UIManager.i.Line2Text.text = "Environmental pollution: " + buildingSelectedInScene.GetComponent<LogisticCenter>().pollution_auto + "/s";
+                UIManager.i.Line3Text.text = "";
+                UIManager.i.Line4Text.text = "";
+            }
+            if(buildingSelectedInScene.tag == "PerpetualMachine")
+            {
+                UIManager.i.Line1Text.text = "";
+                UIManager.i.Line2Text.text = "";
+                UIManager.i.Line3Text.text = "";
                 UIManager.i.Line4Text.text = "";
             }
         }
@@ -403,11 +460,10 @@ public class GameManager : MonoBehaviour
             {
                 return;
             }
-            if (TouchManager.instance.isDragging)
-            {
-                return;
-            }
-            
+            //if (TouchManager.instance.isDragging)
+            //{
+            //    return;
+            //}
             if (buildingPurchasingState)
             {
                 RaycastHit hit0;
@@ -455,6 +511,11 @@ public class GameManager : MonoBehaviour
                     {
                         hit0.collider.gameObject.GetComponent<Ruin>().repairPopUp_REF.
                                 GetComponent<RepairPopUp>().ButtonEvent();
+                    }
+                    // Town Hall
+                    else if (hit0.collider.gameObject.tag == "MainBuilding")
+                    {
+                        hit0.collider.gameObject.GetComponent<MainBuilding>().MainBuildingClickEvent();
                     }
                     // not buildings
                     else
@@ -525,19 +586,31 @@ public class GameManager : MonoBehaviour
                             buildingAnimation.StartCoroutine(buildingAnimation.BuildingPopAnimation());
                         }
                     }
-                    else if (hit.collider.gameObject.tag == "House" || hit.collider.gameObject.tag == "Generator")
+                    else if (hit.collider.gameObject.tag == "House" || 
+                        hit.collider.gameObject.tag == "Generator" || 
+                        hit.collider.gameObject.tag == "LogisticCenter" ||
+                        hit.collider.gameObject.tag == "PerpetualMachine")
                     {
-                        if (hit.collider.gameObject.tag == "House" && hit.collider.gameObject != buildingSelectedInScene)
+                        if(hit.collider.gameObject != buildingSelectedInScene)
                         {
-                            // Audio
-                            AudioManager.instance.Play(SoundList.SelectHouse);
+                            if (hit.collider.gameObject.tag == "House")
+                            {
+                                // Audio
+                                AudioManager.instance.Play(SoundList.SelectHouse);
+                            }
+                            if (hit.collider.gameObject.tag == "Generator")
+                            {
+                                AudioManager.instance.Play(SoundList.SelectTurret);
+                            }
+                            if(hit.collider.gameObject.tag == "LogisticCenter")
+                            {
+                                AudioManager.instance.Play(SoundList.SelectHouse);
+                            }
+                            if(hit.collider.gameObject.tag == "PerpetualMachine")
+                            {
+                                AudioManager.instance.Play(SoundList.SelectFactory);
+                            }
                         }
-                        if (hit.collider.gameObject.tag == "Generator" && hit.collider.gameObject != buildingSelectedInScene)
-                        {
-                            // Audio
-                            AudioManager.instance.Play(SoundList.SelectTurret);
-                        }
-
                         buildingSelectedInScene = hit.collider.gameObject;
                         StartCoroutine(buildingSelectedInScene.GetComponent<BuildingSelection>().BuildingPopAnimation());
                         buildingDetailsCanvas.SetActive(true);
@@ -606,12 +679,10 @@ public class GameManager : MonoBehaviour
         if (buildingSelectedInScene)
         {
             buildingDetailsCanvas.SetActive(true);
-            UIManager.i.BottomUI.SetActive(false);
         }
         else if(buildingSelectedInScene == null)
         {
             buildingDetailsCanvas.SetActive(false);
-            UIManager.i.BottomUI.SetActive(true);
         }
 
         // Check if the generator exists in the scene
@@ -623,7 +694,6 @@ public class GameManager : MonoBehaviour
         //{
         //    buildingButton4.interactable = true;
         //}
-
         //isGeneratorInPlanning = IsGeneratorInPlanning();
         //if (isGeneratorInPlanning)
         //{
@@ -633,9 +703,14 @@ public class GameManager : MonoBehaviour
         //{
         //    buildingButton4.interactable = true;
         //}
+        PurchaseBuildingState();
+        PauseGameState();
+    }
 
+    void PurchaseBuildingState()
+    {
         // Check if the player is purchasing building (which means the variable "buildingSelectedInUI" is not null)
-        if(buildingSelectedInUI != null)
+        if (buildingSelectedInUI != null)
         {
             buildingPurchasingState = true;
             UIManager.i.RightUI.SetActive(true);
@@ -657,13 +732,12 @@ public class GameManager : MonoBehaviour
             UIManager.i.RightUI.SetActive(false);
             UIManager.i.BuildingInstructionUI.SetActive(false);
         }
-
         // base on "buildingPurchasingState" the mesh on each node (the first child, GetChild(0) will be disabled)
         if (buildingPurchasingState && buildingSelectedInUI.gameObject.name != "Platform Small")
         {
-            for(int i = 0; i < allNodes.Length; i++)
+            for (int i = 0; i < allNodes.Length; i++)
             {
-                if(allNodes[i])
+                if (allNodes[i])
                     allNodes[i].transform.GetChild(0).gameObject.SetActive(true);
             }
             for (int i = 0; i < allPlatformNodes.Length; i++)
@@ -672,7 +746,7 @@ public class GameManager : MonoBehaviour
                     allPlatformNodes[i].transform.GetChild(0).gameObject.SetActive(false);
             }
         }
-        else if(buildingPurchasingState && buildingSelectedInUI.gameObject.name == "Platform Small")
+        else if (buildingPurchasingState && buildingSelectedInUI.gameObject.name == "Platform Small")
         {
             for (int i = 0; i < allNodes.Length; i++)
             {
@@ -698,18 +772,18 @@ public class GameManager : MonoBehaviour
                     allPlatformNodes[i].transform.GetChild(0).gameObject.SetActive(false);
             }
         }
-        if(isPaused)
+    }
+    void PauseGameState()
+    {
+        if (isPaused)
         {
-            UIManager.i.MainMenuUI.SetActive(true);
             Time.timeScale = 0;
         }
         else
         {
-            UIManager.i.MainMenuUI.SetActive(false);
             Time.timeScale = 1;
         }
     }
-
     // Check if the turret is on a plan to be built:
     //private bool IsGeneratorInPlanning()
     //{
@@ -734,11 +808,6 @@ public class GameManager : MonoBehaviour
     {
         allNodes = GetAllNodes();
         allPlatformNodes = GetAllPlatformNodes();
-
-        //list_house = GameObject.FindGameObjectsWithTag("House");
-        //list_factory = GameObject.FindGameObjectsWithTag("Factory");
-        //list_park = GameObject.FindGameObjectsWithTag("Park");
-        //list_generator = GameObject.FindGameObjectsWithTag("Generator");
     }
     public GameObject[] GetAllNodes()
     {
@@ -765,15 +834,6 @@ public class GameManager : MonoBehaviour
         EnableGameUI();
         isPaused = false;
     }
-    public void Save()
-    {
-        //AudioManager.instance.Play(SoundList.ButtonClicked);
-        //SerializationManager.Save("gameSave", SaveData.current);
-    }
-    public void Load()
-    {
-        //SaveData.current = (SaveData)SerializationManager.Load(Application.persistentDataPath + "/saves/gameSave.save");
-    }
     public void SaveAndQuit()
     {
         AudioManager.instance.Play(SoundList.ButtonClicked);
@@ -790,6 +850,7 @@ public class GameManager : MonoBehaviour
         UIManager.i.TopUI.SetActive(false);
         UIManager.i.BottomUI.SetActive(false);
         UIManager.i.RightUI.SetActive(false);
+        UIManager.i.MainMenuUI.SetActive(true);
         buildingDetailsCanvas.SetActive(false);
         buildingInfoCanvas.SetActive(false);
     }
@@ -798,14 +859,6 @@ public class GameManager : MonoBehaviour
         UIManager.i.TopUI.SetActive(true);
         UIManager.i.BottomUI.SetActive(true);
         UIManager.i.RightUI.SetActive(true);
-    }
-
-    public void CheatOne()
-    {
-        Currency.MONEY += 1000;
-    }
-    public void CheatTwo()
-    {
-        AsteroidSpawner.i.StartCoroutine(AsteroidSpawner.i.Spawn_DEBUG());
+        UIManager.i.MainMenuUI.SetActive(false);
     }
 }

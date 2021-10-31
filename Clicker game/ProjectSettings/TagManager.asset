@@ -21,6 +21,9 @@ TagManager:
   - Platform
   - NodeDestroyer
   - Bullet
+  - LogisticCenter
+  - BuildingFinder
+  - PerpetualMachine
   layers:
   - Default
   - TransparentFX

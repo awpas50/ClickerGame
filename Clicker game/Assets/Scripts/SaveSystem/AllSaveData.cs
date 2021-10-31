@@ -35,6 +35,13 @@ public class AllSaveData
     public float[,] saveData_airplaneTravelTime;
     public bool[,] saveData_airplaneBoolState;
     public string[] saveData_airplaneEnumState;
+    [Header("Logistic Center")]
+    public float[,] saveData_logisticPos;
+    public int[] saveData_logisticLevel;
+    public int[] saveData_findPosIndex; // 1 ~ 25
+    [Header("Perpetual machine")]
+    public float[,] saveData_perpetualCatPos;
+    public int[] saveData_perpetualLevel;
     [Header("Platforms")]
     public int saveData_platformsInHand;
     public float[,] saveData_platformPos;

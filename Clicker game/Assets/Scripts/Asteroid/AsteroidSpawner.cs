@@ -15,6 +15,9 @@ public class AsteroidSpawner : MonoBehaviour
     public int asteroidCount = 0;
     public float val;
 
+    [Header("Time elapsed")]
+    public float timeElapsed;
+
     void Awake()
     {
         //debug
@@ -33,6 +36,8 @@ public class AsteroidSpawner : MonoBehaviour
 
     private void Update()
     {
+        timeElapsed += Time.deltaTime;
+
         randomX = Random.Range(-6f, 6f);
         randomY = Random.Range(15f, 20f);
         randomZ = Random.Range(-6f, 6f);
@@ -45,8 +50,6 @@ public class AsteroidSpawner : MonoBehaviour
         {
             StartCoroutine(Spawn_DEBUG());
         }
-
-
         if (Pollution.POLLUTION == 0)
         {
             asteroidCount = 0;
@@ -84,34 +87,37 @@ public class AsteroidSpawner : MonoBehaviour
                 temp.GetComponent<Asteroid>().uniqueID = asteroidID;
                 asteroidID++;
                 temp.GetComponent<Asteroid>().speed = Random.Range(asteroid.GetComponent<Asteroid>().speedMin, asteroid.GetComponent<Asteroid>().speedMax);
-                yield return new WaitForSeconds(Random.Range(0.3f, 1.5f));
+                yield return new WaitForSeconds(Random.Range(0.3f, 1.3f));
             }
         }
     }
     IEnumerator Spawn_Auto()
     {
-        yield return new WaitForSeconds(80f);
+        yield return new WaitForSeconds(60f);
         while(true)
         {
-            GameObject temp = Instantiate(asteroid, new Vector3(randomX, randomY, randomZ), Quaternion.identity);
-            temp.GetComponent<Asteroid>().uniqueID = asteroidID;
-            asteroidID++;
-            temp.GetComponent<Asteroid>().speed = 6f;
-            yield return new WaitForSeconds(30f);
+            for (int i = 0; i < Objective.townHallLevel; i++)
+            {
+                GameObject temp = Instantiate(asteroid, new Vector3(randomX, randomY, randomZ), Quaternion.identity);
+                temp.GetComponent<Asteroid>().uniqueID = asteroidID;
+                asteroidID++;
+                temp.GetComponent<Asteroid>().speed = 6f;
+                yield return new WaitForSeconds(Random.Range(0.3f, 1.3f));
+            }
+            yield return new WaitForSeconds(40f);
         }
     }
     public IEnumerator Spawn_DEBUG()
     {
         // A formula to control the asteroid number
-        if (asteroidCount > 32)
+        if (asteroidCount > 40)
         {
-            asteroidCount = 32;
+            asteroidCount = 40;
         }
         //AudioManager.instance.Play(SoundList.AsteroidPassBy);
         asteroidID++;
         GameObject temp = Instantiate(asteroid, new Vector3(randomX, randomY, randomZ), Quaternion.identity);
         temp.GetComponent<Asteroid>().uniqueID = asteroidID;
-        asteroidID++;
         temp.GetComponent<Asteroid>().speed = Random.Range(asteroid.GetComponent<Asteroid>().speedMin, asteroid.GetComponent<Asteroid>().speedMax);
         StopCoroutine(Spawn_DEBUG());
         yield return null;

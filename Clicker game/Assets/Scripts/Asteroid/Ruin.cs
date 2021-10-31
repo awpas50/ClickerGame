@@ -10,7 +10,7 @@ public class Ruin : MonoBehaviour
     public GameObject buildingData;
     public int buildingLevel;
     public float repairCost;
-    public int buildingType; // 1 ~ 5
+    public int buildingType; // 1 ~ 6
     public Vector3 offset;
     [Header("What to Instantiate (assign maunally)")]
     public GameObject repairPopUp;

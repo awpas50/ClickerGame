@@ -4835,6 +4835,7 @@ MonoBehaviour:
   ruin3: {fileID: 8849886429793026977, guid: da71dd12e475d564ea9a6c65aad71e7a, type: 3}
   ruin4: {fileID: 1194856955151848361, guid: e5ceeb0ebfc6d804b81bd52ff5ca4067, type: 3}
   ruin5: {fileID: 6370818009092817997, guid: 8f7c195f7108c724d88cbbe984f83746, type: 3}
+  ruin6: {fileID: 3783225562980481087, guid: 64cc7f0001d286b4eb06426be0221298, type: 3}
 --- !u!114 &915561418421205097
 MonoBehaviour:
   m_ObjectHideFlags: 0

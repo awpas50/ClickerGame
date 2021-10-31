@@ -18,7 +18,6 @@ public class AirportPopUp : MonoBehaviour
     {
         //Invoke = delay Start()
         //Invoke("AirportREFAssign", 0.01f);
-        
         popupStorageCanvas = GameObject.FindGameObjectWithTag("StorageCanvas");
         
     }
@@ -52,6 +51,7 @@ public class AirportPopUp : MonoBehaviour
     {
         // Audio
         AudioManager.instance.Play(SoundList.GetMoney);
+        Pollution.POLLUTION += 4;
         int seed = Random.Range(0, 100);
         if(seed >= 24)
         {

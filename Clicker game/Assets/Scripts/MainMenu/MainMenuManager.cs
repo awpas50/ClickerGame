@@ -23,7 +23,10 @@ public class MainMenuManager : MonoBehaviour
     public void ContinueGame()
     {
         AudioManager.instance.Play(SoundList.ButtonClicked);
-        SceneManager.LoadScene(1);
+        // CreateSceneLoader()
+        GameObject sceneLoader = new GameObject("SceneLoader");
+        DontDestroyOnLoad(sceneLoader);
+        sceneLoader.AddComponent<SceneLoader>();
     }
     public void StartGame()
     {

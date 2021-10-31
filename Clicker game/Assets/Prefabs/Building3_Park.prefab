@@ -132,9 +132,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 662cd494898d34e4089379cf85200710, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pollutionReduced_initial: 0
   pollutionReduced: 6
   interval: 20
+  intervalPassed: 0
   totalProduction: 0
   totalProduction_buff: 0
   extraProduction: 0
@@ -214,8 +214,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buildingBaseCost: 80
   level: 1
-  maxLevel: 8
-  costEachLevel: 0000000096000000fa00000090010000260200008a020000ee020000b603000000000000
+  maxLevel: 9
+  costEachLevel: 0000000096000000fa00000090010000260200008a020000ee020000b60300004605000000000000
   sellCost: 0
 --- !u!114 &984757850796011573
 MonoBehaviour:
