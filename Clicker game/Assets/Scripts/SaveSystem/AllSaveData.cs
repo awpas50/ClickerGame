@@ -40,7 +40,7 @@ public class AllSaveData
     public int[] saveData_logisticLevel;
     public int[] saveData_findPosIndex; // 1 ~ 25
     [Header("Perpetual machine")]
-    public float[,] saveData_perpetualCatPos;
+    public float[,] saveData_perpetualPos;
     public int[] saveData_perpetualLevel;
     [Header("Platforms")]
     public int saveData_platformsInHand;
@@ -74,6 +74,8 @@ public class AllSaveData
     public int allTurrets_int;
     public int allBullets_int;
     public int allAirports_int;
+    public int allLogistics_int;
+    public int allPerpetuals_int;
     public int allPlatforms_int;
     public int allAsteroids_int;
     public int allRuins_int;
@@ -86,6 +88,8 @@ public class AllSaveData
         StoreParkData();
         StoreTurretData();
         StoreAirportData();
+        StoreLogisticCenterData();
+        StorePerpetualMachineData();
         StoreRuinData();
         StoreResourcesAndPollution();
         StoreTownHallRelated();
@@ -213,6 +217,41 @@ public class AllSaveData
             saveData_airplaneBoolState[i, 2] = allAirports[i].GetComponent<Airport>().airplaneScript.redeparture;
             saveData_airplaneBoolState[i, 3] = allAirports[i].GetComponent<Airport>().airplaneScript.isFinishedFirstTimeWaiting;
             saveData_airplaneEnumState[i] = allAirports[i].GetComponent<Airport>().airplaneScript.state.ToString();
+        }
+    }
+    private void StoreLogisticCenterData()
+    {
+        // Logistic Center data
+        GameObject[] allLogistics = GameObject.FindGameObjectsWithTag("LogisticCenter");
+        allLogistics_int = allLogistics.Length;
+        saveData_logisticPos = new float[allLogistics.Length, 3];
+        saveData_logisticLevel = new int[allLogistics.Length];
+        saveData_findPosIndex = new int[allLogistics.Length];
+
+        for (int i = 0; i < allLogistics.Length; i++)
+        {
+            saveData_logisticPos[i, 0] = allLogistics[i].transform.position.x;
+            saveData_logisticPos[i, 1] = allLogistics[i].transform.position.y;
+            saveData_logisticPos[i, 2] = allLogistics[i].transform.position.z;
+            saveData_logisticLevel[i] = allLogistics[i].GetComponent<BuildingLevel>().level;
+            saveData_findPosIndex[i] = allLogistics[i].GetComponent<LogisticCenter>().collectPositionIndex;
+        }
+    }
+    private void StorePerpetualMachineData()
+    {
+        // Perpetual machine data
+        GameObject[] allPerpetuals = GameObject.FindGameObjectsWithTag("PerpetualMachine");
+        allPerpetuals_int = allPerpetuals.Length;
+
+        saveData_perpetualPos = new float[allPerpetuals.Length, 3];
+        saveData_perpetualLevel = new int[allPerpetuals.Length];
+
+        for (int i = 0; i < allPerpetuals.Length; i++)
+        {
+            saveData_perpetualPos[i, 0] = allPerpetuals[i].transform.position.x;
+            saveData_perpetualPos[i, 1] = allPerpetuals[i].transform.position.y;
+            saveData_perpetualPos[i, 2] = allPerpetuals[i].transform.position.z;
+            saveData_perpetualLevel[i] = allPerpetuals[i].GetComponent<BuildingLevel>().level;
         }
     }
     private void StoreRuinData()

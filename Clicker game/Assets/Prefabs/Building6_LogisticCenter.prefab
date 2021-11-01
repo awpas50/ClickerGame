@@ -13,10 +13,10 @@ GameObject:
   - component: {fileID: 281758397531508408}
   - component: {fileID: 281758397531508409}
   - component: {fileID: 7846707699858842216}
+  - component: {fileID: 6055792838545685797}
   - component: {fileID: -2490805682202242107}
   - component: {fileID: 1203822481746043851}
   - component: {fileID: 1038537921}
-  - component: {fileID: 6055792838545685797}
   - component: {fileID: -9065938611911806873}
   m_Layer: 0
   m_Name: Building6_LogisticCenter
@@ -120,6 +120,27 @@ MonoBehaviour:
   indicator: {fileID: 3067335077329269966}
   repeatable: 0
   duration: 0.5
+--- !u!114 &6055792838545685797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 281758397531508390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b042ad603ffeaf647995980abef70237, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectionSpeed: 1.7
+  collectionSpeed_initial: 1.7
+  collectPositionIndex: -1
+  buildingFinder: {fileID: 7459497187363377437}
+  buildingBuff: {fileID: 0}
+  buildingLevel: {fileID: 0}
+  buildingState: {fileID: 0}
+  pollution_auto: 0
+  pollution_auto_interval: 0
 --- !u!114 &-2490805682202242107
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -172,27 +193,6 @@ MonoBehaviour:
   maxLevel: 3
   costEachLevel: 00000000d0070000c409000000000000
   sellCost: 0
---- !u!114 &6055792838545685797
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 281758397531508390}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b042ad603ffeaf647995980abef70237, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  collectionSpeed: 1.7
-  collectionSpeed_initial: 1.7
-  collectPositionIndex: -1
-  buildingFinder: {fileID: 7459497187363377437}
-  buildingBuff: {fileID: 0}
-  buildingLevel: {fileID: 0}
-  buildingState: {fileID: 0}
-  pollution_auto: 0
-  pollution_auto_interval: 0
 --- !u!114 &-9065938611911806873
 MonoBehaviour:
   m_ObjectHideFlags: 0

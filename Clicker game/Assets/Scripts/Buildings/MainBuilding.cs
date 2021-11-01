@@ -35,16 +35,26 @@ public class MainBuilding : MonoBehaviour
         //}
         if (Input.GetMouseButtonUp(0) && !GameManager.i.isPaused)
         {
-            AudioManager.instance.Play(SoundList.ButtonClicked);
             MainBuildingClickEvent();
-            StartCoroutine(BuildingPopAnimation());
         }
     }
     public void MainBuildingClickEvent()
     {
+        AudioManager.instance.Play(SoundList.ButtonClicked);
         Currency.MONEY += moneyEachClick;
         GameObject mainBuildingPopUpREF = Instantiate(mainBuildingPopUp, transform.position, Quaternion.identity);
+        mainBuildingPopUpREF.GetComponent<MainBuildingPopUp>().realMoneyEachClick = moneyEachClick;
         mainBuildingPopUpREF.transform.SetParent(popupStorageCanvas.transform);
+        StartCoroutine(BuildingPopAnimation());
+    }
+    public void MainBuildingClickEvent_LogisticCenterBuff()
+    {
+        AudioManager.instance.Play(SoundList.ButtonClicked);
+        Currency.MONEY += moneyEachClick * 3;
+        GameObject mainBuildingPopUpREF = Instantiate(mainBuildingPopUp, transform.position, Quaternion.identity);
+        mainBuildingPopUpREF.GetComponent<MainBuildingPopUp>().realMoneyEachClick = moneyEachClick * 3;
+        mainBuildingPopUpREF.transform.SetParent(popupStorageCanvas.transform);
+        StartCoroutine(BuildingPopAnimation());
     }
 
     public IEnumerator BuildingPopAnimation()

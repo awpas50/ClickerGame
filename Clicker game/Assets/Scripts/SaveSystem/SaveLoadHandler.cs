@@ -29,6 +29,8 @@ public class SaveLoadHandler : MonoBehaviour
         LoadParks(data, allNodes);
         LoadTurrets(data, allNodes);
         LoadAirports(data, allNodes);
+        LoadLogisticCenters(data, allNodes);
+        LoadPerpetualMachines(data, allNodes);
         LoadRuins(data, allNodes);
         LoadResourcesAndPollution(data);
         LoadTownHallRelated(data);
@@ -142,7 +144,30 @@ public class SaveLoadHandler : MonoBehaviour
             SetNodeReference(newAirport, closestNode);
         }
     }
-    
+    private void LoadLogisticCenters(AllSaveData data, GameObject[] allNodes)
+    {
+        for (int i = 0; i < data.allLogistics_int; i++)
+        {
+            GameObject newLogistic = Instantiate(GameManager.i.building6.building,
+                new Vector3(data.saveData_logisticPos[i, 0],
+                data.saveData_logisticPos[i, 1],
+                data.saveData_logisticPos[i, 2]), Quaternion.identity);
+            newLogistic.GetComponent<BuildingLevel>().level = data.saveData_logisticLevel[i];
+            newLogistic.GetComponent<LogisticCenter>().collectPositionIndex = data.saveData_findPosIndex[i];
+        }
+    }
+    private void LoadPerpetualMachines(AllSaveData data, GameObject[] allNodes)
+    {
+        for (int i = 0; i < data.allPerpetuals_int; i++)
+        {
+            GameObject newPerpetual = Instantiate(GameManager.i.building7.building,
+                new Vector3(data.saveData_perpetualPos[i, 0],
+                data.saveData_perpetualPos[i, 1],
+                data.saveData_perpetualPos[i, 2]), Quaternion.identity);
+            newPerpetual.GetComponent<BuildingLevel>().level = data.saveData_perpetualLevel[i];
+        }
+    }
+
     private void LoadRuins(AllSaveData data, GameObject[] allNodes)
     {
         for (int i = 0; i < data.allRuins_int; i++)

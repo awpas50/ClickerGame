@@ -57,7 +57,7 @@ public class Airplane : MonoBehaviour
         waitTime_des = (waitTime_des_initial + (airportScript.buildingLevel.level - 1) * -10f);
         waitTime_des_actial = (waitTime_des_initial + (airportScript.buildingLevel.level - 1) * -10f) * efficiency;
         // I don't know why the airplanes are still moving even if the game is paused, so I manually stop their movement by writing this.
-        if(GameManager.i.isPaused)
+        if(GameManager.i.isPaused || !GameManager.i.canInput)
         {
             relativeSpeed = 0;
         }

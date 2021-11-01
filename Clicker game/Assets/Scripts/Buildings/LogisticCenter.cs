@@ -7,7 +7,7 @@ public class LogisticCenter : MonoBehaviour
     [HideInInspector] public float collectionSpeed = 1.7f;
     public float collectionSpeed_initial = 1.7f;
 
-    [SerializeField] private int collectPositionIndex = -1; 
+    public int collectPositionIndex = -1; 
     [SerializeField] private Dictionary<int, Vector3> collectPositionDict; // 1 - 25, omit 13
 
     [SerializeField] private Transform buildingFinder;
@@ -81,15 +81,32 @@ public class LogisticCenter : MonoBehaviour
         while(true)
         {
             // Find nearest building: 
-            buildingFinder.position = gameObject.transform.position + collectPositionDict[collectPositionIndex];
-            yield return new WaitForSeconds(0.25f);
-            if(collectPositionIndex >= 25)
+            if (!GameManager.i.isPaused && GameManager.i.canInput)
+                buildingFinder.position = gameObject.transform.position + collectPositionDict[collectPositionIndex];
+
+            yield return new WaitForSeconds(collectionSpeed);
+
+            if(GameManager.i.isPaused || !GameManager.i.canInput)
             {
-                collectPositionIndex = 1;
+                if (collectPositionIndex >= 25)
+                {
+                    collectPositionIndex += 0;
+                }
+                else
+                {
+                    collectPositionIndex += 0;
+                }
             }
-            else
+            if (!GameManager.i.isPaused && GameManager.i.canInput)
             {
-                collectPositionIndex++;
+                if (collectPositionIndex >= 25)
+                {
+                    collectPositionIndex = 1;
+                }
+                else
+                {
+                    collectPositionIndex++;
+                }
             }
         }
     }

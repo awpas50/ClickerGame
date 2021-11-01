@@ -63,6 +63,8 @@ public class GameManager : MonoBehaviour
 
     public bool buildingPurchasingState = false;
     public bool isTurretInPlanning = false;
+    [Header("State")]
+    public bool canInput;
     public bool isPaused = false;
 
     [Header("Node animation")]

@@ -6,6 +6,7 @@ using TMPro;
 
 public class MainBuildingPopUp : MonoBehaviour
 {
+    public float realMoneyEachClick;
     [Header("Props")]
     public Image img;
     public float flyingSpeed;
@@ -22,7 +23,7 @@ public class MainBuildingPopUp : MonoBehaviour
         img.transform.position = pos;
         mainBuildingScript = mainBuilding.GetComponent<MainBuilding>();
 
-        moneyText.text = "+" + mainBuildingScript.moneyEachClick;
+        moneyText.text = "+" + realMoneyEachClick;
     }
     
     void Update()

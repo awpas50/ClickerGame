@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class CameraControllerMouse : MonoBehaviour
 {
-    [Header("State")]
-    [SerializeField] private bool canInput;
+    
     [Header("Move")]
     [SerializeField] private Vector3 newPosition;
     [SerializeField] private float maxPosition;
@@ -36,7 +35,7 @@ public class CameraControllerMouse : MonoBehaviour
     }
     void Update()
     {
-        if(canInput)
+        if(GameManager.i.canInput)
         {
             HandleMovementInput();
         }
@@ -55,9 +54,11 @@ public class CameraControllerMouse : MonoBehaviour
     }
     IEnumerator TemperaryDisableInput()
     {
-        canInput = false;
+        //Time.timeScale = 0;
+        GameManager.i.canInput = false;
         yield return new WaitForSeconds(2.51f);
-        canInput = true;
+        //Time.timeScale = 1;
+        GameManager.i.canInput = true;
     }
     void HandleMovementInput()
     {
