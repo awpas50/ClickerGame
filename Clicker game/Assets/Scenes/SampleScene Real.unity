@@ -11389,6 +11389,7 @@ MonoBehaviour:
     type: 3}
   buildingPurchasingState: 0
   isTurretInPlanning: 0
+  canInput: 0
   isPaused: 0
   allNodes: []
   allPlatformNodes: []
@@ -14099,7 +14100,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 703739086ec1ee64186693e9361b055b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canInput: 0
   newPosition: {x: 0, y: 0, z: 0}
   maxPosition: 15
   movementSpeed: 4
@@ -14140,7 +14140,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 939662064}
   m_LocalRotation: {x: 0, y: -0.38268343, z: 0, w: 0.92387956}
-  m_LocalPosition: {x: 1.4, y: 0, z: -4}
+  m_LocalPosition: {x: 1.17, y: 0, z: -3.33}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 960861817}

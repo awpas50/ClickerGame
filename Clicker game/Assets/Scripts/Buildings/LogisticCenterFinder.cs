@@ -32,7 +32,7 @@ public class LogisticCenterFinder : MonoBehaviour
         }
         else if (other.gameObject.tag == "MainBuilding")
         {
-            // Logistic center x2 buff
+            // Logistic center x4 buff
             other.gameObject.GetComponent<MainBuilding>().MainBuildingClickEvent_LogisticCenterBuff();
         }
         // not buildings

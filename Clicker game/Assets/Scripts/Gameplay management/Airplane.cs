@@ -63,7 +63,7 @@ public class Airplane : MonoBehaviour
         }
         else
         {
-            relativeSpeed = relativeSpeed_initial + (airportScript.buildingLevel.level - 1) * 0.015f;
+            relativeSpeed = relativeSpeed_initial + (airportScript.buildingLevel.level - 1) * 0.005f;
         }
         
         

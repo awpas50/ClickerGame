@@ -50,9 +50,9 @@ public class MainBuilding : MonoBehaviour
     public void MainBuildingClickEvent_LogisticCenterBuff()
     {
         AudioManager.instance.Play(SoundList.ButtonClicked);
-        Currency.MONEY += moneyEachClick * 3;
+        Currency.MONEY += moneyEachClick * 4;
         GameObject mainBuildingPopUpREF = Instantiate(mainBuildingPopUp, transform.position, Quaternion.identity);
-        mainBuildingPopUpREF.GetComponent<MainBuildingPopUp>().realMoneyEachClick = moneyEachClick * 3;
+        mainBuildingPopUpREF.GetComponent<MainBuildingPopUp>().realMoneyEachClick = moneyEachClick * 4;
         mainBuildingPopUpREF.transform.SetParent(popupStorageCanvas.transform);
         StartCoroutine(BuildingPopAnimation());
     }

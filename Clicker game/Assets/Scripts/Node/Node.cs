@@ -20,15 +20,9 @@ public class Node : MonoBehaviour
     public Vector3 offset;
 
     //private bool isDestroyed = false;
-    private void Update()
+    private void Start()
     {
-        if(gameObject.tag == "Node")
-        {
-            if (building_REF)
-            {
-                CheckNearbyBuildingType();
-            }
-        }
+        StartCoroutine(CheckNearbyBuildingType());
     }
     // Only destroy one node when two nodes collide each other.
     private void OnTriggerEnter(Collider other)
@@ -153,60 +147,91 @@ public class Node : MonoBehaviour
         // Remove the placeholder
         placeHolder_building_REF = null;
     }
-    public void CheckNearbyBuildingType()
+    IEnumerator CheckNearbyBuildingType()
     {
-        // Check nearby building type every frame (using a specified collider on the node)
-        building_REF.GetComponent<BuildingBuff>().allBuildingList.Clear();
-        building_REF.GetComponent<BuildingBuff>().nearbyHouse = 0;
-        building_REF.GetComponent<BuildingBuff>().nearbyFactory = 0;
-        building_REF.GetComponent<BuildingBuff>().nearbyPark = 0;
-        building_REF.GetComponent<BuildingBuff>().nearbyTurret = 0;
-        building_REF.GetComponent<BuildingBuff>().nearbyMainBuilding = 0;
-        building_REF.GetComponent<BuildingBuff>().nearbyAirport = 0;
-        building_REF.GetComponent<BuildingBuff>().houseEfficiencyList.Clear();
-        building_REF.GetComponent<BuildingBuff>().houseEfficiencyTotal = 0;
+        while(true)
+        {
+            if (gameObject.tag == "Node" && building_REF)
+            {
+                // Check nearby building type every frame (using a specified collider on the node)
+                building_REF.GetComponent<BuildingBuff>().allBuildingList.Clear();
+                building_REF.GetComponent<BuildingBuff>().nearbyHouse = 0;
+                building_REF.GetComponent<BuildingBuff>().nearbyFactory = 0;
+                building_REF.GetComponent<BuildingBuff>().nearbyPark = 0;
+                building_REF.GetComponent<BuildingBuff>().nearbyTurret = 0;
+                building_REF.GetComponent<BuildingBuff>().nearbyMainBuilding = 0;
+                building_REF.GetComponent<BuildingBuff>().nearbyAirport = 0;
+                building_REF.GetComponent<BuildingBuff>().nearbyLogistic = 0;
+                building_REF.GetComponent<BuildingBuff>().nearbyPerpetual = 0;
+                building_REF.GetComponent<BuildingBuff>().houseEfficiencyList.Clear();
+                building_REF.GetComponent<BuildingBuff>().houseEfficiencyTotal = 0;
+                building_REF.GetComponent<BuildingBuff>().perpetualEfficiencyList.Clear();
+                building_REF.GetComponent<BuildingBuff>().perpetualEfficiencyTotal = 0;
 
-        foreach (GameObject b in nearbyNode_building)
-        {
-            if(b == null)
-            {
-                building_REF.GetComponent<BuildingBuff>().nearbyHouse += 0;
+                foreach (GameObject b in nearbyNode_building)
+                {
+                    if (b == null)
+                    {
+                        building_REF.GetComponent<BuildingBuff>().nearbyHouse += 0;
+                    }
+                    else if (b.gameObject.tag == "House")
+                    {
+                        building_REF.GetComponent<BuildingBuff>().allBuildingList.Add(b.gameObject);
+                        building_REF.GetComponent<BuildingBuff>().nearbyHouse += 1;
+                        building_REF.GetComponent<BuildingBuff>().houseEfficiencyList.Add(b.GetComponent<House>().efficiency);
+                    }
+                    else if (b.gameObject.tag == "Factory")
+                    {
+                        building_REF.GetComponent<BuildingBuff>().allBuildingList.Add(b.gameObject);
+                        building_REF.GetComponent<BuildingBuff>().nearbyFactory += 1;
+                    }
+                    else if (b.gameObject.tag == "Park")
+                    {
+                        building_REF.GetComponent<BuildingBuff>().allBuildingList.Add(b.gameObject);
+                        building_REF.GetComponent<BuildingBuff>().nearbyPark += 1;
+                    }
+                    else if (b.gameObject.tag == "Generator")
+                    {
+                        building_REF.GetComponent<BuildingBuff>().allBuildingList.Add(b.gameObject);
+                        building_REF.GetComponent<BuildingBuff>().nearbyTurret += 1;
+                    }
+                    else if (b.gameObject.tag == "MainBuilding")
+                    {
+                        building_REF.GetComponent<BuildingBuff>().allBuildingList.Add(b.gameObject);
+                        building_REF.GetComponent<BuildingBuff>().nearbyMainBuilding += 1;
+                    }
+                    else if (b.gameObject.tag == "Airport")
+                    {
+                        building_REF.GetComponent<BuildingBuff>().allBuildingList.Add(b.gameObject);
+                        building_REF.GetComponent<BuildingBuff>().nearbyAirport += 1;
+                    }
+                    else if (b.gameObject.tag == "LogisticCenter")
+                    {
+                        building_REF.GetComponent<BuildingBuff>().allBuildingList.Add(b.gameObject);
+                        building_REF.GetComponent<BuildingBuff>().nearbyLogistic += 1;
+                    }
+                    else if (b.gameObject.tag == "PerpetualMachine")
+                    {
+                        building_REF.GetComponent<BuildingBuff>().allBuildingList.Add(b.gameObject);
+                        building_REF.GetComponent<BuildingBuff>().nearbyPerpetual += 1;
+                    }
+                }
+                if (building_REF.GetComponent<BuildingBuff>().houseEfficiencyList.Count > 0)
+                {
+                    for (int i = 0; i < building_REF.GetComponent<BuildingBuff>().houseEfficiencyList.Count; i++)
+                    {
+                        building_REF.GetComponent<BuildingBuff>().houseEfficiencyTotal += building_REF.GetComponent<BuildingBuff>().houseEfficiencyList[i];
+                    }
+                }
+                if (building_REF.GetComponent<BuildingBuff>().perpetualEfficiencyList.Count > 0)
+                {
+                    for (int i = 0; i < building_REF.GetComponent<BuildingBuff>().perpetualEfficiencyList.Count; i++)
+                    {
+                        building_REF.GetComponent<BuildingBuff>().perpetualEfficiencyTotal += building_REF.GetComponent<BuildingBuff>().perpetualEfficiencyList[i];
+                    }
+                }
             }
-            else if (b.gameObject.tag == "House")
-            {
-                building_REF.GetComponent<BuildingBuff>().allBuildingList.Add(b.gameObject);
-                building_REF.GetComponent<BuildingBuff>().nearbyHouse += 1;
-                building_REF.GetComponent<BuildingBuff>().houseEfficiencyList.Add(b.GetComponent<House>().efficiency);
-            }
-            else if (b.gameObject.tag == "Factory")
-            {
-                building_REF.GetComponent<BuildingBuff>().allBuildingList.Add(b.gameObject);
-                building_REF.GetComponent<BuildingBuff>().nearbyFactory += 1;
-            }
-            else if (b.gameObject.tag == "Park")
-            {
-                building_REF.GetComponent<BuildingBuff>().allBuildingList.Add(b.gameObject);
-                building_REF.GetComponent<BuildingBuff>().nearbyPark += 1;
-            }
-            else if (b.gameObject.tag == "Generator")
-            {
-                building_REF.GetComponent<BuildingBuff>().allBuildingList.Add(b.gameObject);
-                building_REF.GetComponent<BuildingBuff>().nearbyTurret += 1;
-            }
-            else if (b.gameObject.tag == "MainBuilding")
-            {
-                building_REF.GetComponent<BuildingBuff>().allBuildingList.Add(b.gameObject);
-                building_REF.GetComponent<BuildingBuff>().nearbyMainBuilding += 1;
-            }
-            else if (b.gameObject.tag == "Airport")
-            {
-                building_REF.GetComponent<BuildingBuff>().allBuildingList.Add(b.gameObject);
-                building_REF.GetComponent<BuildingBuff>().nearbyAirport += 1;
-            }
-        }
-        for (int i = 0; i < building_REF.GetComponent<BuildingBuff>().houseEfficiencyList.Count; i++)
-        {
-            building_REF.GetComponent<BuildingBuff>().houseEfficiencyTotal += building_REF.GetComponent<BuildingBuff>().houseEfficiencyList[i];
+            yield return new WaitForSeconds(0.125f);
         }
     }
 }

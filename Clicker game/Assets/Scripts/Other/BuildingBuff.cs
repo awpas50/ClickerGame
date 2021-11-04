@@ -12,7 +12,12 @@ public class BuildingBuff : MonoBehaviour
     public int nearbyTurret;
     public int nearbyMainBuilding;
     public int nearbyAirport;
+    public int nearbyLogistic;
+    public int nearbyPerpetual;
     [Header("nearbyHouse properties")]
     public List<float> houseEfficiencyList;
     public float houseEfficiencyTotal;
+
+    public List<float> perpetualEfficiencyList;
+    public float perpetualEfficiencyTotal;
 }

@@ -195,7 +195,7 @@ public class GameManager : MonoBehaviour
 
         UIManager.i.buildingInfo_name.text = "Logistic center";
         UIManager.i.buildingInfo_price.text = "$1500";
-        UIManager.i.buildingInfo.text = "Auto collect nearby resources from buildings.";
+        UIManager.i.buildingInfo.text = "Auto collect nearby resources from buildings. Grant 4x buffs when collecting resources from town hall.";
         if (buildingSelectedInScene)
         {
             buildingSelectedInScene.GetComponent<BuildingSelection>().indicator.SetActive(false);
@@ -343,7 +343,6 @@ public class GameManager : MonoBehaviour
     {
         SaveData.current.money = Currency.MONEY;
         SaveData.current.pollution = Pollution.POLLUTION;
-
         if(buildingSelectedInScene)
         {
             BuildingLevel buildingLevel = buildingSelectedInScene.GetComponent<BuildingLevel>();
@@ -676,7 +675,6 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
-
         // make sure the building detail canvas won't show when nothing is selected
         if (buildingSelectedInScene)
         {
@@ -686,7 +684,6 @@ public class GameManager : MonoBehaviour
         {
             buildingDetailsCanvas.SetActive(false);
         }
-
         // Check if the generator exists in the scene
         //if(list_generator.Length >= 1)
         //{
