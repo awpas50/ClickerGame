@@ -32,7 +32,9 @@ public class Turret : MonoBehaviour
     [Header("Efficiency")]
     public float efficiency;
     [Header("Pollution")]
-    public float pollutionProduced_auto;
+    [SerializeField] private float pollutionProduced_auto;
+    [HideInInspector] public float pollutionProduced_auto_base;
+    [HideInInspector] public float pollutionProduced_auto_extra;
     public float pollutionInterval_auto;
     public float pollutionProduced_auto_initial;
     
@@ -72,7 +74,12 @@ public class Turret : MonoBehaviour
         efficiency = 1 + buildingBuff.houseEfficiencyTotal * 0.2f;
         // Pollution
         // Auto production & pollution
-        pollutionProduced_auto = pollutionProduced_auto_initial + (buildingLevel.level - 1) * 0.04f;
+        // Building base + 0.04 per level
+        pollutionProduced_auto_base = pollutionProduced_auto_initial + (buildingLevel.level - 1) * 0.04f;
+        // Stack up pollution according to nearby houses
+        pollutionProduced_auto_extra = buildingBuff.houseEfficiencyTotal * 0.1f;
+        // Total
+        pollutionProduced_auto = pollutionProduced_auto_base + pollutionProduced_auto_extra;
 
         // Level
         fireRate_real = (fireRate_initial + (buildingLevel.level - 1) * 0.15f ) * efficiency;

@@ -379,21 +379,23 @@ public class GameManager : MonoBehaviour
             if (buildingSelectedInScene.tag == "Factory")
             {
                 // Set building name in the UI
-                UIManager.i.Line1Text.text = "Production: " + buildingSelectedInScene.GetComponent<Factory>().totalProduction +
-                    " + " + buildingSelectedInScene.GetComponent<Factory>().extraProduction;
+                UIManager.i.Line1Text.text = "Production: " + 
+                    buildingSelectedInScene.GetComponent<Factory>().totalProduction +" + " + 
+                    buildingSelectedInScene.GetComponent<Factory>().extraProduction;
                 UIManager.i.Line2Text.text = "Pollution: " + Math.Round(buildingSelectedInScene.GetComponent<Factory>().totalPollution, 2);
                 UIManager.i.Line3Text.text = "Auto Production: " + buildingSelectedInScene.GetComponent<Factory>().moneyProduced_auto.ToString("F2") + "/s";
                 UIManager.i.Line4Text.text = "Environmental pollution: " + 
-                    (buildingSelectedInScene.GetComponent<Factory>().pollutionProduced_auto_initial + (buildingLevel.level - 1) * 0.02f / buildingSelectedInScene.GetComponent<Factory>().pollutionInterval_auto).ToString("F2") + " + " +
-                    (buildingSelectedInScene.GetComponent<Factory>().buildingBuff.houseEfficiencyTotal * 0.1f + buildingSelectedInScene.GetComponent<Factory>().buildingBuff.perpetualEfficiencyTotal * 0.1f).ToString("F2") + "/s";
+                    buildingSelectedInScene.GetComponent<Factory>().pollutionProduced_auto_base.ToString("F2") + " + " +
+                    buildingSelectedInScene.GetComponent<Factory>().pollutionProduced_auto_extra.ToString("F2") + "/s";
             }
             if (buildingSelectedInScene.tag == "Park")
             {
                 // Set building name in the UI
                 if(buildingSelectedInScene.GetComponent<Park>().extraProduction > 0)
                 {
-                    UIManager.i.Line1Text.text = "Pollution reduction: " + buildingSelectedInScene.GetComponent<Park>().totalProduction.ToString("F2") +
-                    " + " + buildingSelectedInScene.GetComponent<Park>().extraProduction.ToString("F2");
+                    UIManager.i.Line1Text.text = "Pollution reduction: " + 
+                        buildingSelectedInScene.GetComponent<Park>().totalProduction.ToString("F2") + " + " + 
+                        buildingSelectedInScene.GetComponent<Park>().extraProduction.ToString("F2");
                 }
                 else if(buildingSelectedInScene.GetComponent<Park>().extraProduction == 0)
                 {
@@ -423,7 +425,9 @@ public class GameManager : MonoBehaviour
                     UIManager.i.Line1Text.text = "Fire rate: " + buildingSelectedInScene.GetComponent<Turret>().fireRate_original.ToString("F2") + " + " +
                     (buildingSelectedInScene.GetComponent<Turret>().fireRate_additional).ToString("F2") + " per second";
                 }
-                UIManager.i.Line2Text.text = "Environmental pollution: " + (buildingSelectedInScene.GetComponent<Turret>().pollutionProduced_auto.ToString("F2")) + "/s";
+                UIManager.i.Line2Text.text = "Environmental pollution: " + 
+                    buildingSelectedInScene.GetComponent<Turret>().pollutionProduced_auto_base.ToString("F2") + " + " +
+                    buildingSelectedInScene.GetComponent<Turret>().pollutionProduced_auto_extra.ToString("F2") + "/s";
                 UIManager.i.Line3Text.text = "";
                 UIManager.i.Line4Text.text = "";
             }
@@ -435,7 +439,8 @@ public class GameManager : MonoBehaviour
                     (buildingSelectedInScene.GetComponent<Airport>().airplaneScript.waitTime_des - buildingSelectedInScene.GetComponent<Airport>().airplaneScript.waitTime_des_actial).ToString("F2") + "s";
                 UIManager.i.Line3Text.text = "Pollution: " + buildingSelectedInScene.GetComponent<Airport>().pollutionProduced.ToString("F2");
                 UIManager.i.Line4Text.text = "Environmental pollution: " +
-                    (buildingSelectedInScene.GetComponent<Airport>().pollutionProduced_auto / buildingSelectedInScene.GetComponent<Airport>().pollutionInterval_auto).ToString("F2") + "/s";
+                    buildingSelectedInScene.GetComponent<Airport>().pollutionProduced_base.ToString("F2") + " + " +
+                    buildingSelectedInScene.GetComponent<Airport>().pollutionProduced_extra.ToString("F2") + "/s";
                 
             }
             if (buildingSelectedInScene.tag == "LogisticCenter")

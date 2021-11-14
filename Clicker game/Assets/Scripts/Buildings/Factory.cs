@@ -21,7 +21,9 @@ public class Factory : MonoBehaviour
     [Header("Auto generated resources (money)")]
     public float moneyProduced_auto;
     public float interval_auto;
-    public float pollutionProduced_auto;
+    [SerializeField] private float pollutionProduced_auto;
+    [HideInInspector] public float pollutionProduced_auto_base;
+    [HideInInspector] public float pollutionProduced_auto_extra;
     public float pollutionInterval_auto;
 
     public float moneyProduced_auto_initial;
@@ -75,7 +77,12 @@ public class Factory : MonoBehaviour
         totalPollution = pollutionProduced * (levelMultipiler * 1.2f);
 
         // Auto production & pollution
-        pollutionProduced_auto = pollutionProduced_auto_initial + (buildingLevel.level - 1) * 0.02f + buildingBuff.houseEfficiencyTotal * 0.1f + buildingBuff.perpetualEfficiencyTotal * 0.1f;
+        // Building base + 0.02 per level
+        pollutionProduced_auto_base = pollutionProduced_auto_initial + (buildingLevel.level - 1) * 0.02f;
+        // Stack up pollution according to nearby houses & perpetual machines
+        pollutionProduced_auto_extra = buildingBuff.houseEfficiencyTotal * 0.1f + buildingBuff.perpetualEfficiencyTotal * 0.1f;
+        // Total
+        pollutionProduced_auto = pollutionProduced_auto_base + pollutionProduced_auto_extra;
         moneyProduced_auto = moneyProduced_auto_initial + (buildingLevel.level - 1) * 0.25f;
 
         // interval passed (indicates the current process of generating resources, used for the save system)

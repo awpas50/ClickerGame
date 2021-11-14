@@ -16,7 +16,9 @@ public class Airport : MonoBehaviour
     public float pollutionProduced;
     [HideInInspector] public float pollutionProduced_initial;
     [Header("Auto generated pollution")]
-    public float pollutionProduced_auto;
+    [SerializeField] private float pollutionProduced_auto;
+    [HideInInspector] public float pollutionProduced_base;
+    [HideInInspector] public float pollutionProduced_extra;
     public float pollutionInterval_auto;
     [HideInInspector] public float pollutionProduced_auto_initial;
 
@@ -63,7 +65,10 @@ public class Airport : MonoBehaviour
         }
 
         // Auto production & pollution
-        pollutionProduced_auto = pollutionProduced_auto_initial + (buildingLevel.level - 1) * 0.04f;
+        pollutionProduced_base = pollutionProduced_auto_initial + (buildingLevel.level - 1) * 0.04f;
+        pollutionProduced_extra = buildingBuff.houseEfficiencyTotal * 0.1f;
+        pollutionProduced_auto = pollutionProduced_base + pollutionProduced_extra;
+        
         pollutionProduced = pollutionProduced_initial + ((buildingLevel.level - 1) * 2f);
 
     }
