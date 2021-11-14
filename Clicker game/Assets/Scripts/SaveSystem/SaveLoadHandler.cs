@@ -154,6 +154,9 @@ public class SaveLoadHandler : MonoBehaviour
                 data.saveData_logisticPos[i, 2]), Quaternion.identity);
             newLogistic.GetComponent<BuildingLevel>().level = data.saveData_logisticLevel[i];
             newLogistic.GetComponent<LogisticCenter>().collectPositionIndex = data.saveData_findPosIndex[i];
+            // Node reference
+            GameObject closestNode = GetClosestNode(newLogistic, allNodes);
+            SetNodeReference(newLogistic, closestNode);
         }
     }
     private void LoadPerpetualMachines(AllSaveData data, GameObject[] allNodes)
@@ -165,6 +168,9 @@ public class SaveLoadHandler : MonoBehaviour
                 data.saveData_perpetualPos[i, 1],
                 data.saveData_perpetualPos[i, 2]), Quaternion.identity);
             newPerpetual.GetComponent<BuildingLevel>().level = data.saveData_perpetualLevel[i];
+            // Node reference
+            GameObject closestNode = GetClosestNode(newPerpetual, allNodes);
+            SetNodeReference(newPerpetual, closestNode);
         }
     }
 

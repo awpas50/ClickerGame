@@ -423,7 +423,7 @@ public class GameManager : MonoBehaviour
                 else if(buildingSelectedInScene.GetComponent<Turret>().efficiency > 1)
                 {
                     UIManager.i.Line1Text.text = "Fire rate: " + buildingSelectedInScene.GetComponent<Turret>().fireRate_original.ToString("F2") + " + " +
-                    (buildingSelectedInScene.GetComponent<Turret>().fireRate_additional).ToString("F2") + " per second";
+                    (buildingSelectedInScene.GetComponent<Turret>().fireRate_additional).ToString("F2") + "/s";
                 }
                 UIManager.i.Line2Text.text = "Environmental pollution: " + 
                     buildingSelectedInScene.GetComponent<Turret>().pollutionProduced_auto_base.ToString("F2") + " + " +
@@ -446,8 +446,12 @@ public class GameManager : MonoBehaviour
             if (buildingSelectedInScene.tag == "LogisticCenter")
             {
                 // Set building name in the UI
-                UIManager.i.Line1Text.text = "Collection interval: " + buildingSelectedInScene.GetComponent<LogisticCenter>().collectionSpeed + "s";
-                UIManager.i.Line2Text.text = "Environmental pollution: " + buildingSelectedInScene.GetComponent<LogisticCenter>().pollution_auto + "/s";
+                UIManager.i.Line1Text.text = "Collection interval: " + 
+                    buildingSelectedInScene.GetComponent<LogisticCenter>().collectionSpeed_base + " - " +
+                    buildingSelectedInScene.GetComponent<LogisticCenter>().collectionSpeed_extra + "s";
+                UIManager.i.Line2Text.text = "Environmental pollution: " + 
+                    buildingSelectedInScene.GetComponent<LogisticCenter>().pollution_auto_base + " + " +
+                    buildingSelectedInScene.GetComponent<LogisticCenter>().pollution_auto_extra + "/s";
                 UIManager.i.Line3Text.text = "";
                 UIManager.i.Line4Text.text = "";
             }
