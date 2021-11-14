@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 281758397531508411}
   - component: {fileID: 281758397531508408}
   - component: {fileID: 281758397531508409}
+  - component: {fileID: 4774619285548226102}
   - component: {fileID: 7846707699858842216}
   - component: {fileID: -2490805682202242107}
   - component: {fileID: 1203822481746043851}
@@ -102,6 +103,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.5, y: 1.5, z: 1.5}
   m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!114 &4774619285548226102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 281758397531508390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3163d0409981fa24d99ac49ea430dc46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  efficiency: 0.75
+  baseEfficiency: 0.75
 --- !u!114 &7846707699858842216
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -138,8 +153,12 @@ MonoBehaviour:
   nearbyTurret: 0
   nearbyMainBuilding: 0
   nearbyAirport: 0
+  nearbyLogistic: 0
+  nearbyPerpetual: 0
   houseEfficiencyList: []
   houseEfficiencyTotal: 0
+  perpetualEfficiencyList: []
+  perpetualEfficiencyTotal: 0
 --- !u!114 &1203822481746043851
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -168,8 +187,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buildingBaseCost: 3000
   level: 1
-  maxLevel: 3
-  costEachLevel: 00000000a00f00008813000000000000
+  maxLevel: 4
+  costEachLevel: 00000000a00f0000821400006419000000000000
   sellCost: 0
 --- !u!114 &-9065938611911806873
 MonoBehaviour:

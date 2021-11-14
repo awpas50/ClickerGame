@@ -146,7 +146,7 @@ MonoBehaviour:
   pollutionProduced_auto: 0.07
   pollutionInterval_auto: 1
   moneyProduced_auto_initial: 0
-  pollutionProduced_auto_initial: 0
+  pollutionProduced_auto_initial: 0.07
   factoryPopUp: {fileID: 7541951108901463549, guid: 8ae78f63db5315641ab5b8c13d25542c,
     type: 3}
   popupStorageCanvas: {fileID: 0}
@@ -175,8 +175,12 @@ MonoBehaviour:
   nearbyTurret: 0
   nearbyMainBuilding: 0
   nearbyAirport: 0
+  nearbyLogistic: 0
+  nearbyPerpetual: 0
   houseEfficiencyList: []
   houseEfficiencyTotal: 0
+  perpetualEfficiencyList: []
+  perpetualEfficiencyTotal: 0
 --- !u!114 &8520843552009449592
 MonoBehaviour:
   m_ObjectHideFlags: 0

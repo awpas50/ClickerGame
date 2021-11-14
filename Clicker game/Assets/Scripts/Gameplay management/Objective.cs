@@ -19,6 +19,14 @@ public class Objective : MonoBehaviour
     public bool additionalTrigger3 = false;
     public bool additionalTrigger4 = false;
 
+    private void Awake()
+    {
+        townHallLevel = 1;
+        additionalTrigger1 = false;
+        additionalTrigger2 = false;
+        additionalTrigger3 = false;
+        additionalTrigger4 = false;
+    }
     private void Start()
     {
         mainBuildingScript = FindObjectOfType<MainBuilding>();

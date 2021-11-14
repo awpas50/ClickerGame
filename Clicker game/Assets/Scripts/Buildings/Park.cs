@@ -53,14 +53,12 @@ public class Park : MonoBehaviour
     {
         levelMultipiler = 1f + ((buildingLevel.level - 1) * 0.2f);
         // each house increase the efficiency by 25%, whereas each factory nearby decrease the efficiency by 25%. Minimum 20% output.
-        if (efficiency > 0.2f)
+        float factoryPollutionPunishment = buildingBuff.nearbyFactory * 0.4f;
+        if(factoryPollutionPunishment >= 0.8f)
         {
-            efficiency = 1 + buildingBuff.houseEfficiencyTotal + buildingBuff.nearbyMainBuilding * Objective.townHallEfficiency - buildingBuff.nearbyFactory * 0.4f;
+            factoryPollutionPunishment = 0.8f;
         }
-        if(efficiency <= 0.2f)
-        {
-            efficiency = 0.2f;
-        }
+        efficiency = 1 + buildingBuff.houseEfficiencyTotal + buildingBuff.nearbyMainBuilding * Objective.townHallEfficiency - factoryPollutionPunishment;
 
         totalProduction = pollutionReduced * levelMultipiler;
         totalProduction_buff = pollutionReduced * levelMultipiler * efficiency;

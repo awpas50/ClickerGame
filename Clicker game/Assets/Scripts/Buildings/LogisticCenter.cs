@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class LogisticCenter : MonoBehaviour
 {
-    [HideInInspector] public float collectionSpeed = 1.7f;
-    public float collectionSpeed_initial = 1.7f;
+    [HideInInspector] public float collectionSpeed = 1.8f;
+    public float collectionSpeed_initial = 1.8f;
 
     public int collectPositionIndex = -1; 
     [SerializeField] private Dictionary<int, Vector3> collectPositionDict; // 1 - 25, omit 13
@@ -71,7 +71,7 @@ public class LogisticCenter : MonoBehaviour
     }
     private void Update()
     {
-        collectionSpeed = collectionSpeed_initial - 0.4f * (buildingLevel.level - 1);
+        collectionSpeed = collectionSpeed_initial - 0.3f * (buildingLevel.level - 1);
         pollution_auto = pollution_auto_initial + 0.03f * (buildingLevel.level - 1);
     }
 

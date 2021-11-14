@@ -59,8 +59,8 @@ public class Factory : MonoBehaviour
     private void Update()
     {
         levelMultipiler = 1f + ((buildingLevel.level - 1) * 0.45f);
-        // each house & main building nearby increase the efficiency by 25% (+5% each house level).
-        efficiency = 1 + buildingBuff.houseEfficiencyTotal + buildingBuff.nearbyMainBuilding * Objective.townHallEfficiency;
+        // each house (25% ~ 50%), perpetual machine (100% ~ 250%) & main building nearby increase the efficiency by 25% (+5% each house level).
+        efficiency = 1 + buildingBuff.houseEfficiencyTotal + buildingBuff.perpetualEfficiencyTotal + buildingBuff.nearbyMainBuilding * Objective.townHallEfficiency;
 
         totalProduction = moneyProduced * levelMultipiler;
         totalProduction_buff = moneyProduced * levelMultipiler * efficiency;
@@ -75,7 +75,7 @@ public class Factory : MonoBehaviour
         totalPollution = pollutionProduced * (levelMultipiler * 1.2f);
 
         // Auto production & pollution
-        pollutionProduced_auto = pollutionProduced_auto_initial + (buildingLevel.level - 1) * 0.02f;
+        pollutionProduced_auto = pollutionProduced_auto_initial + (buildingLevel.level - 1) * 0.02f + buildingBuff.houseEfficiencyTotal * 0.1f + buildingBuff.perpetualEfficiencyTotal * 0.1f;
         moneyProduced_auto = moneyProduced_auto_initial + (buildingLevel.level - 1) * 0.25f;
 
         // interval passed (indicates the current process of generating resources, used for the save system)

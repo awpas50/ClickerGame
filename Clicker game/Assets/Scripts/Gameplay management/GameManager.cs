@@ -384,7 +384,8 @@ public class GameManager : MonoBehaviour
                 UIManager.i.Line2Text.text = "Pollution: " + Math.Round(buildingSelectedInScene.GetComponent<Factory>().totalPollution, 2);
                 UIManager.i.Line3Text.text = "Auto Production: " + buildingSelectedInScene.GetComponent<Factory>().moneyProduced_auto.ToString("F2") + "/s";
                 UIManager.i.Line4Text.text = "Environmental pollution: " + 
-                    (buildingSelectedInScene.GetComponent<Factory>().pollutionProduced_auto / buildingSelectedInScene.GetComponent<Factory>().pollutionInterval_auto).ToString("F2") + "/s";
+                    (buildingSelectedInScene.GetComponent<Factory>().pollutionProduced_auto_initial + (buildingLevel.level - 1) * 0.02f / buildingSelectedInScene.GetComponent<Factory>().pollutionInterval_auto).ToString("F2") + " + " +
+                    (buildingSelectedInScene.GetComponent<Factory>().buildingBuff.houseEfficiencyTotal * 0.1f + buildingSelectedInScene.GetComponent<Factory>().buildingBuff.perpetualEfficiencyTotal * 0.1f).ToString("F2") + "/s";
             }
             if (buildingSelectedInScene.tag == "Park")
             {
@@ -447,7 +448,7 @@ public class GameManager : MonoBehaviour
             }
             if(buildingSelectedInScene.tag == "PerpetualMachine")
             {
-                UIManager.i.Line1Text.text = "";
+                UIManager.i.Line1Text.text = "Nearby factory production +" + buildingSelectedInScene.GetComponent<PerpetualMachine>().baseEfficiency * 100 + "%";
                 UIManager.i.Line2Text.text = "";
                 UIManager.i.Line3Text.text = "";
                 UIManager.i.Line4Text.text = "";

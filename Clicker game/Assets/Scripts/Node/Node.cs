@@ -214,6 +214,7 @@ public class Node : MonoBehaviour
                     {
                         building_REF.GetComponent<BuildingBuff>().allBuildingList.Add(b.gameObject);
                         building_REF.GetComponent<BuildingBuff>().nearbyPerpetual += 1;
+                        building_REF.GetComponent<BuildingBuff>().perpetualEfficiencyList.Add(b.GetComponent<PerpetualMachine>().efficiency);
                     }
                 }
                 if (building_REF.GetComponent<BuildingBuff>().houseEfficiencyList.Count > 0)
