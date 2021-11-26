@@ -72,6 +72,14 @@ public class GameManager : MonoBehaviour
     public GameObject[] allPlatformNodes;
     Touch touch;
 
+    [Header("Camera Rotator")]
+    public GameObject cameraRotator;
+    [Header("Main Menu Buttons")]
+    public GameObject mainMenuBG;
+    public GameObject mainMenuBtn1;
+    public GameObject mainMenuBtn2;
+    public GameObject mainMenuBtn3;
+    public GameObject mainMenuBtn4;
     void Awake()
     {
         //debug
@@ -85,6 +93,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        canInput = true;
         Time.timeScale = 1;
         InvokeRepeating("GetRefInvokeFunction", 0f, 0.05f);
     }
@@ -845,13 +854,26 @@ public class GameManager : MonoBehaviour
     }
     public void SaveAndQuit()
     {
+        canInput = false;
         AudioManager.instance.Play(SoundList.ButtonClicked);
+        LeanTween.move(cameraRotator, new Vector3(8.36f, 36, -10.96f), 1.5f).setEase(LeanTweenType.easeOutQuad).setIgnoreTimeScale(true);
+        LeanTween.rotate(cameraRotator, new Vector3(0, -15f, 0), 1.5f).setEase(LeanTweenType.easeOutQuad).setIgnoreTimeScale(true);
+        LeanTween.rotate(cameraRotator.transform.GetChild(0).gameObject, new Vector3(25, 0, 0), 1.5f).setEase(LeanTweenType.easeOutQuad).
+            setIgnoreTimeScale(true).setOnComplete(LoadMainMenu);
+        mainMenuBG.GetComponent<CanvasGroup>().alpha = 0;
+
+        mainMenuBtn1.GetComponent<ScaleTween>().ScaleDown();
+        mainMenuBtn2.GetComponent<ScaleTween>().ScaleDown();
+        mainMenuBtn3.GetComponent<ScaleTween>().ScaleDown();
+        mainMenuBtn4.GetComponent<ScaleTween>().ScaleDown();
+    }
+    void LoadMainMenu()
+    {
         SceneManager.LoadScene(0);
     }
-
     public void ResetCamera()
     {
-        Camera.main.transform.position = new Vector3(4.25f, 6.5f, -5.2f);
+        LeanTween.move(cameraRotator, new Vector3(4.25f, 6.5f, -5.2f), 1f).setEase(LeanTweenType.easeOutQuad);
     }
 
     void DisableGameUI()
@@ -860,6 +882,7 @@ public class GameManager : MonoBehaviour
         UIManager.i.BottomUI.SetActive(false);
         UIManager.i.RightUI.SetActive(false);
         UIManager.i.MainMenuUI.SetActive(true);
+        UIManager.i.popUpStorage.SetActive(false);
         buildingDetailsCanvas.SetActive(false);
         buildingInfoCanvas.SetActive(false);
     }
@@ -869,5 +892,6 @@ public class GameManager : MonoBehaviour
         UIManager.i.BottomUI.SetActive(true);
         UIManager.i.RightUI.SetActive(true);
         UIManager.i.MainMenuUI.SetActive(false);
+        UIManager.i.popUpStorage.SetActive(true);
     }
 }

@@ -42,21 +42,21 @@ public class CameraControllerMouse : MonoBehaviour
     }
     IEnumerator DeleteAnimation()
     {
-        yield return new WaitForSeconds(2.51f);
+        yield return new WaitForSeconds(2.01f);
         Destroy(anim);
     }
     IEnumerator TemperaryDisablePopupCanvas()
     {
         yield return new WaitForSeconds(0.01f);
         popUpCanvas.SetActive(false);
-        yield return new WaitForSeconds(2.51f);
+        yield return new WaitForSeconds(2.01f);
         popUpCanvas.SetActive(true);
     }
     IEnumerator TemperaryDisableInput()
     {
         //Time.timeScale = 0;
         GameManager.i.canInput = false;
-        yield return new WaitForSeconds(2.51f);
+        yield return new WaitForSeconds(2.01f);
         //Time.timeScale = 1;
         GameManager.i.canInput = true;
     }

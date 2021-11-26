@@ -21,7 +21,6 @@ public class SaveLoadHandler : MonoBehaviour
     public void LoadGame()
     {
         AllSaveData data = AccessSaveFile();
-        
         LoadPlatforms(data);
         GameObject[] allNodes = GetNodeRef();
         LoadHouses(data, allNodes);

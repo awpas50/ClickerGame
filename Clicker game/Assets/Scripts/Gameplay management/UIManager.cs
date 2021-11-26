@@ -51,6 +51,9 @@ public class UIManager : MonoBehaviour
     public Button building4_button;
     public Button building5_button;
 
+    [Header("Popup storage UI")]
+    public GameObject popUpStorage;
+
     void Awake()
     {
         //debug

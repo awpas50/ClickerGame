@@ -141,9 +141,11 @@ MonoBehaviour:
   totalProduction_buff: 0
   extraProduction: 0
   totalPollution: 0
-  moneyProduced_auto: 1
+  moneyProduced_auto: 0.25
   interval_auto: 1
   pollutionProduced_auto: 0.07
+  pollutionProduced_auto_base: 0
+  pollutionProduced_auto_extra: 0
   pollutionInterval_auto: 1
   moneyProduced_auto_initial: 0
   pollutionProduced_auto_initial: 0.07
