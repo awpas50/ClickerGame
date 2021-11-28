@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraControllerMouse : MonoBehaviour
 {
-    
+    public static CameraControllerMouse i;
     [Header("Move")]
     [SerializeField] private Vector3 newPosition;
     [SerializeField] private float maxPosition;
@@ -23,6 +23,18 @@ public class CameraControllerMouse : MonoBehaviour
     [SerializeField] private Animator anim;
     [Header("Pop up canvas")]
     [SerializeField] private GameObject popUpCanvas;
+
+    void Awake()
+    {
+        //debug
+        if (i != null)
+        {
+            Debug.LogError("More than one CameraControllerMouse in scene");
+            return;
+        }
+        i = this;
+    }
+
     void Start()
     {
         StartCoroutine(DeleteAnimation());
@@ -121,5 +133,21 @@ public class CameraControllerMouse : MonoBehaviour
         transform.position = Vector3.Lerp(transform.position, newPosition, Time.deltaTime * movementTime);
         transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, Time.deltaTime * rotationAmount);
         cameraTransform.localPosition = Vector3.Lerp(cameraTransform.localPosition, newZoom, Time.deltaTime * movementTime);
+    }
+
+    public void ResetCameraDefaultSettings()
+    {
+        FreezeInput();
+        LeanTween.move(gameObject, new Vector3(1.37f, 0, -3.37f), 0.2f).setEase(LeanTweenType.easeInQuad).setOnComplete(ResumeInput);
+        
+    }
+    void FreezeInput()
+    {
+        GameManager.i.canInput = false;
+    }
+    void ResumeInput()
+    {
+        GameManager.i.canInput = true;
+        newPosition = gameObject.transform.position;
     }
 }

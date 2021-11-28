@@ -13,11 +13,13 @@ public class Objective : MonoBehaviour
     public float objective2;
     public float objective3;
     public float objective4;
+    public float objective5;
 
     public bool additionalTrigger1 = false;
     public bool additionalTrigger2 = false;
     public bool additionalTrigger3 = false;
     public bool additionalTrigger4 = false;
+    public bool additionalTrigger5 = false;
 
     private void Awake()
     {
@@ -26,6 +28,7 @@ public class Objective : MonoBehaviour
         additionalTrigger2 = false;
         additionalTrigger3 = false;
         additionalTrigger4 = false;
+        additionalTrigger5 = false;
     }
     private void Start()
     {
@@ -53,12 +56,29 @@ public class Objective : MonoBehaviour
         {
             townHallLevel = 5;
         }
+        if (Currency.MONEY >= objective5 && !additionalTrigger5)
+        {
+            townHallLevel = 6;
+        }
 
+        if (townHallLevel == 6)
+        {
+            mainBuildingScript.moneyEachClick = 12.5f;
+            townHallEfficiency = 0.6f;
+            UIManager.i.objectiveText.text = "";
+
+            if (!additionalTrigger5)
+            {
+                SpecialBuildingCount.platform1Count += 5;
+
+                additionalTrigger5 = true;
+            }
+        }
         if (townHallLevel == 5)
         {
             mainBuildingScript.moneyEachClick = 10;
-            townHallEfficiency = 0.6f;
-            UIManager.i.objectiveText.text = "";
+            townHallEfficiency = 0.5f;
+            UIManager.i.objectiveText.text = "- Reach 40000";
 
             if (!additionalTrigger4)
             {

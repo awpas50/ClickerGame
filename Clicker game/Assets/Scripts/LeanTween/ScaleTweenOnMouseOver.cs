@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class ScaleTweenOnMouseOver : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class ScaleTweenOnMouseOver : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
 {
     public LeanTweenType inType;
     public LeanTweenType outType;
@@ -13,18 +14,27 @@ public class ScaleTweenOnMouseOver : MonoBehaviour, IPointerEnterHandler, IPoint
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        LeanTween.scale(gameObject, new Vector3(x, y, z), animationTime).setEase(inType).setIgnoreTimeScale(true);
+        if(gameObject.GetComponent<Button>().interactable)
+        {
+            LeanTween.scale(gameObject, new Vector3(x, y, z), animationTime).setEase(inType).setIgnoreTimeScale(true);
+        }
     }
     public void OnPointerExit(PointerEventData eventData)
     {
         LeanTween.scale(gameObject, new Vector3(ox, oy, oz), animationTime).setEase(outType).setIgnoreTimeScale(true);
     }
-    private void OnMouseEnter()
+    public void OnPointerDown(PointerEventData eventData)
     {
-        LeanTween.scale(gameObject, new Vector3(x, y, z), animationTime).setEase(inType).setIgnoreTimeScale(true);
+        if (gameObject.GetComponent<Button>().interactable)
+        {
+            LeanTween.scale(gameObject, new Vector3(x * 1.12f, y * 1.12f, z * 1.12f), 0.05f).setEase(inType).setIgnoreTimeScale(true);
+        }
     }
-    private void OnMouseExit()
+    public void OnPointerUp(PointerEventData eventData)
     {
-        LeanTween.scale(gameObject, new Vector3(ox, oy, oz), animationTime).setEase(outType).setIgnoreTimeScale(true);
+        if (gameObject.GetComponent<Button>().interactable)
+        {
+            LeanTween.scale(gameObject, new Vector3(ox, oy, oz), 0.05f).setEase(outType).setIgnoreTimeScale(true);
+        }
     }
 }

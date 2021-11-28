@@ -117,7 +117,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buildingName: Airport
-  sprite: {fileID: 21300000, guid: c46673252d05a6b428ff316fc14c4f32, type: 3}
+  sprite: {fileID: 21300000, guid: c67ae347b8ea02c4eba4db23f60d5594, type: 3}
   indicator: {fileID: 3785561878270417725}
   repeatable: 0
   duration: 0.5
@@ -140,8 +140,12 @@ MonoBehaviour:
   nearbyTurret: 0
   nearbyMainBuilding: 0
   nearbyAirport: 0
+  nearbyLogistic: 0
+  nearbyPerpetual: 0
   houseEfficiencyList: []
   houseEfficiencyTotal: 0
+  perpetualEfficiencyList: []
+  perpetualEfficiencyTotal: 0
 --- !u!114 &4923360378195877182
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -178,6 +182,8 @@ MonoBehaviour:
   pollutionProduced: 6
   pollutionProduced_initial: 0
   pollutionProduced_auto: 0.13
+  pollutionProduced_base: 0
+  pollutionProduced_extra: 0
   pollutionInterval_auto: 1
   pollutionProduced_auto_initial: 0
   airportPopUp: {fileID: 7541951108901463549, guid: c656e3276e6e260498885c6a8415b820,

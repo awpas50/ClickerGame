@@ -228,6 +228,7 @@ public class SaveLoadHandler : MonoBehaviour
         objective.additionalTrigger2 = data.saveData_townHall_objectiveTriggers[1];
         objective.additionalTrigger3 = data.saveData_townHall_objectiveTriggers[2];
         objective.additionalTrigger4 = data.saveData_townHall_objectiveTriggers[3];
+        objective.additionalTrigger5 = data.saveData_townHall_objectiveTriggers[4];
     }
     private void LoadAsteroids(AllSaveData data)
     {

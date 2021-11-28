@@ -305,19 +305,22 @@ public class AllSaveData
         switch (Objective.townHallLevel)
         {
             case 1:
-                saveData_townHall_objectiveTriggers = new bool[4] { false, false, false, false };
+                saveData_townHall_objectiveTriggers = new bool[5] { false, false, false, false, false };
                 break;
             case 2:
-                saveData_townHall_objectiveTriggers = new bool[4] { true, false, false, false };
+                saveData_townHall_objectiveTriggers = new bool[5] { true, false, false, false, false };
                 break;
             case 3:
-                saveData_townHall_objectiveTriggers = new bool[4] { true, true, false, false };
+                saveData_townHall_objectiveTriggers = new bool[5] { true, true, false, false, false };
                 break;
             case 4:
-                saveData_townHall_objectiveTriggers = new bool[4] { true, true, true, false };
+                saveData_townHall_objectiveTriggers = new bool[5] { true, true, true, false, false };
                 break;
             case 5:
-                saveData_townHall_objectiveTriggers = new bool[4] { true, true, true, true };
+                saveData_townHall_objectiveTriggers = new bool[5] { true, true, true, true, false };
+                break;
+            case 6:
+                saveData_townHall_objectiveTriggers = new bool[5] { true, true, true, true, true };
                 break;
         }
     }

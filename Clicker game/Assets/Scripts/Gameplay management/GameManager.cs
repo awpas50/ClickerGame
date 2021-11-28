@@ -203,7 +203,7 @@ public class GameManager : MonoBehaviour
         buildingObjectType = 0;
 
         UIManager.i.buildingInfo_name.text = "Logistic center";
-        UIManager.i.buildingInfo_price.text = "$1500";
+        UIManager.i.buildingInfo_price.text = "$1000";
         UIManager.i.buildingInfo.text = "Auto collect nearby resources from buildings. Grant 4x buffs when collecting resources from town hall.";
         if (buildingSelectedInScene)
         {
@@ -366,11 +366,19 @@ public class GameManager : MonoBehaviour
             if (buildingLevel.level >= buildingLevel.maxLevel)
             {
                 UIManager.i.upgradeButton.interactable = false;
-                UIManager.i.upgradeText.text = "MAX";
+                UIManager.i.upgradeButton.GetComponentInChildren<TextMeshProUGUI>().text = "Level max";
+                UIManager.i.upgradeText.text = "";
+            }
+            else if(buildingLevel.costEachLevel[buildingLevel.level - 1] > Currency.MONEY)
+            {
+                UIManager.i.upgradeButton.interactable = false;
+                UIManager.i.upgradeButton.GetComponentInChildren<TextMeshProUGUI>().text = "Upgrade";
+                UIManager.i.upgradeText.text = "$" + buildingLevel.costEachLevel[buildingLevel.level];
             }
             else
             {
                 UIManager.i.upgradeButton.interactable = true;
+                UIManager.i.upgradeButton.GetComponentInChildren<TextMeshProUGUI>().text = "Upgrade";
                 UIManager.i.upgradeText.text = "$" + buildingLevel.costEachLevel[buildingLevel.level];
             }
 
@@ -870,10 +878,10 @@ public class GameManager : MonoBehaviour
     void LoadMainMenu()
     {
         SceneManager.LoadScene(0);
-    }
+    }   
     public void ResetCamera()
     {
-        LeanTween.move(cameraRotator, new Vector3(4.25f, 6.5f, -5.2f), 1f).setEase(LeanTweenType.easeOutQuad);
+        CameraControllerMouse.i.ResetCameraDefaultSettings();
     }
 
     void DisableGameUI()
