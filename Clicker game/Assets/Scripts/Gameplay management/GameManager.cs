@@ -100,9 +100,6 @@ public class GameManager : MonoBehaviour
     // Button event
     public void SelectBuilding1()
     {
-        // Audio
-        AudioManager.instance.Play(SoundList.ButtonClicked);
-
         buildingSelectedInUI = building1.building;
         buildingCost = building1.cost;
         buildingObjectType = 0;
@@ -118,8 +115,6 @@ public class GameManager : MonoBehaviour
     }
     public void SelectBuilding2()
     {
-        // Audio
-        AudioManager.instance.Play(SoundList.ButtonClicked);
 
         // Named factory, but this is the dark market where drug dealer do transaction here...........
         buildingSelectedInUI = building2.building;
@@ -137,8 +132,6 @@ public class GameManager : MonoBehaviour
     }
     public void SelectBuilding3()
     {
-        // Audio
-        AudioManager.instance.Play(SoundList.ButtonClicked);
 
         buildingSelectedInUI = building3.building;
         buildingCost = building3.cost;
@@ -156,8 +149,6 @@ public class GameManager : MonoBehaviour
     }
     public void SelectBuilding4()
     {
-        // Audio
-        AudioManager.instance.Play(SoundList.ButtonClicked);
 
         // A cat always lands on her feet whereas a bread with butter always fall buttered side down. 
         buildingSelectedInUI = building4.building;
@@ -175,8 +166,6 @@ public class GameManager : MonoBehaviour
     }
     public void SelectBuilding5()
     {
-        // Audio
-        AudioManager.instance.Play(SoundList.ButtonClicked);
 
         // A cat always lands on her feet whereas a bread with butter always fall buttered side down. 
         buildingSelectedInUI = building5.building;
@@ -194,8 +183,6 @@ public class GameManager : MonoBehaviour
     }
     public void SelectBuilding6()
     {
-        // Audio
-        AudioManager.instance.Play(SoundList.ButtonClicked);
 
         // A cat always lands on her feet whereas a bread with butter always fall buttered side down. 
         buildingSelectedInUI = building6.building;
@@ -213,9 +200,6 @@ public class GameManager : MonoBehaviour
     }
     public void SelectBuilding7()
     {
-        // Audio
-        AudioManager.instance.Play(SoundList.ButtonClicked);
-
         // A cat always lands on her feet whereas a bread with butter always fall buttered side down. 
         buildingSelectedInUI = building7.building;
         buildingCost = building7.cost;
@@ -232,9 +216,6 @@ public class GameManager : MonoBehaviour
     }
     public void SelectPlatform()
     {
-        // Audio
-        AudioManager.instance.Play(SoundList.ButtonClicked);
-
         // A cat always lands on her feet whereas a bread with butter always fall buttered side down. 
         buildingSelectedInUI = platform1.building;
         buildingCost = platform1.cost;
@@ -251,9 +232,6 @@ public class GameManager : MonoBehaviour
     }
     public void OK_PurchaseBuilding()
     {
-        // Audio
-        AudioManager.instance.Play(SoundList.ButtonClicked);
-
         // Remove placeHolder and building reference
         // Place building according to the building reference on the node
         for (int i = 0; i < nodeList.Count; i++)
@@ -282,9 +260,6 @@ public class GameManager : MonoBehaviour
     }
     public void Cancel_PurchaseBuilding()
     {
-        // Audio
-        AudioManager.instance.Play(SoundList.Cancel);
-
         // Add back the estimated number of platforms.
         for (int i = 0; i < nodeList.Count; i++)
         {
@@ -333,7 +308,6 @@ public class GameManager : MonoBehaviour
             
             // level 2 --> 3
             // buildingLevel.level = 2
-            AudioManager.instance.Play(SoundList.ButtonClicked);
             Currency.MONEY -= buildingLevel.costEachLevel[buildingLevel.level];
             //Debug.Log("buildingLevel.costEachLevel[buildingLevel.level] = " + buildingLevel.costEachLevel[buildingLevel.level]);
             buildingLevel.level += 1;
@@ -342,8 +316,6 @@ public class GameManager : MonoBehaviour
     }
     public void Sell()
     {
-        // Remove ref on node properly
-        AudioManager.instance.Play(SoundList.Cancel);
         buildingSelectedInScene.GetComponent<BuildingState>().node.GetComponent<Node>().building_REF = null;
         Destroy(buildingSelectedInScene);
         Currency.MONEY += buildingSelectedInScene.GetComponent<BuildingLevel>().sellCost;
@@ -846,7 +818,6 @@ public class GameManager : MonoBehaviour
 
     public void PauseGameMenu()
     {
-        AudioManager.instance.Play(SoundList.ButtonClicked);
         buildingSelectedInScene = null;
         buildingObjectType = -1;
         buildingSelectedInUI = null;
@@ -856,14 +827,12 @@ public class GameManager : MonoBehaviour
 
     public void Resume()
     {
-        AudioManager.instance.Play(SoundList.ButtonClicked);
         EnableGameUI();
         isPaused = false;
     }
     public void SaveAndQuit()
     {
         canInput = false;
-        AudioManager.instance.Play(SoundList.ButtonClicked);
         LeanTween.move(cameraRotator, new Vector3(8.36f, 36, -10.96f), 1.5f).setEase(LeanTweenType.easeOutQuad).setIgnoreTimeScale(true);
         LeanTween.rotate(cameraRotator, new Vector3(0, -15f, 0), 1.5f).setEase(LeanTweenType.easeOutQuad).setIgnoreTimeScale(true);
         LeanTween.rotate(cameraRotator.transform.GetChild(0).gameObject, new Vector3(25, 0, 0), 1.5f).setEase(LeanTweenType.easeOutQuad).
