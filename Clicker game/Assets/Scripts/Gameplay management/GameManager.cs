@@ -80,6 +80,11 @@ public class GameManager : MonoBehaviour
     public GameObject mainMenuBtn2;
     public GameObject mainMenuBtn3;
     public GameObject mainMenuBtn4;
+    public GameObject musicText;
+    public GameObject sfxText;
+    public GameObject musicSlider;
+    public GameObject sfxSlider;
+
     void Awake()
     {
         //debug
@@ -843,6 +848,10 @@ public class GameManager : MonoBehaviour
         mainMenuBtn2.GetComponent<ScaleTween>().ScaleDown();
         mainMenuBtn3.GetComponent<ScaleTween>().ScaleDown();
         mainMenuBtn4.GetComponent<ScaleTween>().ScaleDown();
+        musicText.GetComponent<ScaleTween>().ScaleDown();
+        musicSlider.GetComponent<ScaleTween>().ScaleDown();
+        sfxText.GetComponent<ScaleTween>().ScaleDown();
+        sfxSlider.GetComponent<ScaleTween>().ScaleDown();
     }
     void LoadMainMenu()
     {

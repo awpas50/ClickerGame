@@ -59,7 +59,7 @@ public class AudioManager : MonoBehaviour
         AudioSource audioSource = soundGameObject.AddComponent<AudioSource>();
         AudioClip audioClip = GetAudioClip(soundList);
 
-        audioSource.volume = GetVolume(soundList);
+        audioSource.volume = GetVolume(soundList) * GetSfxVolume();
         audioSource.pitch = GetPitch(soundList);
         audioSource.reverbZoneMix = GetReverbZoneMix(soundList);
         audioSource.PlayOneShot(audioClip);
@@ -78,7 +78,7 @@ public class AudioManager : MonoBehaviour
             AudioSource audioSource = soundGameObject.AddComponent<AudioSource>();
             AudioClip audioClip = GetAudioClip(soundList);
 
-            audioSource.volume = GetVolume(soundList);
+            audioSource.volume = GetVolume(soundList) * GetSfxVolume();
             audioSource.pitch = GetPitch(soundList);
             audioSource.reverbZoneMix = GetReverbZoneMix(soundList);
             audioSource.PlayOneShot(audioClip);
@@ -97,7 +97,7 @@ public class AudioManager : MonoBehaviour
             AudioSource audioSource = soundGameObject.AddComponent<AudioSource>();
             AudioClip audioClip = GetAudioClip(soundList);
 
-            audioSource.volume = GetVolume(soundList);
+            audioSource.volume = GetVolume(soundList) * GetSfxVolume();
             audioSource.pitch = GetPitch(soundList);
             audioSource.reverbZoneMix = GetReverbZoneMix(soundList);
             audioSource.PlayOneShot(audioClip);
@@ -154,5 +154,10 @@ public class AudioManager : MonoBehaviour
             }
         }
         return 0;
+    }
+
+    public float GetSfxVolume()
+    {
+        return VolumeController.i.SfxVolume;
     }
 }

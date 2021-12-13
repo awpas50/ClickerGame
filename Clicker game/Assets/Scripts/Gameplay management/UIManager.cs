@@ -67,19 +67,19 @@ public class UIManager : MonoBehaviour
     
     void Update()
     {
-        moneyText.text = "RESOURCES " + Currency.MONEY;
+        moneyText.text = Currency.MONEY.ToString();
 
         if (Currency.MONEY >= 1000)
         {
             float temp = Mathf.RoundToInt(Currency.MONEY);
-            moneyText.text = "RESOURCES " + temp;
+            moneyText.text = temp.ToString();
         }
         else if (Currency.MONEY < 1000)
         {
             float temp = (float)Math.Round(Currency.MONEY, 1);
-            moneyText.text = "RESOURCES " + temp;
+            moneyText.text = temp.ToString();
         }
-        pollutionText.text = "POLLUTION " + Math.Round(Pollution.POLLUTION, 2).ToString();
+        pollutionText.text = Math.Round(Pollution.POLLUTION, 2).ToString();
 
         platform1Text.text = "x" + SpecialBuildingCount.platform1Count;
 

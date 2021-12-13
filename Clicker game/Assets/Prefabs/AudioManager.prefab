@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5748901789371089986}
   - component: {fileID: 5748901789371089987}
+  - component: {fileID: 7853011655243039718}
   - component: {fileID: 1469478127}
   m_Layer: 0
   m_Name: AudioManager
@@ -164,6 +165,20 @@ MonoBehaviour:
     volume: 0.3
     pitch: 1
     reverbZoneMix: 1
+--- !u!114 &7853011655243039718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5748901789371089988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f04c9f1547b9f0e40be91c73a07351d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  musicVolume: 1
+  SfxVolume: 1
 --- !u!82 &1469478127
 AudioSource:
   m_ObjectHideFlags: 0
