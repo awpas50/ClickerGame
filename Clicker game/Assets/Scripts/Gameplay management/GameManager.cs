@@ -30,6 +30,10 @@ public class GameManager : MonoBehaviour
     public List<GameObject> nodeList;
     [Header("Indicate total spent (Do not edit)")]
     public List<float> estimatedCostList;
+
+    // Upgrade++
+    private int estimateCostToUpgrade = 0;
+    private int estimatelevelsToUpgrade = 0;
     public BuildingBluePrint building1;
     public BuildingBluePrint building2;
     public BuildingBluePrint building3;
@@ -310,12 +314,31 @@ public class GameManager : MonoBehaviour
         {
             // level 1 --> 2
             // buildingLevel.level = 1
-            
             // level 2 --> 3
             // buildingLevel.level = 2
             Currency.MONEY -= buildingLevel.costEachLevel[buildingLevel.level];
             //Debug.Log("buildingLevel.costEachLevel[buildingLevel.level] = " + buildingLevel.costEachLevel[buildingLevel.level]);
             buildingLevel.level += 1;
+            //Debug.Log("buildingLevel.level = " + buildingLevel.level);
+        }
+    }
+    public void UpgradePlus()
+    {
+        BuildingLevel buildingLevel = buildingSelectedInScene.GetComponent<BuildingLevel>();
+        if (Currency.MONEY <= estimateCostToUpgrade)
+        {
+            AudioManager.instance.Play(SoundList.Error);
+            return;
+        }
+        else
+        {
+            // level 1 --> 2
+            // buildingLevel.level = 1
+            // level 2 --> 3
+            // buildingLevel.level = 2
+            Currency.MONEY -= estimateCostToUpgrade;
+            //Debug.Log("buildingLevel.costEachLevel[buildingLevel.level] = " + buildingLevel.costEachLevel[buildingLevel.level]);
+            buildingLevel.level += estimatelevelsToUpgrade;
             //Debug.Log("buildingLevel.level = " + buildingLevel.level);
         }
     }
@@ -327,36 +350,61 @@ public class GameManager : MonoBehaviour
     }
     private void Update()
     {
+        // Get money and pollution
         SaveData.current.money = Currency.MONEY;
         SaveData.current.pollution = Pollution.POLLUTION;
-        if(buildingSelectedInScene)
+
+        if (buildingSelectedInScene)
         {
             BuildingLevel buildingLevel = buildingSelectedInScene.GetComponent<BuildingLevel>();
             BuildingSelection buildingSelection = buildingSelectedInScene.GetComponent<BuildingSelection>();
             UIManager.i.sellText.text = "$" + buildingLevel.sellCost;
             UIManager.i.upgradeText.text = "$" + buildingLevel.costEachLevel[buildingLevel.level];
+            UIManager.i.upgradePlusText.text = "$" + buildingLevel.costEachLevel[buildingLevel.level];
             UIManager.i.image.sprite = buildingSelection.sprite;
             UIManager.i.buildingName.text = buildingSelection.buildingName + " (LEVEL " + buildingLevel.level + ")";
             UIManager.i.Line1Text.color = UIManager.i.textDefaultColor;
+
+            // Get upgrade++ estimate cost
+            estimateCostToUpgrade = buildingLevel.costEachLevel[buildingLevel.level];
+            estimatelevelsToUpgrade = 1;
+            for (int i = buildingLevel.level + 1; i < buildingLevel.maxLevel; i++)
+            {
+                if (estimateCostToUpgrade + buildingLevel.costEachLevel[i] <= Currency.MONEY)
+                {
+                    estimateCostToUpgrade += buildingLevel.costEachLevel[i];
+                    estimatelevelsToUpgrade += 1;
+                }
+                else
+                {
+                    break;
+                }
+            }
 
             // Disable button when maximum level:
             if (buildingLevel.level >= buildingLevel.maxLevel)
             {
                 UIManager.i.upgradeButton.interactable = false;
-                UIManager.i.upgradeButton.GetComponentInChildren<TextMeshProUGUI>().text = "Level max";
+                UIManager.i.upgradePlusButton.interactable = false;
+                //UIManager.i.upgradeButton.GetComponentInChildren<TextMeshProUGUI>().text = "Level max";
                 UIManager.i.upgradeText.text = "";
+                UIManager.i.upgradePlusText.text = "";
             }
-            else if(buildingLevel.costEachLevel[buildingLevel.level - 1] > Currency.MONEY)
+            else if(buildingLevel.costEachLevel[buildingLevel.level] > Currency.MONEY)
             {
                 UIManager.i.upgradeButton.interactable = false;
-                UIManager.i.upgradeButton.GetComponentInChildren<TextMeshProUGUI>().text = "Upgrade";
+                UIManager.i.upgradePlusButton.interactable = false;
+                //UIManager.i.upgradeButton.GetComponentInChildren<TextMeshProUGUI>().text = "Upgrade";
                 UIManager.i.upgradeText.text = "$" + buildingLevel.costEachLevel[buildingLevel.level];
+                UIManager.i.upgradePlusText.text = "$" + buildingLevel.costEachLevel[buildingLevel.level];
             }
             else
             {
                 UIManager.i.upgradeButton.interactable = true;
-                UIManager.i.upgradeButton.GetComponentInChildren<TextMeshProUGUI>().text = "Upgrade";
+                UIManager.i.upgradePlusButton.interactable = true;
+                //UIManager.i.upgradeButton.GetComponentInChildren<TextMeshProUGUI>().text = "Upgrade";
                 UIManager.i.upgradeText.text = "$" + buildingLevel.costEachLevel[buildingLevel.level];
+                UIManager.i.upgradePlusText.text = "$" + estimateCostToUpgrade;
             }
 
             // Building detail text

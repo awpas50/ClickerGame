@@ -19,8 +19,10 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI Line4Text;
     public TextMeshProUGUI sellText;
     public TextMeshProUGUI upgradeText;
+    public TextMeshProUGUI upgradePlusText;
     public Button sellButton;
     public Button upgradeButton;
+    public Button upgradePlusButton;
     public Button OKButton;
 
     [Header("Building Info")]
