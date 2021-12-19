@@ -32,6 +32,7 @@ public class SaveLoadHandler : MonoBehaviour
         LoadPerpetualMachines(data, allNodes);
         LoadRuins(data, allNodes);
         LoadResourcesAndPollution(data);
+        LoadCurrentGameTime(data);
         LoadTownHallRelated(data);
         LoadAsteroids(data);
         LoadBullets(data);
@@ -219,6 +220,10 @@ public class SaveLoadHandler : MonoBehaviour
     {
         Currency.MONEY = data.saveData_resources;
         Pollution.POLLUTION = data.saveData_pollution;
+    }
+    private void LoadCurrentGameTime(AllSaveData data)
+    {
+        GameManager.i.timeElapsed = data.saveData_currentGameTime;
     }
     private void LoadTownHallRelated(AllSaveData data)
     {

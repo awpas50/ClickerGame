@@ -10,7 +10,8 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager i;
-
+    [Header("Time elapsed")]
+    public float timeElapsed;
     [Header("Canvas of building details (assign manually)")]
     public GameObject buildingDetailsCanvas;
     public TextMeshProUGUI buildingLevel;
@@ -350,6 +351,8 @@ public class GameManager : MonoBehaviour
     }
     private void Update()
     {
+        // Record elapsed time
+        timeElapsed += Time.deltaTime;
         // Get money and pollution
         SaveData.current.money = Currency.MONEY;
         SaveData.current.pollution = Pollution.POLLUTION;

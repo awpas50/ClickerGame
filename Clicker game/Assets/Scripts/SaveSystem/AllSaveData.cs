@@ -51,6 +51,7 @@ public class AllSaveData
     public int[] saveData_ruinBuildingLevel;
     public float[] saveData_ruinRepairCost;
     [Header("Miscellenous")]
+    public float saveData_currentGameTime;
     public float saveData_resources;
     public float saveData_pollution;
     public int saveData_townHallLevel;
@@ -92,6 +93,7 @@ public class AllSaveData
         StorePerpetualMachineData();
         StoreRuinData();
         StoreResourcesAndPollution();
+        StoreCurrentGameTime();
         StoreTownHallRelated();
         StoreAsteroidsData();
         StoreBulletData();
@@ -298,6 +300,10 @@ public class AllSaveData
     {
         saveData_resources = Currency.MONEY;
         saveData_pollution = Pollution.POLLUTION;
+    }
+    private void StoreCurrentGameTime()
+    {
+        saveData_currentGameTime = GameManager.i.timeElapsed;
     }
     private void StoreTownHallRelated()
     {
