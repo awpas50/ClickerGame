@@ -69,8 +69,13 @@ public class AsteroidSpawner : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(40f);
-            AudioManager.instance.Play(SoundList.AsteroidPassBy);
+            yield return new WaitForSeconds(38f);
+            if (asteroidCount >= 1)
+            {
+                AudioManager.instance.Play(SoundList.AsteroidPassBy);
+            }
+            yield return new WaitForSeconds(2f);
+
             // A formula to control the asteroid number
             if (Pollution.POLLUTION <= 15)
             {
@@ -81,6 +86,7 @@ public class AsteroidSpawner : MonoBehaviour
                 asteroidCount = 40;
             }
             //yield return null;
+            
             for (int i = 0; i < asteroidCount; i++)
             {
                 GameObject temp = Instantiate(asteroid, new Vector3(randomX, randomY, randomZ), Quaternion.identity);
@@ -93,8 +99,10 @@ public class AsteroidSpawner : MonoBehaviour
     }
     IEnumerator Spawn_Auto()
     {
-        yield return new WaitForSeconds(60f);
-        while(true)
+        yield return new WaitForSeconds(58f);
+        AudioManager.instance.Play(SoundList.AsteroidPassBy);
+        yield return new WaitForSeconds(2f);
+        while (true)
         {
             for (int i = 0; i < Objective.townHallLevel; i++)
             {
@@ -105,6 +113,7 @@ public class AsteroidSpawner : MonoBehaviour
                 yield return new WaitForSeconds(Random.Range(0.3f, 1.3f));
             }
             yield return new WaitForSeconds(40f);
+            AudioManager.instance.Play(SoundList.AsteroidPassBy);
         }
     }
     public IEnumerator Spawn_DEBUG()

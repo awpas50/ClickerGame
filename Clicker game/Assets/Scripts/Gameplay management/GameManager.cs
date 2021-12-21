@@ -53,11 +53,6 @@ public class GameManager : MonoBehaviour
     public GameObject ruin7;
     public GameObject bullet;
 
-    [Header("Building Buttons")]
-    public Button buildingButton1;
-    public Button buildingButton2;
-    public Button buildingButton3;
-    public Button buildingButton4;
     //[Header("buildingStats")]
     //public GameObject[] list_house;
     //public GameObject[] list_factory;
@@ -886,15 +881,8 @@ public class GameManager : MonoBehaviour
         EnableGameUI();
         isPaused = false;
     }
-    public void SaveAndQuit()
+    public void ScaleDownAllBtns()
     {
-        canInput = false;
-        LeanTween.move(cameraRotator, new Vector3(8.36f, 36, -10.96f), 1.5f).setEase(LeanTweenType.easeOutQuad).setIgnoreTimeScale(true);
-        LeanTween.rotate(cameraRotator, new Vector3(0, -15f, 0), 1.5f).setEase(LeanTweenType.easeOutQuad).setIgnoreTimeScale(true);
-        LeanTween.rotate(cameraRotator.transform.GetChild(0).gameObject, new Vector3(25, 0, 0), 1.5f).setEase(LeanTweenType.easeOutQuad).
-            setIgnoreTimeScale(true).setOnComplete(LoadMainMenu);
-        mainMenuBG.GetComponent<CanvasGroup>().alpha = 0;
-
         mainMenuBtn1.GetComponent<ScaleTween>().ScaleDown();
         mainMenuBtn2.GetComponent<ScaleTween>().ScaleDown();
         mainMenuBtn3.GetComponent<ScaleTween>().ScaleDown();
@@ -903,6 +891,15 @@ public class GameManager : MonoBehaviour
         musicSlider.GetComponent<ScaleTween>().ScaleDown();
         sfxText.GetComponent<ScaleTween>().ScaleDown();
         sfxSlider.GetComponent<ScaleTween>().ScaleDown();
+    }
+    public void SaveAndQuit()
+    {
+        canInput = false;
+        LeanTween.move(cameraRotator, new Vector3(8.36f, 36, -10.96f), 1.5f).setEase(LeanTweenType.easeOutQuad).setIgnoreTimeScale(true);
+        LeanTween.rotate(cameraRotator, new Vector3(0, -15f, 0), 1.5f).setEase(LeanTweenType.easeOutQuad).setIgnoreTimeScale(true);
+        LeanTween.rotate(cameraRotator.transform.GetChild(0).gameObject, new Vector3(25, 0, 0), 1.5f).setEase(LeanTweenType.easeOutQuad).
+            setIgnoreTimeScale(true).setOnComplete(LoadMainMenu);
+        mainMenuBG.GetComponent<CanvasGroup>().alpha = 0;
     }
     void LoadMainMenu()
     {

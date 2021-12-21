@@ -13,6 +13,7 @@ public class ScaleTween : MonoBehaviour
     
     void OnEnable()
     {
+
         ScaleUp();
     }
 
@@ -24,11 +25,13 @@ public class ScaleTween : MonoBehaviour
 
     public void ScaleDown()
     {
+
         LeanTween.scale(gameObject, new Vector3(x, y, z), 0f).setIgnoreTimeScale(true);
-        LeanTween.scale(gameObject, new Vector3(0, 0, 0), animationTime).setDelay(delay_out).setOnComplete(DestroyMe).setEase(outType).setIgnoreTimeScale(true);
+        LeanTween.scale(gameObject, new Vector3(0, 0, 0), animationTime).setDelay(delay_out).setOnComplete(DisableMe).setEase(outType).setIgnoreTimeScale(true);
     }
-    void DestroyMe()
+    void DisableMe()
     {
-        Destroy(this);
+        gameObject.SetActive(false);
+        //Destroy(this);
     }
 }

@@ -52,6 +52,7 @@ public class UIManager : MonoBehaviour
     public Button building3_button;
     public Button building4_button;
     public Button building5_button;
+    public Button building6_button;
 
     [Header("Popup storage UI")]
     public GameObject popUpStorage;
@@ -85,15 +86,23 @@ public class UIManager : MonoBehaviour
 
         platform1Text.text = "x" + SpecialBuildingCount.platform1Count;
 
-        if(Objective.townHallLevel < 2)
+        if (Objective.townHallLevel == 1)
         {
             building4_button.interactable = false;
             building5_button.interactable = false;
+            building6_button.interactable = false;
         }
-        else
+        else if (Objective.townHallLevel == 2)
         {
             building4_button.interactable = true;
             building5_button.interactable = true;
+            building6_button.interactable = false;
+        }
+        else if (Objective.townHallLevel >= 3)
+        {
+            building4_button.interactable = true;
+            building5_button.interactable = true;
+            building6_button.interactable = true;
         }
     }
 

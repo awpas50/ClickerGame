@@ -13,6 +13,8 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] private GameObject button3;
     [SerializeField] private GameObject button4;
     [SerializeField] private GameObject button5;
+    [SerializeField] private GameObject settingPanel;
+    [SerializeField] private GameObject creditPanel;
 
     void Awake()
     {
@@ -93,5 +95,12 @@ public class MainMenuManager : MonoBehaviour
         button3.GetComponent<ScaleTween>().ScaleDown();
         button4.GetComponent<ScaleTween>().ScaleDown();
         button5.GetComponent<ScaleTween>().ScaleDown();
+        settingPanel.GetComponent<ScaleTween>().ScaleDown();
+        creditPanel.GetComponent<ScaleTween>().ScaleDown();
+    }
+
+    public void OpenItchLink()
+    {
+        Application.OpenURL("https://awpas50.itch.io/");
     }
 }

@@ -56,6 +56,7 @@ public class CameraControllerMouse : MonoBehaviour
     {
         yield return new WaitForSeconds(2.01f);
         Destroy(anim);
+        anim = null;
     }
     IEnumerator TemperaryDisablePopupCanvas()
     {
@@ -68,7 +69,7 @@ public class CameraControllerMouse : MonoBehaviour
     {
         //Time.timeScale = 0;
         GameManager.i.canInput = false;
-        yield return new WaitForSeconds(2.01f);
+        yield return new WaitForSeconds(2.01f + 0.06f);
         //Time.timeScale = 1;
         GameManager.i.canInput = true;
     }

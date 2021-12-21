@@ -50,7 +50,7 @@ MonoBehaviour:
     soundList: 0
     source: {fileID: 0}
     originalVolume: 0
-    volume: 0.5
+    volume: 0.3
     pitch: 1
     reverbZoneMix: 1
   - clip: {fileID: 8300000, guid: 44282973147e3b94c80790e1cfec4a09, type: 3}
@@ -134,14 +134,14 @@ MonoBehaviour:
     soundList: 12
     source: {fileID: 0}
     originalVolume: 0
-    volume: 0.3
+    volume: 0.25
     pitch: 1
     reverbZoneMix: 1
   - clip: {fileID: 8300000, guid: e0ecf3b568b56094595ea9e7815e2b96, type: 3}
     soundList: 13
     source: {fileID: 0}
     originalVolume: 0
-    volume: 0.6
+    volume: 0.25
     pitch: 1
     reverbZoneMix: 1
   - clip: {fileID: 8300000, guid: 596790f05b873c04a8f10d3a1a3d3d96, type: 3}
@@ -177,8 +177,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f04c9f1547b9f0e40be91c73a07351d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  musicVolume: 1
-  SfxVolume: 1
+  musicVolume: 0.7
+  SfxVolume: 0.7
 --- !u!82 &1469478127
 AudioSource:
   m_ObjectHideFlags: 0
