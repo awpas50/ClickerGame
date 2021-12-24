@@ -83,6 +83,20 @@ public class Airport : MonoBehaviour
 
     public void SpawnPopUp()
     {
+        //SFX
+        int seed = Random.Range(0, 3);
+        switch(seed)
+        {
+            case 0:
+                AudioManager.instance.Play(SoundList.PopUp1);
+                break;
+            case 1:
+                AudioManager.instance.Play(SoundList.PopUp2);
+                break;
+            case 2:
+                AudioManager.instance.Play(SoundList.PopUp3);
+                break;
+        }
         GameObject temp = Instantiate(airportPopUp, transform.position, Quaternion.identity);
         temp.GetComponent<AirportPopUp>().airportREF = gameObject;
         temp.transform.SetParent(popupStorageCanvas.transform);

@@ -10,7 +10,22 @@ public class UIOnMouseOver : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if(whatToShow)
+        //SFX
+        int seed = Random.Range(0, 3);
+        switch (seed)
+        {
+            case 0:
+                AudioManager.instance.Play(SoundList.Hover1);
+                break;
+            case 1:
+                AudioManager.instance.Play(SoundList.Hover2);
+                break;
+            case 2:
+                AudioManager.instance.Play(SoundList.Hover3);
+                break;
+        }
+
+        if (whatToShow)
         {
             whatToShow.SetActive(true);
         }

@@ -84,6 +84,8 @@ public class GameManager : MonoBehaviour
     public GameObject sfxText;
     public GameObject musicSlider;
     public GameObject sfxSlider;
+    [Header("VFX")]
+    public GameObject upgradeVFX;
 
     void Awake()
     {
@@ -237,6 +239,13 @@ public class GameManager : MonoBehaviour
     }
     public void OK_PurchaseBuilding()
     {
+        for (int i = 0; i < nodeList.Count; i++)
+        {
+            Instantiate(upgradeVFX, nodeList[i].transform.position, Quaternion.identity);
+        }
+        
+        // Sound
+        AudioManager.instance.Play(SoundList.BuildingComplete);
         // Remove placeHolder and building reference
         // Place building according to the building reference on the node
         for (int i = 0; i < nodeList.Count; i++)
@@ -300,6 +309,7 @@ public class GameManager : MonoBehaviour
     }
     public void Upgrade()
     {
+        Instantiate(upgradeVFX, buildingSelectedInScene.transform.position, Quaternion.identity);
         BuildingLevel buildingLevel = buildingSelectedInScene.GetComponent<BuildingLevel>();
         if (Currency.MONEY <= buildingLevel.costEachLevel[buildingLevel.level])
         {
@@ -308,6 +318,8 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            // Sound
+            AudioManager.instance.Play(SoundList.BuildingUpgrade);
             // level 1 --> 2
             // buildingLevel.level = 1
             // level 2 --> 3
@@ -320,6 +332,7 @@ public class GameManager : MonoBehaviour
     }
     public void UpgradePlus()
     {
+        
         BuildingLevel buildingLevel = buildingSelectedInScene.GetComponent<BuildingLevel>();
         if (Currency.MONEY <= estimateCostToUpgrade)
         {
@@ -328,6 +341,8 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            // Sound
+            AudioManager.instance.Play(SoundList.BuildingUpgrade);
             // level 1 --> 2
             // buildingLevel.level = 1
             // level 2 --> 3
@@ -340,6 +355,8 @@ public class GameManager : MonoBehaviour
     }
     public void Sell()
     {
+        // Sound
+        AudioManager.instance.Play(SoundList.BuildingSold);
         buildingSelectedInScene.GetComponent<BuildingState>().node.GetComponent<Node>().building_REF = null;
         Destroy(buildingSelectedInScene);
         Currency.MONEY += buildingSelectedInScene.GetComponent<BuildingLevel>().sellCost;
@@ -504,7 +521,7 @@ public class GameManager : MonoBehaviour
             }
         }
         // Make resources avaliable to collect even in building pruchasing mode.
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0) || Input.GetMouseButtonUp(1))
         {
             // prevent clicking through UI
             if (MouseOverUILayerObject.IsPointerOverUIObject())
@@ -566,7 +583,8 @@ public class GameManager : MonoBehaviour
                     // Town Hall
                     else if (hit0.collider.gameObject.tag == "MainBuilding")
                     {
-                        hit0.collider.gameObject.GetComponent<MainBuilding>().MainBuildingClickEvent();
+                        return;
+                        //hit0.collider.gameObject.GetComponent<MainBuilding>().MainBuildingClickEvent();
                     }
                     // not buildings
                     else
@@ -655,7 +673,7 @@ public class GameManager : MonoBehaviour
                             }
                             if(hit.collider.gameObject.tag == "LogisticCenter")
                             {
-                                AudioManager.instance.Play(SoundList.SelectHouse);
+                                AudioManager.instance.Play(SoundList.SelectLogisticCenter);
                             }
                             if(hit.collider.gameObject.tag == "PerpetualMachine")
                             {

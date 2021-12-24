@@ -14,7 +14,11 @@ public class ScaleTweenOnMouseOver : MonoBehaviour, IPointerEnterHandler, IPoint
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if(gameObject.GetComponent<Button>().interactable)
+        if(gameObject.GetComponent<Button>() && gameObject.GetComponent<Button>().interactable)
+        {
+            LeanTween.scale(gameObject, new Vector3(x, y, z), animationTime).setEase(inType).setIgnoreTimeScale(true);
+        }
+        else if(!gameObject.GetComponent<Button>())
         {
             LeanTween.scale(gameObject, new Vector3(x, y, z), animationTime).setEase(inType).setIgnoreTimeScale(true);
         }
@@ -25,14 +29,22 @@ public class ScaleTweenOnMouseOver : MonoBehaviour, IPointerEnterHandler, IPoint
     }
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (gameObject.GetComponent<Button>().interactable)
+        if (gameObject.GetComponent<Button>() && gameObject.GetComponent<Button>().interactable)
+        {
+            LeanTween.scale(gameObject, new Vector3(x * 1.12f, y * 1.12f, z * 1.12f), 0.05f).setEase(inType).setIgnoreTimeScale(true);
+        }
+        else if (!gameObject.GetComponent<Button>())
         {
             LeanTween.scale(gameObject, new Vector3(x * 1.12f, y * 1.12f, z * 1.12f), 0.05f).setEase(inType).setIgnoreTimeScale(true);
         }
     }
     public void OnPointerUp(PointerEventData eventData)
     {
-        if (gameObject.GetComponent<Button>().interactable)
+        if (gameObject.GetComponent<Button>() && gameObject.GetComponent<Button>().interactable)
+        {
+            LeanTween.scale(gameObject, new Vector3(ox, oy, oz), 0.05f).setEase(outType).setIgnoreTimeScale(true);
+        }
+        else if(!gameObject.GetComponent<Button>())
         {
             LeanTween.scale(gameObject, new Vector3(ox, oy, oz), 0.05f).setEase(outType).setIgnoreTimeScale(true);
         }

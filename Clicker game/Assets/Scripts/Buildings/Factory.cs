@@ -99,6 +99,20 @@ public class Factory : MonoBehaviour
         while (factoryPopUpREF == null)
         {
             yield return new WaitForSeconds(interval);
+            //SFX
+            int seed = UnityEngine.Random.Range(0, 3);
+            switch (seed)
+            {
+                case 0:
+                    AudioManager.instance.Play(SoundList.PopUp1);
+                    break;
+                case 1:
+                    AudioManager.instance.Play(SoundList.PopUp2);
+                    break;
+                case 2:
+                    AudioManager.instance.Play(SoundList.PopUp3);
+                    break;
+            }
             factoryPopUpREF = Instantiate(factoryPopUp, transform.position, Quaternion.identity);
             factoryPopUpREF.transform.SetParent(popupStorageCanvas.transform);
             factoryPopUpREF.GetComponent<FactoryPopUp>().factoryREF = gameObject;

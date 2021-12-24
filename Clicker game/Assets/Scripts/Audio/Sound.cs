@@ -21,7 +21,21 @@ public enum SoundList
     GetCleanAir,
     Repair,
     Error,
-    TurretShoot
+    TurretShoot,
+    SelectLogisticCenter,
+    ButtonClicked2,
+    ButtonClicked3,
+    Slide,
+    BuildingComplete,
+    BuildingSold,
+    BuildingUpgrade,
+    GetRandomStuff,
+    PopUp1,
+    PopUp2,
+    PopUp3,
+    Hover1,
+    Hover2,
+    Hover3
 }
 
 [System.Serializable]

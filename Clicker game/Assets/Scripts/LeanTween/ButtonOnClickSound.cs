@@ -9,7 +9,11 @@ public class ButtonOnClickSound : MonoBehaviour, IPointerDownHandler
     public SoundList soundList;
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (gameObject.GetComponent<Button>().interactable)
+        if (gameObject.GetComponent<Button>() && gameObject.GetComponent<Button>().interactable)
+        {
+            AudioManager.instance.Play(soundList);
+        }
+        else if(!gameObject.GetComponent<Button>())
         {
             AudioManager.instance.Play(soundList);
         }

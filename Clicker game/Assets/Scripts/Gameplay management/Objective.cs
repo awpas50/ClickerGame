@@ -65,11 +65,12 @@ public class Objective : MonoBehaviour
         {
             mainBuildingScript.moneyEachClick = 12.5f;
             townHallEfficiency = 0.6f;
+            UIManager.i.missionObjectiveText.text = "";
             UIManager.i.objectiveText.text = "";
 
             if (!additionalTrigger5)
             {
-                SpecialBuildingCount.platform1Count += 5;
+                SpecialBuildingCount.platform1Count += 10;
 
                 additionalTrigger5 = true;
             }
@@ -78,7 +79,8 @@ public class Objective : MonoBehaviour
         {
             mainBuildingScript.moneyEachClick = 10;
             townHallEfficiency = 0.5f;
-            UIManager.i.objectiveText.text = "- Reach 40000";
+            UIManager.i.missionObjectiveText.text = "Objective";
+            UIManager.i.objectiveText.text = "- Gather 40000 minerals";
 
             if (!additionalTrigger4)
             {
@@ -91,7 +93,8 @@ public class Objective : MonoBehaviour
         {
             mainBuildingScript.moneyEachClick = 6;
             townHallEfficiency = 0.45f;
-            UIManager.i.objectiveText.text = "- Reach 10000";
+            UIManager.i.missionObjectiveText.text = "Objective";
+            UIManager.i.objectiveText.text = "- Gather 10000 minerals";
             if (!additionalTrigger3)
             {
                 SpecialBuildingCount.platform1Count += 5;
@@ -102,7 +105,8 @@ public class Objective : MonoBehaviour
         {
             mainBuildingScript.moneyEachClick = 4;
             townHallEfficiency = 0.35f;
-            UIManager.i.objectiveText.text = "- Reach 6000";
+            UIManager.i.missionObjectiveText.text = "Objective";
+            UIManager.i.objectiveText.text = "- Gather 6000 minerals";
             if (!additionalTrigger2)
             {
                 SpecialBuildingCount.platform1Count += 4;
@@ -113,7 +117,8 @@ public class Objective : MonoBehaviour
         {
             mainBuildingScript.moneyEachClick = 2.5f;
             townHallEfficiency = 0.3f;
-            UIManager.i.objectiveText.text = "- Reach 2500";
+            UIManager.i.missionObjectiveText.text = "Objective";
+            UIManager.i.objectiveText.text = "- Gather 2500 minerals";
             if (!additionalTrigger1)
             {
                 SpecialBuildingCount.platform1Count += 4;
@@ -124,7 +129,8 @@ public class Objective : MonoBehaviour
         {
             mainBuildingScript.moneyEachClick = 1;
             townHallEfficiency = 0.25f;
-            UIManager.i.objectiveText.text = "- Reach 1000";
+            UIManager.i.missionObjectiveText.text = "Objective";
+            UIManager.i.objectiveText.text = "- Gather 1000 minerals";
         }
     }
 }

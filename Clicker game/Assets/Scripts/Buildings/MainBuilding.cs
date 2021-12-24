@@ -33,14 +33,14 @@ public class MainBuilding : MonoBehaviour
         //{
         //    return;
         //}
-        if (Input.GetMouseButtonUp(0) && !GameManager.i.isPaused)
+        if ((Input.GetMouseButtonUp(0) || Input.GetMouseButtonUp(1)) && !GameManager.i.isPaused)
         {
             MainBuildingClickEvent();
         }
     }
     public void MainBuildingClickEvent()
     {
-        AudioManager.instance.Play(SoundList.ButtonClicked);
+        AudioManager.instance.Play(SoundList.ButtonClicked2);
         Currency.MONEY += moneyEachClick;
         GameObject mainBuildingPopUpREF = Instantiate(mainBuildingPopUp, transform.position, Quaternion.identity);
         mainBuildingPopUpREF.GetComponent<MainBuildingPopUp>().realMoneyEachClick = moneyEachClick;
@@ -49,7 +49,7 @@ public class MainBuilding : MonoBehaviour
     }
     public void MainBuildingClickEvent_LogisticCenterBuff()
     {
-        AudioManager.instance.Play(SoundList.ButtonClicked);
+        AudioManager.instance.Play(SoundList.ButtonClicked2);
         Currency.MONEY += moneyEachClick * 4;
         GameObject mainBuildingPopUpREF = Instantiate(mainBuildingPopUp, transform.position, Quaternion.identity);
         mainBuildingPopUpREF.GetComponent<MainBuildingPopUp>().realMoneyEachClick = moneyEachClick * 4;

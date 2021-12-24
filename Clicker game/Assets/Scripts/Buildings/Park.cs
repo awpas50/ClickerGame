@@ -85,6 +85,20 @@ public class Park : MonoBehaviour
         while (parkPopUpREF == null)
         {
             yield return new WaitForSeconds(interval);
+            //SFX
+            int seed = UnityEngine.Random.Range(0, 3);
+            switch (seed)
+            {
+                case 0:
+                    AudioManager.instance.Play(SoundList.PopUp1);
+                    break;
+                case 1:
+                    AudioManager.instance.Play(SoundList.PopUp2);
+                    break;
+                case 2:
+                    AudioManager.instance.Play(SoundList.PopUp3);
+                    break;
+            }
             parkPopUpREF = Instantiate(parkPopUp, transform.position, Quaternion.identity);
             parkPopUpREF.transform.SetParent(popupStorageCanvas.transform);
             parkPopUpREF.GetComponent<ParkPopUp>().parkREF = gameObject;

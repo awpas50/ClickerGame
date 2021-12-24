@@ -2820,7 +2820,7 @@ PrefabInstance:
     - target: {fileID: 7549303059383576294, guid: 45198fe3387e3914497232928035a723,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7549303059383576294, guid: 45198fe3387e3914497232928035a723,
         type: 3}
@@ -3561,7 +3561,7 @@ PrefabInstance:
     - target: {fileID: 7549303059383576294, guid: 45198fe3387e3914497232928035a723,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7549303059383576294, guid: 45198fe3387e3914497232928035a723,
         type: 3}
@@ -3937,9 +3937,9 @@ MonoBehaviour:
   x: 1
   y: 1
   z: 1
-  delay_in: 0.2
+  delay_in: 0.3
   delay_out: 0.5
-  animationTime: 0.25
+  animationTime: 0.5
 --- !u!1 &744643260
 GameObject:
   m_ObjectHideFlags: 0
@@ -4247,9 +4247,9 @@ MonoBehaviour:
   x: 1
   y: 1
   z: 1
-  delay_in: 0.6
+  delay_in: 1.1
   delay_out: 0.1
-  animationTime: 0.25
+  animationTime: 0.5
 --- !u!1 &794509863
 GameObject:
   m_ObjectHideFlags: 0
@@ -4649,7 +4649,7 @@ PrefabInstance:
     - target: {fileID: 7549303059383576294, guid: 45198fe3387e3914497232928035a723,
         type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7549303059383576294, guid: 45198fe3387e3914497232928035a723,
         type: 3}
@@ -10823,9 +10823,9 @@ MonoBehaviour:
   x: 1
   y: 1
   z: 1
-  delay_in: 0.3
+  delay_in: 0.5
   delay_out: 0.4
-  animationTime: 0.25
+  animationTime: 0.5
 --- !u!1 &1123772197
 GameObject:
   m_ObjectHideFlags: 0
@@ -11620,7 +11620,7 @@ RectTransform:
   m_LocalScale: {x: 8, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 1417775440}
-  m_RootOrder: 5
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -11679,7 +11679,7 @@ MonoBehaviour:
   z: 1
   delay_in: 0.1
   delay_out: 0.6
-  animationTime: 0.25
+  animationTime: 0.5
 --- !u!1 &1313067370
 GameObject:
   m_ObjectHideFlags: 0
@@ -11813,9 +11813,9 @@ MonoBehaviour:
   x: 1
   y: 1
   z: 1
-  delay_in: 0.4
+  delay_in: 0.7
   delay_out: 0.3
-  animationTime: 0.25
+  animationTime: 0.5
 --- !u!1001 &1364652502
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16910,12 +16910,12 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 1306909250}
   - {fileID: 849767616}
   - {fileID: 1951281328}
   - {fileID: 463559220}
   - {fileID: 1558480465}
   - {fileID: 629922165}
-  - {fileID: 1306909250}
   - {fileID: 1745908801}
   - {fileID: 831503873}
   m_Father: {fileID: 1205742930}
@@ -17679,7 +17679,7 @@ PrefabInstance:
     - target: {fileID: 7549303059383576294, guid: 45198fe3387e3914497232928035a723,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7549303059383576294, guid: 45198fe3387e3914497232928035a723,
         type: 3}
@@ -18134,9 +18134,9 @@ MonoBehaviour:
   x: 1
   y: 1
   z: 1
-  delay_in: 0.5
+  delay_in: 0.9
   delay_out: 0.2
-  animationTime: 0.25
+  animationTime: 0.5
 --- !u!1 &1670697483
 GameObject:
   m_ObjectHideFlags: 0
@@ -19344,7 +19344,7 @@ PrefabInstance:
     - target: {fileID: 7549303059383576294, guid: 45198fe3387e3914497232928035a723,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7549303059383576294, guid: 45198fe3387e3914497232928035a723,
         type: 3}
