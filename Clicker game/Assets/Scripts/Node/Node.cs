@@ -133,14 +133,17 @@ public class Node : MonoBehaviour
     {
         // This is the actual process of putting a building
         GameObject buildingPrefab = Instantiate(placeHolder_building_REF, transform.position + placeHolder_building_REF.GetComponent<BuildingState>().offset, Quaternion.identity);
+        Debug.Log(buildingPrefab);
         if(gameObject.tag == "Node")
         {
             // Add reference (node recongize the building)
-            building_REF = buildingPrefab;
+            if (buildingPrefab.tag != "Platform")
+                building_REF = buildingPrefab;
             // Add reference (building recongize the node)
-            building_REF.GetComponent<BuildingState>().node = gameObject;
+            if (buildingPrefab.tag != "Platform")
+                building_REF.GetComponent<BuildingState>().node = gameObject;
             // Add glowing effect
-            StartCoroutine(building_REF.GetComponent<BuildingGlowingMat>().SetGlow());
+            //StartCoroutine(buildingPrefab.GetComponent<BuildingGlowingMat>().SetGlow());
         }
         
         GameManager.i.estimatedCostList.Clear();

@@ -19,6 +19,10 @@ public class BuildingGlowingMat : MonoBehaviour
     private float t1_3;
     private float t2;
 
+    private void Start()
+    {
+        StartCoroutine(SetGlow());
+    }
     public IEnumerator SetGlow()
     {
         yield return new WaitForSeconds(0.02f);

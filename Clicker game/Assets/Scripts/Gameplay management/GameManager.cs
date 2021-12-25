@@ -878,7 +878,6 @@ public class GameManager : MonoBehaviour
     //        return true;
     //    }
     //}
-
     public void GetRefInvokeFunction()
     {
         allNodes = GetAllNodes();
@@ -892,7 +891,6 @@ public class GameManager : MonoBehaviour
     {
         return GameObject.FindGameObjectsWithTag("PlatformPlaces");
     }
-
     public void PauseGameMenu()
     {
         buildingSelectedInScene = null;
@@ -901,7 +899,6 @@ public class GameManager : MonoBehaviour
         DisableGameUI();
         isPaused = true;
     }
-
     public void Resume()
     {
         EnableGameUI();
@@ -935,7 +932,6 @@ public class GameManager : MonoBehaviour
     {
         CameraControllerMouse.i.ResetCameraDefaultSettings();
     }
-
     void DisableGameUI()
     {
         UIManager.i.TopUI.SetActive(false);
