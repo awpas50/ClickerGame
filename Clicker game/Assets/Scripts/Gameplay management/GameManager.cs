@@ -783,6 +783,10 @@ public class GameManager : MonoBehaviour
             UIManager.i.RightUI.SetActive(true);
             UIManager.i.BuildingInstructionUI.SetActive(true);
 
+            UIManager.i.tutorialButton.interactable = false;
+            UIManager.i.resetCameraButton.interactable = false;
+            UIManager.i.pauseButton.interactable = false;
+
             // Right UI state
             if (nodeList.Count == 0)
             {
@@ -798,6 +802,10 @@ public class GameManager : MonoBehaviour
             buildingPurchasingState = false;
             UIManager.i.RightUI.SetActive(false);
             UIManager.i.BuildingInstructionUI.SetActive(false);
+
+            UIManager.i.tutorialButton.interactable = true;
+            UIManager.i.resetCameraButton.interactable = true;
+            UIManager.i.pauseButton.interactable = true;
         }
         // base on "buildingPurchasingState" the mesh on each node (the first child, GetChild(0) will be disabled)
         if (buildingPurchasingState && buildingSelectedInUI.gameObject.name != "Platform Small")

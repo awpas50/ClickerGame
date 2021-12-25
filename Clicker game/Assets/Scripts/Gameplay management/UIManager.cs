@@ -35,6 +35,9 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI pollutionText;
     public TextMeshProUGUI objectiveText;
     public TextMeshProUGUI missionObjectiveText;
+    public Button tutorialButton;
+    public Button resetCameraButton;
+    public Button pauseButton;
     public Image image;
     public GameObject MainMenuUI;
     public GameObject TopUI;

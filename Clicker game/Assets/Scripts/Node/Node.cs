@@ -139,7 +139,10 @@ public class Node : MonoBehaviour
             building_REF = buildingPrefab;
             // Add reference (building recongize the node)
             building_REF.GetComponent<BuildingState>().node = gameObject;
+            // Add glowing effect
+            StartCoroutine(building_REF.GetComponent<BuildingGlowingMat>().SetGlow());
         }
+        
         GameManager.i.estimatedCostList.Clear();
     }
     public void RemoveBuildingPlaceHolder()

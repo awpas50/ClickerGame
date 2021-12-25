@@ -11,7 +11,7 @@ public class Turret : MonoBehaviour
     [Header("Bullet props")]
     [SerializeField] private GameObject bullet;
     [SerializeField] private Transform firePoint;
-
+    
     [Header("Turret props")]
     public GameObject cannonBase;
     public GameObject barrel;
@@ -37,11 +37,16 @@ public class Turret : MonoBehaviour
     [HideInInspector] public float pollutionProduced_auto_extra;
     public float pollutionInterval_auto;
     public float pollutionProduced_auto_initial;
-    
+
+    [Header("Initial freeze")]
+    public float initialFreeze = 1.8f;
+    public bool canFreeze = true;
+
     public enum State
     {
         Idle,
-        Attack
+        Attack,
+        Freezed
     }
     public State state;
 
@@ -49,6 +54,10 @@ public class Turret : MonoBehaviour
     private float angleY_random;
     private float angleY_current;
 
+    private void Awake()
+    {
+        StartCoroutine(FreezeTurret());
+    }
     void Start()
     {
         lr = GetComponent<LineRenderer>();
@@ -82,17 +91,25 @@ public class Turret : MonoBehaviour
         pollutionProduced_auto = pollutionProduced_auto_base + pollutionProduced_auto_extra;
 
         // Level
-        fireRate_real = (fireRate_initial + (buildingLevel.level - 1) * 0.15f ) * efficiency;
-        fireRate_original = fireRate_initial + (buildingLevel.level - 1) * 0.15f;
-        fireRate_additional = (fireRate_initial + (buildingLevel.level - 1) * 0.15f) * (efficiency - 1);
-        if (target == null)
+        fireRate_real = (fireRate_initial + (buildingLevel.level - 1) * 0.1f ) * efficiency;
+        fireRate_original = fireRate_initial + (buildingLevel.level - 1) * 0.1f;
+        fireRate_additional = (fireRate_initial + (buildingLevel.level - 1) * 0.1f) * (efficiency - 1);
+        if(canFreeze)
         {
-            state = State.Idle;
+            state = State.Freezed;
         }
-        if (target != null)
+        else if(!canFreeze)
         {
-            state = State.Attack;
+            if (target == null)
+            {
+                state = State.Idle;
+            }
+            if (target != null)
+            {
+                state = State.Attack;
+            }
         }
+        
         
         if(state == State.Idle)
         {
@@ -126,7 +143,10 @@ public class Turret : MonoBehaviour
                 Shoot();
                 fireCountdown = 1f / fireRate_real;
             }
-            
+        }
+        if(state == State.Freezed)
+        {
+            return;
         }
     }
 
@@ -230,5 +250,12 @@ public class Turret : MonoBehaviour
             angleY_random = Random.Range(angleY_random - 50, angleY_random + 50);
             yield return new WaitForSeconds(3f);
         }
+    }
+
+    public IEnumerator FreezeTurret()
+    {
+        canFreeze = true;
+        yield return new WaitForSeconds(initialFreeze);
+        canFreeze = false;
     }
 }

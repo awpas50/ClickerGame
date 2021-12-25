@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 1203822481746043851}
   - component: {fileID: 1038537921}
   - component: {fileID: -9065938611911806873}
+  - component: {fileID: -708064399050978018}
   m_Layer: 0
   m_Name: Building7_PerpetualMachine
   m_TagString: PerpetualMachine
@@ -206,6 +207,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   repeatable: 0
   duration: 0.5
+--- !u!114 &-708064399050978018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 281758397531508390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ba5cb899c8496746a62d943ab3894b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  model1Glows: []
+  model2Glow: {fileID: 0}
+  mat1: {fileID: 0}
+  mat1_2: {fileID: 0}
+  mat2: {fileID: 0}
 --- !u!1001 &412607035176523151
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -15,12 +15,12 @@ public class BuildingRandomModel : MonoBehaviour
     
     void Update()
     {
-        if(seed == 0)
+        if (seed == 0)
         {
             model1.SetActive(true);
             model2.SetActive(false);
         }
-        else if(seed == 1)
+        else if (seed == 1)
         {
             model1.SetActive(false);
             model2.SetActive(true);
