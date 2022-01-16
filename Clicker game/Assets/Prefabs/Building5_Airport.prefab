@@ -184,7 +184,7 @@ MonoBehaviour:
   point2: {fileID: 3622753274027452090}
   pollutionProduced: 6
   pollutionProduced_initial: 0
-  pollutionProduced_auto: 0.13
+  pollutionProduced_auto: 0.2
   pollutionProduced_base: 0
   pollutionProduced_extra: 0
   pollutionInterval_auto: 1

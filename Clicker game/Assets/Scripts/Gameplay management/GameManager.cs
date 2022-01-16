@@ -241,7 +241,8 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i < nodeList.Count; i++)
         {
-            Instantiate(upgradeVFX, nodeList[i].transform.position, Quaternion.identity);
+            GameObject tempVFX = Instantiate(upgradeVFX, nodeList[i].transform.position, Quaternion.identity);
+            Destroy(tempVFX, 5f);
         }
         
         // Sound
@@ -309,7 +310,8 @@ public class GameManager : MonoBehaviour
     }
     public void Upgrade()
     {
-        Instantiate(upgradeVFX, buildingSelectedInScene.transform.position, Quaternion.identity);
+        GameObject tempVFX = Instantiate(upgradeVFX, buildingSelectedInScene.transform.position, Quaternion.identity);
+        Destroy(tempVFX, 5f);
         BuildingLevel buildingLevel = buildingSelectedInScene.GetComponent<BuildingLevel>();
         if (Currency.MONEY <= buildingLevel.costEachLevel[buildingLevel.level])
         {
@@ -332,7 +334,8 @@ public class GameManager : MonoBehaviour
     }
     public void UpgradePlus()
     {
-        
+        GameObject tempVFX = Instantiate(upgradeVFX, buildingSelectedInScene.transform.position, Quaternion.identity);
+        Destroy(tempVFX, 5f);
         BuildingLevel buildingLevel = buildingSelectedInScene.GetComponent<BuildingLevel>();
         if (Currency.MONEY <= estimateCostToUpgrade)
         {
@@ -528,10 +531,6 @@ public class GameManager : MonoBehaviour
             {
                 return;
             }
-            //if (TouchManager.instance.isDragging)
-            //{
-            //    return;
-            //}
             if (buildingPurchasingState)
             {
                 RaycastHit hit0;

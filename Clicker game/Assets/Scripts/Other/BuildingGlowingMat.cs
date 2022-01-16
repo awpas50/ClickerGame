@@ -22,6 +22,18 @@ public class BuildingGlowingMat : MonoBehaviour
     private void Start()
     {
         StartCoroutine(SetGlow());
+        for (int i = 0; i < model1Glows.Length; i++)
+        {
+            if(model1Glows[i] != null)
+            {
+                Destroy(model1Glows[i], 5f);
+            }
+            
+        }
+        if(model2Glow != null)
+        {
+            Destroy(model2Glow, 5f);
+        }
     }
     public IEnumerator SetGlow()
     {

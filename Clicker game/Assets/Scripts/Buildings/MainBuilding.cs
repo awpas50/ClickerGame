@@ -33,7 +33,7 @@ public class MainBuilding : MonoBehaviour
         //{
         //    return;
         //}
-        if ((Input.GetMouseButtonUp(0) || Input.GetMouseButtonUp(1)) && !GameManager.i.isPaused)
+        if ((Input.GetMouseButtonUp(0)) && !GameManager.i.isPaused)
         {
             MainBuildingClickEvent();
         }

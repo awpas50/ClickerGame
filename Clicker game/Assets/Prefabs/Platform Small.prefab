@@ -758,7 +758,7 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: bb3e330a7492fc94b9924762004f0bbd,
         type: 3}
       propertyPath: m_TagString
-      value: Platform
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: bb3e330a7492fc94b9924762004f0bbd,
         type: 3}

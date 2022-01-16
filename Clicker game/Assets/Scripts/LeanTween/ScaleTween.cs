@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ScaleTween : MonoBehaviour
 {
+    public bool canPlayScaleUpSound = false;
+    public SoundList scaleUpSound;
     public LeanTweenType inType;
     public LeanTweenType outType;
     public float x, y, z;
@@ -13,14 +15,13 @@ public class ScaleTween : MonoBehaviour
     
     void OnEnable()
     {
-
         ScaleUp();
     }
 
     void ScaleUp()
     {
         LeanTween.scale(gameObject, new Vector3(0, 0, 0), 0f).setIgnoreTimeScale(true);
-        LeanTween.scale(gameObject, new Vector3(x, y, z), animationTime).setDelay(delay_in).setEase(inType).setIgnoreTimeScale(true);
+        LeanTween.scale(gameObject, new Vector3(x, y, z), animationTime).setDelay(delay_in).setEase(inType).setIgnoreTimeScale(true).setOnComplete(PlayScaleUpSound);
     }
 
     public void ScaleDown()
@@ -33,5 +34,12 @@ public class ScaleTween : MonoBehaviour
     {
         gameObject.SetActive(false);
         //Destroy(this);
+    }
+    void PlayScaleUpSound()
+    {
+        if(canPlayScaleUpSound)
+        {
+            AudioManager.instance.Play(scaleUpSound);
+        }
     }
 }

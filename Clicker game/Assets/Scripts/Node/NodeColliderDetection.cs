@@ -10,6 +10,7 @@ public class NodeColliderDetection : MonoBehaviour
     void Start()
     {
         nodeREF = transform.parent.GetComponent<Node>();
+        InvokeRepeating("DetectNearbyBuildings", 0f, 0.07f);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -26,7 +27,7 @@ public class NodeColliderDetection : MonoBehaviour
         }
     }
 
-    private void Update()
+    void DetectNearbyBuildings()
     {
         // If a node has building on it, add it to the list.
         // Main building will be added to both list.
@@ -36,7 +37,7 @@ public class NodeColliderDetection : MonoBehaviour
             {
                 nodeREF.nearbyNode_building[i] = nodeREF.nearbyNode[i].GetComponent<Node>().building_REF;
             }
-            else if(nodeREF.nearbyNode[i].CompareTag("MainBuilding"))
+            else if (nodeREF.nearbyNode[i].CompareTag("MainBuilding"))
             {
                 nodeREF.nearbyNode_building[i] = nodeREF.nearbyNode[i];
             }
