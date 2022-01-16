@@ -50,18 +50,31 @@ public class AsteroidSpawner : MonoBehaviour
         {
             StartCoroutine(Spawn_DEBUG());
         }
-        if (Pollution.POLLUTION == 0)
+
+
+        val = Pollution.POLLUTION;
+
+        // A formula to control the asteroid number
+
+        if (Pollution.POLLUTION <= 15)
         {
             asteroidCount = 0;
-            val = 1;
         }
-        else
+        else if(Pollution.POLLUTION >= 15 && Pollution.POLLUTION <= 500)
         {
-           val = Pollution.POLLUTION;
+            asteroidCount = (int)(val / 50);
         }
-        if(val - 4 >= 0)
+        else if (Pollution.POLLUTION > 500 && Pollution.POLLUTION <= 2100)
         {
-            asteroidCount = (int)Mathf.Sqrt(val - 4);
+            asteroidCount = (int)(10 + Mathf.Floor((val - 500) / 80));
+        }
+        else if (Pollution.POLLUTION > 2100 && Pollution.POLLUTION <= 4500)
+        {
+            asteroidCount = (int)(30 + Mathf.Floor((val - 2100) / 120));
+        }
+        else if(Pollution.POLLUTION > 4500)
+        {
+            asteroidCount = 50;
         }
     }
 
@@ -76,15 +89,7 @@ public class AsteroidSpawner : MonoBehaviour
             }
             yield return new WaitForSeconds(2f);
 
-            // A formula to control the asteroid number
-            if (Pollution.POLLUTION <= 15)
-            {
-                asteroidCount = 0;
-            }
-            if (asteroidCount > 40)
-            {
-                asteroidCount = 40;
-            }
+            
             //yield return null;
             
             for (int i = 0; i < asteroidCount; i++)
