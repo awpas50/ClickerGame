@@ -17,7 +17,7 @@ public enum SoundList
     SelectTurret,
     SelectAirport,
     AsteroidPassBy,
-    GetMoney,
+    GetAirportGoods,
     GetCleanAir,
     Repair,
     Error,
@@ -35,7 +35,10 @@ public enum SoundList
     PopUp3,
     Hover1,
     Hover2,
-    Hover3
+    Hover3,
+    GetMoney1,
+    GetMoney2,
+    GetMoney3
 }
 
 [System.Serializable]

@@ -42,6 +42,10 @@ public class AsteroidSpawner : MonoBehaviour
         randomY = Random.Range(15f, 20f);
         randomZ = Random.Range(-6f, 6f);
 
+        if(Input.GetKeyDown(KeyCode.J))
+        {
+            SpecialBuildingCount.platform1Count += 1;
+        }
         if (Input.GetKeyDown(KeyCode.K))
         {
             Currency.MONEY += 1000;

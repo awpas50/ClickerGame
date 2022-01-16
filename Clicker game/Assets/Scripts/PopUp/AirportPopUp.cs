@@ -50,7 +50,7 @@ public class AirportPopUp : MonoBehaviour
     public void ButtonEvent()
     {
         // Audio
-        AudioManager.instance.Play(SoundList.GetMoney);
+        AudioManager.instance.Play(SoundList.GetAirportGoods);
         Pollution.POLLUTION += 4;
         int seed = Random.Range(0, 100);
         if(seed >= 24)

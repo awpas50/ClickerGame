@@ -40,7 +40,21 @@ public class FactoryPopUp : MonoBehaviour
     public void ButtonEvent()
     {
         // Audio
-        AudioManager.instance.Play(SoundList.GetMoney);
+        int seed = UnityEngine.Random.Range(0, 3);
+        switch(seed)
+        {
+            case 0:
+                AudioManager.instance.Play(SoundList.GetMoney1);
+                break;
+            case 1:
+                AudioManager.instance.Play(SoundList.GetMoney2);
+                break;
+            case 2:
+                AudioManager.instance.Play(SoundList.GetMoney3);
+                break;
+            default:
+                break;
+        }
 
         factoryREF_script.moneyProduced = (float)Math.Round(factoryREF_script.moneyProduced, 1);
         factoryREF_script.GetResourcesAndAddPollution(factoryREF_script.moneyProduced);
