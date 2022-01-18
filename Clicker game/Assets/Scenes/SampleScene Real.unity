@@ -2714,7 +2714,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canPlayScaleUpSound: 1
+  canPlayScaleDownSound: 1
   scaleUpSound: 29
+  scaleDownSound: 29
   inType: 3
   outType: 2
   x: 1
@@ -3679,7 +3681,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canPlayScaleUpSound: 1
+  canPlayScaleDownSound: 1
   scaleUpSound: 29
+  scaleDownSound: 29
   inType: 3
   outType: 2
   x: 1
@@ -3725,7 +3729,7 @@ MonoBehaviour:
   - {fileID: 1665988568}
   - {fileID: 493307537}
   openDelay: 0
-  closeDelay: 0.25
+  closeDelay: 0
 --- !u!114 &309009145
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5063,7 +5067,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canPlayScaleUpSound: 0
+  canPlayScaleDownSound: 0
   scaleUpSound: 0
+  scaleDownSound: 0
   inType: 3
   outType: 2
   x: 1
@@ -6847,7 +6853,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canPlayScaleUpSound: 0
+  canPlayScaleDownSound: 0
   scaleUpSound: 0
+  scaleDownSound: 0
   inType: 3
   outType: 2
   x: 1
@@ -12952,8 +12960,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 828a2d118f2d30a468d32d603fab851e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canPlayScaleUpSound: 1
+  canPlayScaleUpSound: 0
+  canPlayScaleDownSound: 1
   scaleUpSound: 29
+  scaleDownSound: 29
   inType: 3
   outType: 2
   x: 1
@@ -12999,7 +13009,7 @@ MonoBehaviour:
   - {fileID: 1665988568}
   - {fileID: 493307537}
   openDelay: 0
-  closeDelay: 0.25
+  closeDelay: 0
 --- !u!114 &895872916
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13677,7 +13687,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canPlayScaleUpSound: 1
+  canPlayScaleDownSound: 1
   scaleUpSound: 29
+  scaleDownSound: 29
   inType: 3
   outType: 2
   x: 1
@@ -21959,7 +21971,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canPlayScaleUpSound: 0
+  canPlayScaleDownSound: 0
   scaleUpSound: 0
+  scaleDownSound: 0
   inType: 3
   outType: 2
   x: 1
@@ -26415,7 +26429,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canPlayScaleUpSound: 0
+  canPlayScaleDownSound: 0
   scaleUpSound: 0
+  scaleDownSound: 0
   inType: 3
   outType: 2
   x: 1

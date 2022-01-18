@@ -24,10 +24,10 @@ public class UICloseAndOpen : MonoBehaviour, IPointerClickHandler
         {
             for (int i = 0; i < whatToOpen.Length; i++)
             {
+                Debug.Log("AAA");
                 whatToOpen[i].SetActive(true);
             }
         }
-        yield return null;
     }
 
     private IEnumerator CloseWithDelay()
@@ -37,6 +37,7 @@ public class UICloseAndOpen : MonoBehaviour, IPointerClickHandler
         {
             for (int i = 0; i < whatToClose.Length; i++)
             {
+                Debug.Log("BBB");
                 whatToClose[i].SetActive(false);
             }
         }

@@ -63,7 +63,7 @@ public class Airplane : MonoBehaviour
         }
         else
         {
-            relativeSpeed = relativeSpeed_initial + (airportScript.buildingLevel.level - 1) * 0.005f;
+            relativeSpeed = relativeSpeed_initial + (airportScript.buildingLevel.level - 1) * 0.5f;
         }
         
         
@@ -91,13 +91,13 @@ public class Airplane : MonoBehaviour
             if(!reachedHighPoint)
             {
                 transform.LookAt(airport_point2);
-                transform.position = Vector3.MoveTowards(transform.position, airport_point2.position, relativeSpeed);
+                transform.position = Vector3.MoveTowards(transform.position, airport_point2.position, relativeSpeed * Time.deltaTime);
                 randomDestinationIndex = Random.Range(0, destinations.Length);
             }
             if(reachedHighPoint)
             {
                 transform.LookAt(destinations[randomDestinationIndex].transform);
-                transform.position = Vector3.MoveTowards(transform.position, destinations[randomDestinationIndex].transform.position, relativeSpeed);
+                transform.position = Vector3.MoveTowards(transform.position, destinations[randomDestinationIndex].transform.position, relativeSpeed * Time.deltaTime);
             }
             if (Vector3.Distance(transform.position, airport_point2.position) <= 0.1f)
             {
@@ -113,12 +113,12 @@ public class Airplane : MonoBehaviour
             if(!reachedHighPoint)
             {
                 transform.LookAt(airport_point2);
-                transform.position = Vector3.MoveTowards(transform.position, airport_point2.transform.position, relativeSpeed);
+                transform.position = Vector3.MoveTowards(transform.position, airport_point2.transform.position, relativeSpeed * Time.deltaTime);
             }
             if (reachedHighPoint)
             {
                 transform.LookAt(airport_point1);
-                transform.position = Vector3.MoveTowards(transform.position, airport_point1.transform.position, relativeSpeed);
+                transform.position = Vector3.MoveTowards(transform.position, airport_point1.transform.position, relativeSpeed * Time.deltaTime);
             }
             if (Vector3.Distance(transform.position, airport_point2.transform.position) <= 0.1f)
             {

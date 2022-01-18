@@ -5,7 +5,9 @@ using UnityEngine;
 public class ScaleTween : MonoBehaviour
 {
     public bool canPlayScaleUpSound = false;
+    public bool canPlayScaleDownSound = false;
     public SoundList scaleUpSound;
+    public SoundList scaleDownSound;
     public LeanTweenType inType;
     public LeanTweenType outType;
     public float x, y, z;
@@ -26,9 +28,8 @@ public class ScaleTween : MonoBehaviour
 
     public void ScaleDown()
     {
-
         LeanTween.scale(gameObject, new Vector3(x, y, z), 0f).setIgnoreTimeScale(true);
-        LeanTween.scale(gameObject, new Vector3(0, 0, 0), animationTime).setDelay(delay_out).setOnComplete(DisableMe).setEase(outType).setIgnoreTimeScale(true);
+        LeanTween.scale(gameObject, new Vector3(0, 0, 0), animationTime).setDelay(delay_out).setOnComplete(DisableMe).setEase(outType).setIgnoreTimeScale(true).setOnComplete(PlayScaleDownSound);
     }
     void DisableMe()
     {
@@ -40,6 +41,21 @@ public class ScaleTween : MonoBehaviour
         if(canPlayScaleUpSound)
         {
             AudioManager.instance.Play(scaleUpSound);
+        }
+        else
+        {
+            return;
+        }
+    }
+    void PlayScaleDownSound()
+    {
+        if (canPlayScaleDownSound)
+        {
+            AudioManager.instance.Play(scaleDownSound);
+        }
+        else
+        {
+            return;
         }
     }
 }

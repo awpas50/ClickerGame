@@ -49,7 +49,7 @@ public class Asteroid : MonoBehaviour
     void Update()
     {
         //transform.position += Vector3.down * speed * Time.deltaTime;
-        if(GameManager.i.isPaused)
+        if(GameManager.i.isPaused || !GameManager.i.canInput)
         {
             transform.position = Vector3.MoveTowards(transform.position, target_vector3, 0 * Time.deltaTime);
         }
