@@ -24,11 +24,16 @@ public class LogisticCenterFinder : MonoBehaviour
         }
         else if (other.gameObject.tag == "Airport")
         {
-            if (other.gameObject.GetComponent<Airport>().airportPopUpREF)
-                other.gameObject.GetComponent<Airport>().airportPopUpREF.
-                    GetComponent<AirportPopUp>().ButtonEvent();
-            else
-                return;
+            try
+            {
+                if (other.gameObject.GetComponent<Airport>().airportPopUpREF)
+                    other.gameObject.GetComponent<Airport>().airportPopUpREF.
+                        GetComponent<AirportPopUp>().ButtonEvent();
+            }
+            catch
+            {
+                throw new MissingReferenceException();
+            }
         }
         else if (other.gameObject.tag == "MainBuilding")
         {

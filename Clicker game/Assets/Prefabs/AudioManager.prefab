@@ -158,11 +158,11 @@ MonoBehaviour:
     volume: 0.2
     pitch: 1
     reverbZoneMix: 1
-  - clip: {fileID: 8300000, guid: ab8da95ab215e924f8355bbf33077981, type: 3}
+  - clip: {fileID: 8300000, guid: 22877d54746b03b4e9a48d241f9d58c7, type: 3}
     soundList: 16
     source: {fileID: 0}
     originalVolume: 0
-    volume: 0.25
+    volume: 0.6
     pitch: 1
     reverbZoneMix: 1
   - clip: {fileID: 8300000, guid: 7db08929fd297d340a1321d5bc07a0d2, type: 3}
@@ -197,7 +197,7 @@ MonoBehaviour:
     soundList: 21
     source: {fileID: 0}
     originalVolume: 0
-    volume: 0.12
+    volume: 0.15
     pitch: 1
     reverbZoneMix: 1
   - clip: {fileID: 8300000, guid: ebea19728fbfe4d4a93365a7ee010b28, type: 3}
@@ -207,11 +207,11 @@ MonoBehaviour:
     volume: 0.5
     pitch: 1
     reverbZoneMix: 1
-  - clip: {fileID: 8300000, guid: d1f334560ce32b64588dbfbc15dfe43f, type: 3}
+  - clip: {fileID: 8300000, guid: 3309675821ea4e94386f47626635477a, type: 3}
     soundList: 23
     source: {fileID: 0}
     originalVolume: 0
-    volume: 0.8
+    volume: 0.15
     pitch: 1
     reverbZoneMix: 1
   - clip: {fileID: 8300000, guid: ebea19728fbfe4d4a93365a7ee010b28, type: 3}

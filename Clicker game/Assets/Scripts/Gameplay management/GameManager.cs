@@ -369,8 +369,8 @@ public class GameManager : MonoBehaviour
         // Record elapsed time
         timeElapsed += Time.deltaTime;
         // Get money and pollution
-        SaveData.current.money = Currency.MONEY;
-        SaveData.current.pollution = Pollution.POLLUTION;
+        //SaveData.current.money = Currency.MONEY;
+        //SaveData.current.pollution = Pollution.POLLUTION;
 
         if (buildingSelectedInScene)
         {
@@ -700,7 +700,11 @@ public class GameManager : MonoBehaviour
                         }
                         else
                         {
-                            AudioManager.instance.Play(SoundList.SelectAirport);
+                            if (hit.collider.gameObject != buildingSelectedInScene)
+                            {
+                                // Audio
+                                AudioManager.instance.Play(SoundList.SelectAirport);
+                            }
 
                             buildingSelectedInScene = hit.collider.gameObject;
                             StartCoroutine(buildingSelectedInScene.GetComponent<BuildingSelection>().BuildingPopAnimation());
