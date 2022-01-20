@@ -39,14 +39,14 @@ public class Turret : MonoBehaviour
     public float pollutionProduced_auto_initial;
 
     [Header("Initial freeze")]
-    public float initialFreeze = 1.8f;
+    [SerializeField] private float initialFreeze = 0.3f;
     public bool canFreeze = true;
 
     public enum State
     {
         Idle,
         Attack,
-        Freezed
+        ModelFreezed
     }
     public State state;
 
@@ -89,32 +89,31 @@ public class Turret : MonoBehaviour
         pollutionProduced_auto_extra = buildingBuff.houseEfficiencyTotal * 0.1f;
         // Total
         pollutionProduced_auto = pollutionProduced_auto_base + pollutionProduced_auto_extra;
-
         // Level
         fireRate_real = (fireRate_initial + (buildingLevel.level - 1) * 0.1f ) * efficiency;
         fireRate_original = fireRate_initial + (buildingLevel.level - 1) * 0.1f;
         fireRate_additional = (fireRate_initial + (buildingLevel.level - 1) * 0.1f) * (efficiency - 1);
-        if(canFreeze)
+
+        if (target == null)
         {
-            state = State.Freezed;
+            state = State.Idle;
         }
-        else if(!canFreeze)
+        if (target != null)
         {
-            if (target == null)
+            if(canFreeze)
             {
-                state = State.Idle;
+                state = State.ModelFreezed;
             }
-            if (target != null)
+            else
             {
                 state = State.Attack;
             }
         }
-        
-        
-        if(state == State.Idle)
-        {
-            UpdateTarget();
 
+        fireCountdown -= Time.deltaTime;
+
+        if (state == State.Idle)
+        {
             cannonBase.transform.eulerAngles = new Vector3(cannonBase.transform.rotation.x,
                 angleY_current,
                 cannonBase.transform.rotation.z);
@@ -126,7 +125,7 @@ public class Turret : MonoBehaviour
 
             targetLocked = false;
         }
-        if (state == State.Attack)
+        if (state == State.Attack || state == State.ModelFreezed)
         {
             lr.SetPosition(0, transform.position);
             lr.SetPosition(1, target.transform.position);
@@ -137,16 +136,39 @@ public class Turret : MonoBehaviour
             //Vector3 rotation = Quaternion.Lerp(cannonBase.transform.rotation, lookRotation, Time.deltaTime * turnSpeed).eulerAngles;
             //cannonBase.transform.rotation = Quaternion.Euler(0, rotation.y, 0);
 
-            fireCountdown -= Time.deltaTime;
+            
             if (fireCountdown <= 0f)
             {
                 Shoot();
                 fireCountdown = 1f / fireRate_real;
             }
         }
-        if(state == State.Freezed)
+
+        // Update asteroid list
+        asteroids = GameObject.FindGameObjectsWithTag(enemyTag);
+        if (asteroids.Length == 0)
         {
+            target = null;
             return;
+        }
+        if (asteroids.Length > 0)
+        {
+            asteroids_list = new List<GameObject>();
+            // Array --> list
+            for (int i = 0; i < asteroids.Length; i++)
+            {
+                asteroids_list.Add(asteroids[i]);
+            }
+            // Remove unnecessary
+            for (int i = 0; i < asteroids_list.Count; i++)
+            {
+                if (asteroids_list[i].GetComponent<Asteroid>().isLockedByTurret)
+                {
+                    asteroids_list[i] = null;
+                }
+            }
+            if (state == State.Idle)
+                UpdateTarget();
         }
     }
 
@@ -163,13 +185,8 @@ public class Turret : MonoBehaviour
     {
         float shortestDistance = Mathf.Infinity;
         GameObject nearestTarget = null;
-        asteroids = GameObject.FindGameObjectsWithTag(enemyTag);
-        if(asteroids.Length == 0)
-        {
-            target = null;
-            return;
-        }
-        List<GameObject> asteroids_list = new List<GameObject>();
+
+        asteroids_list = new List<GameObject>();
         // Array --> list
         for (int i = 0; i < asteroids.Length; i++)
         {
@@ -178,11 +195,14 @@ public class Turret : MonoBehaviour
         // Remove unnecessary
         for (int i = 0; i < asteroids_list.Count; i++)
         {
-            if(asteroids_list[i].GetComponent<Asteroid>().isLockedByTurret)
+            if (asteroids_list[i].GetComponent<Asteroid>().isLockedByTurret)
             {
                 asteroids_list[i] = null;
             }
         }
+
+        
+        
         // find out which asteroid is the nearest.
         foreach (GameObject asteroid in asteroids_list)
         {
@@ -202,6 +222,7 @@ public class Turret : MonoBehaviour
                     shortestDistance = distanceToAsteroid;
                     nearestTarget = asteroid;
                     nearestTarget.GetComponent<Asteroid>().isLockedByTurret = true;
+                    nearestTarget.GetComponent<Asteroid>().targetTurret = gameObject;
                 }
                 else if(asteroid.GetComponent<Asteroid>().isLockedByTurret)
                 {

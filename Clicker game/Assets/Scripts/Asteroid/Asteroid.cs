@@ -17,6 +17,7 @@ public class Asteroid : MonoBehaviour
     public ParticleSystem particleEffect2;
 
     public bool isLockedByTurret = false;
+    public GameObject targetTurret;
     public bool reachedDestination = false;
     // this variable will be recorded by the save system, used to prevent reassigning targets when loading a game.
     //public bool assignedTarget = false; 
