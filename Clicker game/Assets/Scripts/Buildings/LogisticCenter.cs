@@ -20,10 +20,10 @@ public class LogisticCenter : MonoBehaviour
     public BuildingState buildingState;
 
     [Header("Environmental pollution")]
-    [SerializeField] private float pollution_auto;
+    private float pollution_auto;
     [HideInInspector] public float pollution_auto_base;
     [HideInInspector] public float pollution_auto_extra;
-    private float pollution_auto_initial = 0.15f;
+    [SerializeField] private float pollution_auto_initial = 0.2f;
     public float pollution_auto_interval;
 
     private void Awake()
@@ -62,6 +62,9 @@ public class LogisticCenter : MonoBehaviour
         collectPositionDict.Add(24, new Vector3(2, 0, 1));
         collectPositionDict.Add(25, new Vector3(2, 0, 2));
 
+        // Add reference
+        buildingFinder.GetComponent<LogisticCenterFinder>().logisticCenter = this;
+
         // Detach from the parent gameobject.
         buildingFinder.parent = null;
     }
@@ -72,6 +75,7 @@ public class LogisticCenter : MonoBehaviour
         buildingState = GetComponent<BuildingState>();
         
         StartCoroutine(AutoCollectResources());
+        StartCoroutine(Pollution_AUTOMATIC(pollution_auto_interval));
     }
     private void Update()
     {
@@ -81,8 +85,8 @@ public class LogisticCenter : MonoBehaviour
         // houseEfficiencyTotal will be multiplied by 0.2 as the original efficiency of a level 1 house is 25%. Multiply by 0.2 makes it 5%.
         collectionSpeed_extra = buildingBuff.houseEfficiencyTotal * 0.2f;
         collectionSpeed_total = collectionSpeed_base - collectionSpeed_extra;
-        pollution_auto_base = pollution_auto_initial + 0.03f * (buildingLevel.level - 1);
-        pollution_auto_extra = buildingBuff.houseEfficiencyTotal;
+        pollution_auto_base = pollution_auto_initial + 0.05f * (buildingLevel.level - 1);
+        pollution_auto_extra = buildingBuff.houseEfficiencyTotal * 0.2f;
         pollution_auto = pollution_auto_base + pollution_auto_extra;
     }
 

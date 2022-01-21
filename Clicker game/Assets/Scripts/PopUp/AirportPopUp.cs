@@ -50,8 +50,22 @@ public class AirportPopUp : MonoBehaviour
     public void ButtonEvent()
     {
         // Audio
-        AudioManager.instance.Play(SoundList.GetAirportGoods);
-        Pollution.POLLUTION += 4;
+        int seed2 = Random.Range(0, 3);
+        switch (seed2)
+        {
+            case 0:
+                AudioManager.instance.Play(SoundList.GetMoney1);
+                break;
+            case 1:
+                AudioManager.instance.Play(SoundList.GetMoney2);
+                break;
+            case 2:
+                AudioManager.instance.Play(SoundList.GetMoney3);
+                break;
+            default:
+                break;
+        }
+
         int seed = Random.Range(0, 100);
         if(seed >= 24)
         {
@@ -73,7 +87,8 @@ public class AirportPopUp : MonoBehaviour
             secondPopUpPrefab.GetComponent<BuildingPopUp>().buildingREF = airportREF;
             secondPopUpPrefab.GetComponent<BuildingPopUp>().resourceText.text = "+1 platform";
         }
-        
+
+        Pollution.POLLUTION += airportREF_script.pollutionProduced;
         // ** tell the airplane to leave the base.
         //airportREF_script.airplaneScript.state = Airplane.State.Departure;
         airportREF_script.airplaneScript.redeparture = true;

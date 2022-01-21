@@ -177,7 +177,7 @@ MonoBehaviour:
   buildingBaseCost: 600
   level: 1
   maxLevel: 4
-  costEachLevel: 0000000084030000e2040000ca08000000000000
+  costEachLevel: 0000000084030000b00400006009000000000000
   sellCost: 0
 --- !u!114 &1128910312
 MonoBehaviour:
@@ -205,7 +205,7 @@ MonoBehaviour:
   fireRate_additional: 0
   fireCountdown: 0
   efficiency: 0
-  pollutionProduced_auto: 0.24
+  pollutionProduced_auto: 0.28
   pollutionProduced_auto_base: 0
   pollutionProduced_auto_extra: 0
   pollutionInterval_auto: 1

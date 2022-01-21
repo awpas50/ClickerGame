@@ -78,9 +78,9 @@ public class Factory : MonoBehaviour
 
         // Auto production & pollution
         // Building base + 0.02 per level
-        pollutionProduced_auto_base = pollutionProduced_auto_initial + (buildingLevel.level - 1) * 0.02f;
+        pollutionProduced_auto_base = pollutionProduced_auto_initial + (buildingLevel.level - 1) * 0.03f;
         // Stack up pollution according to nearby houses & perpetual machines
-        pollutionProduced_auto_extra = buildingBuff.houseEfficiencyTotal * 0.1f + buildingBuff.perpetualEfficiencyTotal * 0.1f;
+        pollutionProduced_auto_extra = buildingBuff.houseEfficiencyTotal * 0.1f + buildingBuff.perpetualEfficiencyTotal * 0.2f;
         // Total
         pollutionProduced_auto = pollutionProduced_auto_base + pollutionProduced_auto_extra;
         moneyProduced_auto = moneyProduced_auto_initial + (buildingLevel.level - 1) * 0.25f;

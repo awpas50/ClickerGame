@@ -66,10 +66,10 @@ public class Airport : MonoBehaviour
 
         // Auto production & pollution
         pollutionProduced_base = pollutionProduced_auto_initial + (buildingLevel.level - 1) * 0.04f;
-        pollutionProduced_extra = buildingBuff.houseEfficiencyTotal * 0.1f;
+        pollutionProduced_extra = buildingBuff.houseEfficiencyTotal * 0.2f;
         pollutionProduced_auto = pollutionProduced_base + pollutionProduced_extra;
         
-        pollutionProduced = pollutionProduced_initial + ((buildingLevel.level - 1) * 2f);
+        pollutionProduced = pollutionProduced_initial + ((buildingLevel.level - 1) * 2.5f);
 
     }
     public IEnumerator Pollution_AUTOMATIC(float interval)

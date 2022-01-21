@@ -230,7 +230,7 @@ MonoBehaviour:
   buildingBaseCost: 100
   level: 1
   maxLevel: 9
-  costEachLevel: 0000000096000000fa0000009001000026020000bc02000052030000e80300004605000000000000
+  costEachLevel: 0000000096000000fa0000009001000026020000bc02000052030000e8030000d606000000000000
   sellCost: 0
 --- !u!114 &-595418874292705008
 MonoBehaviour:
@@ -261,9 +261,6 @@ MonoBehaviour:
   model1Glows:
   - {fileID: 7146997788505500440}
   model2Glow: {fileID: 978666632897290546}
-  mat1: {fileID: 0}
-  mat1_2: {fileID: 0}
-  mat2: {fileID: 0}
 --- !u!1 &1926146317614599267
 GameObject:
   m_ObjectHideFlags: 0

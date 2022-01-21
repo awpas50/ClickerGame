@@ -86,7 +86,7 @@ public class Turret : MonoBehaviour
         // Building base + 0.04 per level
         pollutionProduced_auto_base = pollutionProduced_auto_initial + (buildingLevel.level - 1) * 0.04f;
         // Stack up pollution according to nearby houses
-        pollutionProduced_auto_extra = buildingBuff.houseEfficiencyTotal * 0.1f;
+        pollutionProduced_auto_extra = buildingBuff.houseEfficiencyTotal * 0.2f;
         // Total
         pollutionProduced_auto = pollutionProduced_auto_base + pollutionProduced_auto_extra;
         // Level
@@ -94,24 +94,32 @@ public class Turret : MonoBehaviour
         fireRate_original = fireRate_initial + (buildingLevel.level - 1) * 0.1f;
         fireRate_additional = (fireRate_initial + (buildingLevel.level - 1) * 0.1f) * (efficiency - 1);
 
-        if (target == null)
+        if (canFreeze && target != null)
+        {
+            state = State.Attack;
+        }
+        if (canFreeze && target == null)
+        {
+            state = State.ModelFreezed;
+        }
+        if (!canFreeze && target != null)
+        {
+            state = State.Attack;
+        }
+        if (!canFreeze && target == null)
         {
             state = State.Idle;
-        }
-        if (target != null)
-        {
-            if(canFreeze)
-            {
-                state = State.ModelFreezed;
-            }
-            else
-            {
-                state = State.Attack;
-            }
         }
 
         fireCountdown -= Time.deltaTime;
 
+        if(state == State.ModelFreezed)
+        {
+            lr.SetPosition(0, transform.position);
+            lr.SetPosition(1, transform.position);
+
+            targetLocked = false;
+        }
         if (state == State.Idle)
         {
             cannonBase.transform.eulerAngles = new Vector3(cannonBase.transform.rotation.x,
@@ -125,7 +133,7 @@ public class Turret : MonoBehaviour
 
             targetLocked = false;
         }
-        if (state == State.Attack || state == State.ModelFreezed)
+        if (state == State.Attack)
         {
             lr.SetPosition(0, transform.position);
             lr.SetPosition(1, target.transform.position);
@@ -135,7 +143,6 @@ public class Turret : MonoBehaviour
             //Quaternion lookRotation = Quaternion.LookRotation(dir);
             //Vector3 rotation = Quaternion.Lerp(cannonBase.transform.rotation, lookRotation, Time.deltaTime * turnSpeed).eulerAngles;
             //cannonBase.transform.rotation = Quaternion.Euler(0, rotation.y, 0);
-
             
             if (fireCountdown <= 0f)
             {
@@ -167,7 +174,7 @@ public class Turret : MonoBehaviour
                     asteroids_list[i] = null;
                 }
             }
-            if (state == State.Idle)
+            if (state == State.Idle || state == State.ModelFreezed)
                 UpdateTarget();
         }
     }
@@ -185,23 +192,6 @@ public class Turret : MonoBehaviour
     {
         float shortestDistance = Mathf.Infinity;
         GameObject nearestTarget = null;
-
-        asteroids_list = new List<GameObject>();
-        // Array --> list
-        for (int i = 0; i < asteroids.Length; i++)
-        {
-            asteroids_list.Add(asteroids[i]);
-        }
-        // Remove unnecessary
-        for (int i = 0; i < asteroids_list.Count; i++)
-        {
-            if (asteroids_list[i].GetComponent<Asteroid>().isLockedByTurret)
-            {
-                asteroids_list[i] = null;
-            }
-        }
-
-        
         
         // find out which asteroid is the nearest.
         foreach (GameObject asteroid in asteroids_list)
@@ -268,7 +258,10 @@ public class Turret : MonoBehaviour
     {
         while(true)
         {
-            angleY_random = Random.Range(angleY_random - 50, angleY_random + 50);
+            if(state == State.Idle)
+            {
+                angleY_random = Random.Range(angleY_random - 50, angleY_random + 50);
+            }
             yield return new WaitForSeconds(3f);
         }
     }

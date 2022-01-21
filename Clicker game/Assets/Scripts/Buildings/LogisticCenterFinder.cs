@@ -4,6 +4,16 @@ using UnityEngine;
 
 public class LogisticCenterFinder : MonoBehaviour
 {
+    [HideInInspector] public LogisticCenter logisticCenter;
+
+
+    private void Update()
+    {
+        if(!logisticCenter)
+        {
+            Destroy(gameObject);
+        }
+    }
     public void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.CompareTag("Factory"))

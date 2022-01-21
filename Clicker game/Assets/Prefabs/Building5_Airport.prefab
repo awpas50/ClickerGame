@@ -182,9 +182,9 @@ MonoBehaviour:
   popupStorageCanvas: {fileID: 0}
   point1: {fileID: 2644036457247890185}
   point2: {fileID: 3622753274027452090}
-  pollutionProduced: 6
+  pollutionProduced: 8
   pollutionProduced_initial: 0
-  pollutionProduced_auto: 0.2
+  pollutionProduced_auto: 0.24
   pollutionProduced_base: 0
   pollutionProduced_extra: 0
   pollutionInterval_auto: 1
