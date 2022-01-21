@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class LogisticCenter : MonoBehaviour
 {
-    [SerializeField] private float collectionSpeed_total = 1.8f;
+    [HideInInspector] public float collectionSpeed_total = 1.8f;
     [HideInInspector] public float collectionSpeed_base;
     [HideInInspector] public float collectionSpeed_extra;
     public float collectionSpeed_initial = 1.8f;
 
     public int collectPositionIndex = -1; 
     [SerializeField] private Dictionary<int, Vector3> collectPositionDict; // 1 - 25, omit 13
-
-    [SerializeField] private Transform buildingFinder;
 
     [Header("Script reference (Do not edit)")]
     public BuildingBuff buildingBuff;
@@ -25,6 +23,10 @@ public class LogisticCenter : MonoBehaviour
     [HideInInspector] public float pollution_auto_extra;
     [SerializeField] private float pollution_auto_initial = 0.2f;
     public float pollution_auto_interval;
+
+    [Header("Drone")]
+    public GameObject droneCompleteModel;
+    [SerializeField] private Transform buildingFinder;
 
     private void Awake()
     {
@@ -64,6 +66,7 @@ public class LogisticCenter : MonoBehaviour
 
         // Add reference
         buildingFinder.GetComponent<LogisticCenterFinder>().logisticCenter = this;
+        droneCompleteModel.GetComponent<DroneFollower>().logisticCenter = this;
 
         // Detach from the parent gameobject.
         buildingFinder.parent = null;
@@ -97,7 +100,12 @@ public class LogisticCenter : MonoBehaviour
         {
             // Find nearest building: 
             if (!GameManager.i.isPaused && GameManager.i.canInput)
+            {
+                //LeanTween.move(droneCompleteModel, buildingFinder.transform.position, 0.75f).setEase(LeanTweenType.easeInOutQuad);
                 buildingFinder.position = gameObject.transform.position + collectPositionDict[collectPositionIndex];
+                LeanTween.move(droneCompleteModel, buildingFinder.transform.position + new Vector3(0, 1.5f, 0), 0.4f).setEase(LeanTweenType.easeInOutQuad);
+                //droneCompleteModel.transform.position = Vector3.MoveTowards(droneCompleteModel.transform.position, buildingFinder.position + new Vector3(0, 1.5f, 0), 20 * Time.deltaTime);
+            }
 
             yield return new WaitForSeconds(collectionSpeed_total);
 

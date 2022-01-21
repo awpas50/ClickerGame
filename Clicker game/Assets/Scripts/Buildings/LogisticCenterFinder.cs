@@ -5,8 +5,6 @@ using UnityEngine;
 public class LogisticCenterFinder : MonoBehaviour
 {
     [HideInInspector] public LogisticCenter logisticCenter;
-
-
     private void Update()
     {
         if(!logisticCenter)
@@ -42,7 +40,7 @@ public class LogisticCenterFinder : MonoBehaviour
             }
             catch
             {
-                throw new MissingReferenceException();
+                return;
             }
         }
         else if (other.gameObject.tag == "MainBuilding")

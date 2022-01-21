@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c7205b869456a5488bd8478babe25cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  droneModel: {fileID: 1376451538905966296}
+  droneModel: {fileID: 3474391701530844000}
 --- !u!1001 &1376451539836086260
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -132,6 +132,12 @@ PrefabInstance:
 --- !u!4 &6224141464979475694 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: e0aed0d4b418e24409a04327fa8f94ad,
+    type: 3}
+  m_PrefabInstance: {fileID: 1376451539836086260}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3474391701530844000 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2534866581884222612, guid: e0aed0d4b418e24409a04327fa8f94ad,
     type: 3}
   m_PrefabInstance: {fileID: 1376451539836086260}
   m_PrefabAsset: {fileID: 0}
