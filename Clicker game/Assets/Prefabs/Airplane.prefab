@@ -9574,8 +9574,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waitTime_base: 4
-  waitTime_des: 60
-  waitTime_des_actial: 60
+  waitTime_des: 65
+  waitTime_des_actual: 65
   waitTime_des_initial: 0
   relativeSpeed: 6.5
   relativeSpeed_initial: 0

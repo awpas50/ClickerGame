@@ -86,10 +86,10 @@ public class LogisticCenter : MonoBehaviour
         // Efficiency
         // Each house nearby grants 5% efficiency (+1% every level)
         // houseEfficiencyTotal will be multiplied by 0.2 as the original efficiency of a level 1 house is 25%. Multiply by 0.2 makes it 5%.
-        collectionSpeed_extra = buildingBuff.houseEfficiencyTotal * 0.2f;
+        collectionSpeed_extra = (buildingBuff.houseEfficiencyTotal + buildingBuff.nearbyMainBuilding * Objective.townHallEfficiency ) * 0.2f;
         collectionSpeed_total = collectionSpeed_base - collectionSpeed_extra;
-        pollution_auto_base = pollution_auto_initial + 0.05f * (buildingLevel.level - 1);
-        pollution_auto_extra = buildingBuff.houseEfficiencyTotal * 0.2f;
+        pollution_auto_base = pollution_auto_initial + 0.09f * (buildingLevel.level - 1);
+        pollution_auto_extra = (buildingBuff.houseEfficiencyTotal + buildingBuff.nearbyMainBuilding * Objective.townHallEfficiency) * 0.2f;
         pollution_auto = pollution_auto_base + pollution_auto_extra;
     }
 

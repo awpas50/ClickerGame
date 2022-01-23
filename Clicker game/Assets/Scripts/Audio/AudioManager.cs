@@ -8,6 +8,7 @@ public class AudioManager : MonoBehaviour
 {
     // ref:https://www.youtube.com/watch?v=6OT43pvUyfY
 
+    public AudioSource bgm;
     public Sound[] sounds;
     public static AudioManager instance;
     public static Dictionary<SoundList, float> soundTimerDict;
@@ -36,6 +37,10 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        bgm.volume = GetMusicVolume();
+    }
     public static bool CanPlaySound(SoundList sound, float CD)
     {
         Debug.Log(Time.time + CD + " " + soundTimerDict[sound]);
@@ -159,5 +164,9 @@ public class AudioManager : MonoBehaviour
     public float GetSfxVolume()
     {
         return VolumeController.i.SfxVolume;
+    }
+    public float GetMusicVolume()
+    {
+        return VolumeController.i.musicVolume;
     }
 }

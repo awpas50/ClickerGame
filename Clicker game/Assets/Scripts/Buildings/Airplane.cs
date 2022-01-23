@@ -6,7 +6,8 @@ public class Airplane : MonoBehaviour
 {
     [SerializeField] private float waitTime_base;
     public float waitTime_des;
-    public float waitTime_des_actial;
+    public float waitTime_des_actual;
+    private float actualTimeReduction;
     [SerializeField] private float waitTime_des_initial;
 
     public float relativeSpeed;
@@ -44,8 +45,8 @@ public class Airplane : MonoBehaviour
     public State state;
     void Start()
     {
-        waitTime_des = waitTime_des_actial;
-        waitTime_des_initial = waitTime_des_actial;
+        waitTime_des = waitTime_des_actual;
+        waitTime_des_initial = waitTime_des_actual;
         relativeSpeed_initial = relativeSpeed;
         destinations = GameObject.FindGameObjectsWithTag("Destinations");
     }
@@ -53,9 +54,10 @@ public class Airplane : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        efficiency = 1 - ((airportScript.buildingBuff.houseEfficiencyTotal + airportScript.buildingBuff.nearbyMainBuilding * Objective.townHallEfficiency) * 0.2f);
-        waitTime_des = (waitTime_des_initial + (airportScript.buildingLevel.level - 1) * -10f);
-        waitTime_des_actial = (waitTime_des_initial + (airportScript.buildingLevel.level - 1) * -10f) * efficiency;
+        efficiency = (airportScript.buildingBuff.houseEfficiencyTotal + airportScript.buildingBuff.nearbyMainBuilding * Objective.townHallEfficiency) * 0.2f;
+        actualTimeReduction = 50 * efficiency;
+        waitTime_des = (waitTime_des_initial + (airportScript.buildingLevel.level - 1) * -7.5f);
+        waitTime_des_actual = (waitTime_des_initial + (airportScript.buildingLevel.level - 1) * -7.5f) - actualTimeReduction;
         // I don't know why the airplanes are still moving even if the game is paused, so I manually stop their movement by writing this.
         if(GameManager.i.isPaused || !GameManager.i.canInput)
         {
@@ -157,7 +159,7 @@ public class Airplane : MonoBehaviour
     {
         // arrived
         t1 += Time.deltaTime;
-        if (t1 >= waitTime_des_actial)
+        if (t1 >= waitTime_des_actual)
         {
             t1 = 0;
             reachedHighPoint = false;

@@ -80,13 +80,13 @@ public class Turret : MonoBehaviour
         // Efficiency
         // Each house nearby grants 5% efficiency (+1% every level)
         // houseEfficiencyTotal will be multiplied by 0.2 as the original efficiency of a level 1 house is 25%. Multiply by 0.2 makes it 5%.
-        efficiency = 1 + buildingBuff.houseEfficiencyTotal * 0.2f;
+        efficiency = 1 + buildingBuff.houseEfficiencyTotal * 0.2f + buildingBuff.nearbyMainBuilding * Objective.townHallEfficiency * 0.2f;
         // Pollution
         // Auto production & pollution
         // Building base + 0.04 per level
         pollutionProduced_auto_base = pollutionProduced_auto_initial + (buildingLevel.level - 1) * 0.04f;
         // Stack up pollution according to nearby houses
-        pollutionProduced_auto_extra = buildingBuff.houseEfficiencyTotal * 0.2f;
+        pollutionProduced_auto_extra = buildingBuff.houseEfficiencyTotal * 0.2f + buildingBuff.nearbyMainBuilding * Objective.townHallEfficiency * 0.2f;
         // Total
         pollutionProduced_auto = pollutionProduced_auto_base + pollutionProduced_auto_extra;
         // Level

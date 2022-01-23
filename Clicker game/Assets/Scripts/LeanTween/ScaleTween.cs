@@ -30,6 +30,7 @@ public class ScaleTween : MonoBehaviour
     {
         LeanTween.scale(gameObject, new Vector3(x, y, z), 0f).setIgnoreTimeScale(true);
         LeanTween.scale(gameObject, new Vector3(0, 0, 0), animationTime).setDelay(delay_out).setOnComplete(DisableMe).setEase(outType).setIgnoreTimeScale(true).setOnComplete(PlayScaleDownSound);
+        Destroy(gameObject.GetComponent<ScaleTweenOnMouseOver>());
     }
     void DisableMe()
     {

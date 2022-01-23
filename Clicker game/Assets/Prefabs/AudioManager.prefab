@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5748901789371089986}
   - component: {fileID: 5748901789371089987}
   - component: {fileID: 7853011655243039718}
-  - component: {fileID: 1469478127}
+  - component: {fileID: 3850743676036293553}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f382457fc3acc746853952cedf433b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bgm: {fileID: 3850743676036293553}
   sounds:
   - clip: {fileID: 8300000, guid: bab221fe28d97a3469d08ef6ea82f56c, type: 3}
     soundList: 0
@@ -298,19 +299,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicVolume: 0.7
   SfxVolume: 0.7
---- !u!82 &1469478127
+--- !u!82 &3850743676036293553
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5748901789371089988}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 7c4f98dd7a9c9204c970c7b1c47480b7, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 668c1703dc35a474982f2460256873ab, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.18
+  m_Volume: 1
   m_Pitch: 1
   Loop: 1
   Mute: 0

@@ -130,7 +130,7 @@ public class GameManager : MonoBehaviour
 
         UIManager.i.buildingInfo_name.text = "Factory";
         UIManager.i.buildingInfo_price.text = "$100";
-        UIManager.i.buildingInfo.text = "Generate resources every 20 seconds. Gains efficiency buff from nearby houses, but will pollute nearby parks.";
+        UIManager.i.buildingInfo.text = "Produce minerals every 20 seconds. Gains efficiency buff from nearby houses and town hall, but will pollute nearby parks.";
         if (buildingSelectedInScene)
         {
             buildingSelectedInScene.GetComponent<BuildingSelection>().indicator.SetActive(false);
@@ -146,7 +146,7 @@ public class GameManager : MonoBehaviour
 
         UIManager.i.buildingInfo_name.text = "Park";
         UIManager.i.buildingInfo_price.text = "$80";
-        UIManager.i.buildingInfo.text = "The clear air generated every 20 seconds can temporary keep out the pollution. Gains efficiency buff from nearby houses, but remember not to put near factories.";
+        UIManager.i.buildingInfo.text = "Produce clear air every 20 seconds to keep out the pollution. Gains efficiency buff from nearby houses and town hall, but remember not to put near factories.";
         if (buildingSelectedInScene)
         {
             buildingSelectedInScene.GetComponent<BuildingSelection>().indicator.SetActive(false);
@@ -164,7 +164,7 @@ public class GameManager : MonoBehaviour
 
         UIManager.i.buildingInfo_name.text = "Meteor defense";
         UIManager.i.buildingInfo_price.text = "$600";
-        UIManager.i.buildingInfo.text = "Powerful laser beams protect your base from asteroids. Gains shooting speed buff from nearby houses.";
+        UIManager.i.buildingInfo.text = "Powerful laser cannon protect your base from asteroids. Gains shooting speed buff from nearby houses.";
         if (buildingSelectedInScene)
         {
             buildingSelectedInScene.GetComponent<BuildingSelection>().indicator.SetActive(false);
@@ -181,7 +181,7 @@ public class GameManager : MonoBehaviour
 
         UIManager.i.buildingInfo_name.text = "Airport";
         UIManager.i.buildingInfo_price.text = "$800";
-        UIManager.i.buildingInfo.text = "Build airplanes to explore the outside world, treasures are waiting for you! Gains airplane travel speed buff from nearby houses.";
+        UIManager.i.buildingInfo.text = "Build airplanes to explore the outside world, treasures are waiting for you! Gains airplane travel speed buff from nearby houses and town hall.";
         if (buildingSelectedInScene)
         {
             buildingSelectedInScene.GetComponent<BuildingSelection>().indicator.SetActive(false);
@@ -433,7 +433,7 @@ public class GameManager : MonoBehaviour
                 // Set building name in the UI
                 UIManager.i.Line1Text.text = "Nearby resources production +" + buildingSelectedInScene.GetComponent<House>().baseEfficiency * 100 + "%";
                 UIManager.i.Line2Text.text = "Nearby turret shooting speed +" + buildingSelectedInScene.GetComponent<House>().baseEfficiency * 20 + "%";
-                UIManager.i.Line3Text.text = "Nearby airplane travel time -" + buildingSelectedInScene.GetComponent<House>().baseEfficiency * 20 + "%";
+                UIManager.i.Line3Text.text = "Nearby airplane travel time -" + buildingSelectedInScene.GetComponent<House>().baseEfficiency * 10 + "s";
                 UIManager.i.Line4Text.text = "";
             }
             if (buildingSelectedInScene.tag == "Factory")
@@ -496,7 +496,7 @@ public class GameManager : MonoBehaviour
                 // Set building name in the UI
                 UIManager.i.Line1Text.text = "Airplane speed: " + buildingSelectedInScene.GetComponent<Airport>().airplaneScript.relativeSpeed;
                 UIManager.i.Line2Text.text = "Travel time: " + buildingSelectedInScene.GetComponent<Airport>().airplaneScript.waitTime_des + " - " + 
-                    (buildingSelectedInScene.GetComponent<Airport>().airplaneScript.waitTime_des - buildingSelectedInScene.GetComponent<Airport>().airplaneScript.waitTime_des_actial).ToString("F2") + "s";
+                    (buildingSelectedInScene.GetComponent<Airport>().airplaneScript.waitTime_des - buildingSelectedInScene.GetComponent<Airport>().airplaneScript.waitTime_des_actual).ToString("F2") + "s";
                 UIManager.i.Line3Text.text = "Pollution: " + buildingSelectedInScene.GetComponent<Airport>().pollutionProduced.ToString("F2");
                 UIManager.i.Line4Text.text = "Environmental pollution: " +
                     buildingSelectedInScene.GetComponent<Airport>().pollutionProduced_base.ToString("F2") + " + " +
@@ -776,7 +776,6 @@ public class GameManager : MonoBehaviour
         PurchaseBuildingState();
         PauseGameState();
     }
-
     void PurchaseBuildingState()
     {
         // Check if the player is purchasing building (which means the variable "buildingSelectedInUI" is not null)
