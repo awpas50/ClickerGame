@@ -97,6 +97,15 @@ public class MainMenuManager : MonoBehaviour
         button5.GetComponent<ScaleTween>().ScaleDown();
         settingPanel.GetComponent<ScaleTween>().ScaleDown();
         creditPanel.GetComponent<ScaleTween>().ScaleDown();
+
+        title.GetComponent<ScaleTween>().DestroyMouseHoveringEvent();
+        button1.GetComponent<ScaleTween>().DestroyMouseHoveringEvent();
+        button2.GetComponent<ScaleTween>().DestroyMouseHoveringEvent();
+        button3.GetComponent<ScaleTween>().DestroyMouseHoveringEvent();
+        button4.GetComponent<ScaleTween>().DestroyMouseHoveringEvent();
+        button5.GetComponent<ScaleTween>().DestroyMouseHoveringEvent();
+        settingPanel.GetComponent<ScaleTween>().DestroyMouseHoveringEvent();
+        creditPanel.GetComponent<ScaleTween>().DestroyMouseHoveringEvent();
     }
 
     public void OpenItchLink()
