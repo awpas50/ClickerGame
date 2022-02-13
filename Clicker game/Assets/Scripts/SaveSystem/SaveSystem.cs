@@ -4,12 +4,13 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 using System.Runtime.InteropServices;
-
 
 public static class SaveSystem
 {
+    [DllImport("__Internal")]
+    private static extern void JS_FileSystem_Sync();
+
     public static void Save()
     {
         // create a binary formatter
@@ -17,40 +18,40 @@ public static class SaveSystem
         // declare a path 
         string path;
 #if UNITY_STANDALONE_WIN || UNITY_EDITOR
-        var pathWithEnv = @"%userprofile%\AppData\Local\Motorland0123\Save\save1.txt";
-        path = Environment.ExpandEnvironmentVariables(pathWithEnv);
+        path = Application.persistentDataPath + "/save1.txt";
 #elif UNITY_STANDALONE_OSX
         path = Application.persistentDataPath + "/save1.txt";
 #elif UNITY_STANDALONE_LINUX
-        path = Application.persistentDataPath + "/Motorland/Save/save1.txt";
+        path = Application.persistentDataPath + "/motorlandSave1.txt";
 #elif UNITY_WEBGL
-        path = "/idbfs/Motorland0123" + "/save1.txt";
+        path = "/idbfs/motorland0212" + "/save1.dat";
         if (!Directory.Exists(path))
         {
-            Directory.CreateDirectory(path);
+            Directory.CreateDirectory("/idbfs/motorland0212");
         }
 #endif
-
-        FileStream stream = new FileStream(path, FileMode.Create);
-        AllSaveData allSaveData = new AllSaveData();
-        // encrypt the data into binary format
-        formatter.Serialize(stream, allSaveData);
-        // remember to close the stream
-        stream.Close();
+        using (FileStream stream = new FileStream(path, FileMode.Create)) {
+            AllSaveData allSaveData = new AllSaveData();
+            // encrypt the data into binary format
+            formatter.Serialize(stream, allSaveData);
+            // remember to close the stream
+            stream.Close();
+            // Sync
+            JS_FileSystem_Sync();
+        }
     }
 
     public static AllSaveData Load()
     {
         string path;
 #if UNITY_STANDALONE_WIN || UNITY_EDITOR
-        var pathWithEnv = @"%userprofile%\AppData\Local\Motorland0123\Save\save1.txt";
-        path = Environment.ExpandEnvironmentVariables(pathWithEnv);
+        path = Application.persistentDataPath + "/save1.txt";
 #elif UNITY_STANDALONE_OSX
         path = Application.persistentDataPath + "/save1.txt";
 #elif UNITY_STANDALONE_LINUX
-        path = Application.persistentDataPath + "/Motorland/Save/save1.txt";
+        path = Application.persistentDataPath + "/motorlandSave1.txt";
 #elif UNITY_WEBGL
-        path = "/idbfs/Motorland0123" + "/save1.txt";
+        path = "/idbfs/motorland0212" + "/save1.dat";
 #endif
         if (File.Exists(path))
         {
