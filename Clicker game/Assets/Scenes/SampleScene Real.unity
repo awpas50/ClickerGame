@@ -31566,15 +31566,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 134627827488348538, guid: e6b334b2cd2bbda41ab504b863977dbc,
+    - target: {fileID: 814780393657421858, guid: e6b334b2cd2bbda41ab504b863977dbc,
         type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -1.333
-      objectReference: {fileID: 0}
-    - target: {fileID: 134627827488348538, guid: e6b334b2cd2bbda41ab504b863977dbc,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.167
+      propertyPath: limit
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 814780393657421859, guid: e6b334b2cd2bbda41ab504b863977dbc,
         type: 3}
@@ -31631,30 +31626,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 814780393657421862, guid: e6b334b2cd2bbda41ab504b863977dbc,
-        type: 3}
-      propertyPath: m_Size.y
-      value: 0.74394023
-      objectReference: {fileID: 0}
-    - target: {fileID: 814780393657421862, guid: e6b334b2cd2bbda41ab504b863977dbc,
-        type: 3}
-      propertyPath: m_Center.y
-      value: -0.12802991
-      objectReference: {fileID: 0}
     - target: {fileID: 814780393657421863, guid: e6b334b2cd2bbda41ab504b863977dbc,
         type: 3}
       propertyPath: m_Name
       value: Main Building
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000624267997064041, guid: e6b334b2cd2bbda41ab504b863977dbc,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7906981150157653505, guid: e6b334b2cd2bbda41ab504b863977dbc,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e6b334b2cd2bbda41ab504b863977dbc, type: 3}

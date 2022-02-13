@@ -5,6 +5,10 @@ using UnityEngine.EventSystems;
 
 public class MainBuilding : MonoBehaviour
 {
+    [Header("Click lock")]
+    public float limit = 10;
+    private float t;
+    [Header("Money")]
     public float moneyEachClick;
     [Header("What to instantiate")]
     public GameObject mainBuildingPopUp;
@@ -25,7 +29,20 @@ public class MainBuilding : MonoBehaviour
         originalScale = transform.localScale;
         popupStorageCanvas = GameObject.FindGameObjectWithTag("StorageCanvas");
     }
-    
+
+    private void Update()
+    {
+        t += Time.deltaTime;
+        if(t > 0.2f && limit >= 10)
+        {
+            t = 0;
+        }
+        if(t > 0.2f && limit < 10)
+        {
+            limit++;
+            t = 0;
+        }
+    }
     public void OnMouseOver()
     {
         //prevent clicking through UI
@@ -33,13 +50,15 @@ public class MainBuilding : MonoBehaviour
         //{
         //    return;
         //}
-        if ((Input.GetMouseButtonUp(0)) && !GameManager.i.isPaused)
+        if ((Input.GetMouseButtonUp(0)) && !GameManager.i.isPaused && limit > 0)
         {
             MainBuildingClickEvent();
         }
     }
     public void MainBuildingClickEvent()
     {
+        limit--;
+
         AudioManager.instance.Play(SoundList.ButtonClicked2);
         Currency.MONEY += moneyEachClick;
         GameObject mainBuildingPopUpREF = Instantiate(mainBuildingPopUp, transform.position, Quaternion.identity);
