@@ -39,7 +39,8 @@ public class AudioManager : MonoBehaviour
 
     private void Update()
     {
-        bgm.volume = GetMusicVolume();
+        //bgm.volume = GetMusicVolume();
+        EverloopController.instance.volume = GetMusicVolume() / 4;
     }
     public static bool CanPlaySound(SoundList sound, float CD)
     {

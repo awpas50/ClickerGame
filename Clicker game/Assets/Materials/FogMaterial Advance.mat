@@ -29,7 +29,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _Cookie:
         m_Texture: {fileID: 2800000, guid: 6df9abdc175e85540be281dd7c6a6f9b, type: 3}
-        m_Scale: {x: 12, y: 12}
+        m_Scale: {x: 18, y: 18}
         m_Offset: {x: 0, y: 0}
     - _DistortTex:
         m_Texture: {fileID: 0}
@@ -41,7 +41,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 2800000, guid: 4ac847aa57391ca4392e8822871ef907, type: 3}
-        m_Scale: {x: 12, y: 12}
+        m_Scale: {x: 10, y: 10}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
@@ -74,7 +74,7 @@ Material:
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Intensity: 1
-    - _IntersectionThresholdMax: 1
+    - _IntersectionThresholdMax: 1.03
     - _Invert: 0
     - _Magnitude: 0.1
     - _MainDistort: 1
@@ -88,7 +88,7 @@ Material:
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _Rotation: 1
-    - _RotationSpeed: 0.001
+    - _RotationSpeed: 0.0005
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -105,7 +105,7 @@ Material:
     m_Colors:
     - Color_BBEA10C3: {r: 0.6320754, g: 0.6320754, b: 0.6320754, a: 1}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 0.30210927, g: 0.4791089, b: 0.8773585, a: 0.54509807}
+    - _Color: {r: 0.4219918, g: 0.56699634, b: 0.8207547, a: 0.21176471}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
 --- !u!114 &1346720275441667876

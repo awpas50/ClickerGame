@@ -36,7 +36,7 @@ public class MainMenuManager : MonoBehaviour
     }
     IEnumerator ContinueGameAsync()
     {
-        AudioManager.instance.Play(SoundList.ButtonClicked);
+        AudioManager.instance.Play(SoundList.ButtonClicked3);
 
         AllUIScaleDown();
         yield return new WaitForSeconds(1f);
@@ -61,7 +61,7 @@ public class MainMenuManager : MonoBehaviour
     }
     IEnumerator StartGameAsync()
     {
-        AudioManager.instance.Play(SoundList.ButtonClicked);
+        AudioManager.instance.Play(SoundList.ButtonClicked3);
 
         AllUIScaleDown();
         yield return new WaitForSeconds(1f);

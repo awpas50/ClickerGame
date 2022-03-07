@@ -24,11 +24,11 @@ public class VolumeScroller : MonoBehaviour
     {
         if (audioType == AudioType.Music)
         {
-            gameObject.GetComponent<Slider>().value = VolumeController.i.musicVolume;
+            gameObject.GetComponent<Slider>().value = AudioManager.instance.GetMusicVolume();
         }
         if (audioType == AudioType.SFX)
         {
-            gameObject.GetComponent<Slider>().value = VolumeController.i.SfxVolume;
+            gameObject.GetComponent<Slider>().value = AudioManager.instance.GetSfxVolume();
         }
     }
 

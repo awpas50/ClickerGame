@@ -50,21 +50,22 @@ public class AirportPopUp : MonoBehaviour
     public void ButtonEvent()
     {
         // Audio
-        int seed2 = Random.Range(0, 3);
-        switch (seed2)
-        {
-            case 0:
-                AudioManager.instance.Play(SoundList.GetMoney1);
-                break;
-            case 1:
-                AudioManager.instance.Play(SoundList.GetMoney2);
-                break;
-            case 2:
-                AudioManager.instance.Play(SoundList.GetMoney3);
-                break;
-            default:
-                break;
-        }
+        AudioManager.instance.Play(SoundList.GetAirportGoods);
+        //int seed2 = Random.Range(0, 3);
+        //switch (seed2)
+        //{
+        //    case 0:
+        //        AudioManager.instance.Play(SoundList.GetMoney1);
+        //        break;
+        //    case 1:
+        //        AudioManager.instance.Play(SoundList.GetMoney2);
+        //        break;
+        //    case 2:
+        //        AudioManager.instance.Play(SoundList.GetMoney3);
+        //        break;
+        //    default:
+        //        break;
+        //}
 
         int seed = Random.Range(0, 100);
         if(seed >= 24)

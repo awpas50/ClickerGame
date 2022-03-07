@@ -38,7 +38,9 @@ public enum SoundList
     Hover3,
     GetMoney1,
     GetMoney2,
-    GetMoney3
+    GetMoney3,
+    ButtonClicked4,
+    ButtonClicked5
 }
 
 [System.Serializable]

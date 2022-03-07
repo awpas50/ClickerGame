@@ -103,7 +103,7 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - Color_BBEA10C3: {r: 0, g: 0.32054046, b: 0.6132076, a: 0.2627451}
+    - Color_BBEA10C3: {r: 0.24870951, g: 0.5079199, b: 0.764151, a: 0.29803923}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 0.11859204, g: 0.21130331, b: 0.38679248, a: 0.42745098}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
