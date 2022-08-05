@@ -1,27 +1,27 @@
-# ClickerGame
+# Summary
 1-year long C# Unity project.
 Technique used: Binary Formatter, LeanTween API, URP Shader Graph.
 Learnt: Writing post-release devlogs for users (players).
 
-# Step-to-step guide on how to save data (on PC/Mac/Linux/WebGL) using binary formatter
-Today's example will be saving multiple building positions in a city builder game. As building positions are stored as Vector3, but binary formatter cannot store Unity variables such as GameObject, Transform, Vector3, we need to convert it to non Unity specified variables (int, float, etc.).
+## Step-to-step guide on how to save data (on PC/Mac/Linux/WebGL) using binary formatter
+Today's example will be saving multiple building positions in a city builder game. As building positions are stored as `Vector3`, but binary formatter cannot store Unity variables such as `GameObject`, `Transform`, `Vector3`, we need to convert it to non Unity specified variables (`int`, `float`, etc.).
 
 The scene will be reloaded to wipe any old data before new save data is read and loaded.
 
 4 scripts are needed:
 
-SaveSystem.cs: Static class that handles the binary formatter 
+`SaveSystem.cs`: Static class that handles the binary formatter 
 
-SaveLoadHandler.cs: A script that has to be placed in the Unity hierarchy (using a empty GameObject) in order to work. Has function called SaveGame() and CreateSceneLoader() to be triggered in the game (usually with a button)
+`SaveLoadHandler.cs`: A script that has to be placed in the Unity hierarchy (using a empty GameObject) in order to work. Has function called `SaveGame()` and `CreateSceneLoader()` to be triggered in the game (usually with a button)
 
-AllSaveData.cs: Non-Monobehaviour script which stores the game data you want to save (must be a string, int, float, bool)
+`AllSaveData.cs`: Non-Monobehaviour script which stores the game data you want to save (must be a string, int, float, bool)
 
-SceneLoader.cs: A script used to properly load the game using LoadSceneAsync() (instead of LoadScene()). Otherwise, the save data loading will happened before the scene reloads, and thus loading will fail.
+`SceneLoader.cs`: A script used to properly load the game using `LoadSceneAsync()` (instead of `LoadScene()`). Otherwise, the save data loading will happened before the scene reloads, and thus loading will fail.
 
 ![Screenshot 2022-08-05 17 03 24](https://user-images.githubusercontent.com/41810433/183021373-e0d75004-574c-40b4-9a72-4eb53f84c810.png)
 
-SaveSystem.cs
-```
+###### SaveSystem.cs
+``` C#
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
@@ -98,13 +98,15 @@ public static class SaveSystem
 }
 ```
 
-SaveLoadHandler.cs
-```
+###### SaveLoadHandler.cs 
+``` C#
 using System;
 using UnityEngine;
 
 public class SaveLoadHandler : MonoBehaviour
 {
+    // THe building you want to be loaded
+    public GameObject buildingA;
     // Will be called in runtime (usually with a button)
     public void SaveGame()
     {
@@ -118,7 +120,7 @@ public class SaveLoadHandler : MonoBehaviour
         DontDestroyOnLoad(sceneLoader);
         sceneLoader.AddComponent<SceneLoader>();
     }
-    // *** This will be called when the script "SceneLoader" is initialized.
+    // *** Will be called when SceneLoader.cs is initialized.
     public void LoadGame()
     {
         AllSaveData data = SaveSystem.Load();
@@ -127,9 +129,10 @@ public class SaveLoadHandler : MonoBehaviour
     }
     private void LoadHouses(AllSaveData data)
     {
-        for (int i = 0; i < data.allHouses_int; i++)
+        for (int i = 0; i < data.saveData_allHousesCount; i++)
         {
-            GameObject newHouse = Instantiate(GameManager.i.building1.building, 
+            // Instantiate a new house with the position previously saved.
+            GameObject newHouse = Instantiate(buildingA, 
                 new Vector3(data.saveData_housePos[i,0],
                 data.saveData_housePos[i,1],
                 data.saveData_housePos[i,2]), Quaternion.identity);
@@ -138,8 +141,8 @@ public class SaveLoadHandler : MonoBehaviour
 }
 ```
 
-AllSaveData.cs
-```
+###### AllSaveData.cs
+``` C#
 using UnityEngine;
 
 [System.Serializable]
@@ -147,21 +150,23 @@ public class AllSaveData
 {
     [Header("House")]
     public float[,] saveData_housePos;
-    
-    // Will be called in the script "SaveLoadHandler"
+    public int saveData_allHousesCount;
+    // Will be called in SaveLoadHandler.cs
     public AllSaveData()
     {
         StoreHouseData();
-    }
-    
+    } 
     private void StoreHouseData()
     {
-        // House data
+        // Obtain all the houses with the tag 'House' in the scene
         GameObject[] allHouses = GameObject.FindGameObjectsWithTag("House");
-        allHouses_int = allHouses.Length;
+        // The number of houses has to be stored. This will be used when loading.
+        saveData_allHousesCount = allHouses.Length;
+        // Initializing the array
         saveData_housePos = new float[allHouses.Length, 3];
         for (int i = 0; i < allHouses.Length; i++)
         {
+            // Storing a Vector3 variable into 3 float variables.
             saveData_housePos[i, 0] = allHouses[i].transform.position.x;
             saveData_housePos[i, 1] = allHouses[i].transform.position.y;
             saveData_housePos[i, 2] = allHouses[i].transform.position.z;
@@ -169,8 +174,8 @@ public class AllSaveData
     }
 }
 ```
-SceneLoader.cs
-```
+###### SceneLoader.cs
+``` C#
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -181,26 +186,70 @@ public class SceneLoader : MonoBehaviour
     {
         StartCoroutine(LoadScene());
     }
-
     public IEnumerator LoadScene()
     {
+        // Access SaveLoadHandler.cs
         SaveLoadHandler slh = FindObjectOfType<SaveLoadHandler>();
         // Start loading the scene
         AsyncOperation asyncLoadLevel = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
         // Wait until the level finish loading
         while (!asyncLoadLevel.isDone)
             yield return null;
-        // Wait a frame so every Awake and Start method is called
+        // Wait a frame so every Awake() and Start() method is called
         yield return new WaitForEndOfFrame();
-        // Load save data
+        // Load save data in the next frame
         slh.LoadGame();
-        // Destroy itself after everything has loaded
+        // Destroy itself after everything has loaded, so that this function will only be called once.
         Destroy(gameObject);
     }
 }
 ```
 
-This is everything needed for the save system. To save or load in the game, create 2 buttons and simply assign SaveLoadHandler.SaveGame() or SaveL
-oadHandler.CreateSceneLoader() to the OnClick() function respectively.
+This is everything needed for the save system. To test saving or loading in the game, create 2 buttons and simply assign `SaveLoadHandler.SaveGame()` and `SaveLoadHandler.CreateSceneLoader()` to the OnClick() function respectively.
 
 ![Screenshot 2022-08-05 17 11 50](https://user-images.githubusercontent.com/41810433/183022755-d1697b2d-d14c-45d1-9118-8b4bdf36af1b.png)
+
+## Tips
+If you want to save multiple types of buildings, simply put all the data you need to save in `SaveData.SaveData()` and everything you need to load in the script `SaveLoadHandler.LoadGame()`. Below is a example storing different entities in the game:
+###### SaveData.cs
+``` C#
+public AllSaveData()
+{
+    StorePlatformData();
+    StoreHouseData();
+    StoreFactoryData();
+    StoreParkData();
+    StoreTurretData();
+    StoreAirportData();
+    StoreLogisticCenterData();
+    StorePerpetualMachineData();
+    StoreRuinData();
+    StoreResourcesAndPollution();
+    StoreCurrentGameTime();
+    StoreTownHallRelated();
+    StoreAsteroidsData();
+    StoreBulletData();
+}
+```
+
+###### SaveLoadHandler.cs
+``` C#
+public void LoadGame()
+{
+    AllSaveData data = SaveSystem.Load();
+    LoadPlatforms(data);
+    LoadHouses(data);
+    LoadFactories(data);
+    LoadParks(data);
+    LoadTurrets(data);
+    LoadAirports(data);
+    LoadLogisticCenters(data);
+    LoadPerpetualMachines(data);
+    LoadRuins(data);
+    LoadResourcesAndPollution(data);
+    LoadCurrentGameTime(data);
+    LoadTownHallRelated(data);
+    LoadAsteroids(data);
+    LoadBullets(data);
+}
+```
