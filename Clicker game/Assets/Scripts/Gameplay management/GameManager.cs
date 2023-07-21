@@ -53,12 +53,6 @@ public class GameManager : MonoBehaviour
     public GameObject ruin7;
     public GameObject bullet;
 
-    //[Header("buildingStats")]
-    //public GameObject[] list_house;
-    //public GameObject[] list_factory;
-    //public GameObject[] list_park;
-    //public GameObject[] list_generator;
-
     public GameObject placeHolder;
 
     public bool buildingPurchasingState = false;
@@ -113,7 +107,7 @@ public class GameManager : MonoBehaviour
 
         UIManager.i.buildingInfo_name.text = "House";
         UIManager.i.buildingInfo_price.text = "$60";
-        UIManager.i.buildingInfo.text = "Buffs the efficiency of the closest 4 nearby buildings.";
+        UIManager.i.buildingInfo.text = "Boost the production of the closest 4 buildings.";
         if(buildingSelectedInScene)
         {
             buildingSelectedInScene.GetComponent<BuildingSelection>().indicator.SetActive(false);
@@ -130,7 +124,7 @@ public class GameManager : MonoBehaviour
 
         UIManager.i.buildingInfo_name.text = "Factory";
         UIManager.i.buildingInfo_price.text = "$100";
-        UIManager.i.buildingInfo.text = "Produce minerals every 20 seconds. Gains efficiency buff from nearby houses and town hall, but will pollute nearby parks.";
+        UIManager.i.buildingInfo.text = "Produce minerals. production can be boosted by nearby houses and town hall. Pollutes nearby parks.";
         if (buildingSelectedInScene)
         {
             buildingSelectedInScene.GetComponent<BuildingSelection>().indicator.SetActive(false);
@@ -146,7 +140,7 @@ public class GameManager : MonoBehaviour
 
         UIManager.i.buildingInfo_name.text = "Park";
         UIManager.i.buildingInfo_price.text = "$80";
-        UIManager.i.buildingInfo.text = "Produce clear air every 20 seconds to keep out the pollution. Gains efficiency buff from nearby houses and town hall, but remember not to put near factories.";
+        UIManager.i.buildingInfo.text = "Produce clear air to reduce pollution. production can be boosted by nearby houses and town hall.";
         if (buildingSelectedInScene)
         {
             buildingSelectedInScene.GetComponent<BuildingSelection>().indicator.SetActive(false);
@@ -164,7 +158,7 @@ public class GameManager : MonoBehaviour
 
         UIManager.i.buildingInfo_name.text = "Meteor defense";
         UIManager.i.buildingInfo_price.text = "$600";
-        UIManager.i.buildingInfo.text = "Powerful laser cannon protect your base from asteroids. Gains shooting speed buff from nearby houses.";
+        UIManager.i.buildingInfo.text = "Powerful laser cannon protects your base from asteroids. Gains shooting speed buff from nearby houses.";
         if (buildingSelectedInScene)
         {
             buildingSelectedInScene.GetComponent<BuildingSelection>().indicator.SetActive(false);
@@ -173,7 +167,6 @@ public class GameManager : MonoBehaviour
     }
     public void SelectBuilding5()
     {
-
         // A cat always lands on her feet whereas a bread with butter always fall buttered side down. 
         buildingSelectedInUI = building5.building;
         buildingCost = building5.cost;
@@ -181,7 +174,7 @@ public class GameManager : MonoBehaviour
 
         UIManager.i.buildingInfo_name.text = "Airport";
         UIManager.i.buildingInfo_price.text = "$800";
-        UIManager.i.buildingInfo.text = "Build airplanes to explore the outside world, treasures are waiting for you! Gains airplane travel speed buff from nearby houses and town hall.";
+        UIManager.i.buildingInfo.text = "Build airplanes to explore the world, treasures are waiting for you! Gains airplane travel speed buff from nearby houses and town hall.";
         if (buildingSelectedInScene)
         {
             buildingSelectedInScene.GetComponent<BuildingSelection>().indicator.SetActive(false);
@@ -198,7 +191,7 @@ public class GameManager : MonoBehaviour
 
         UIManager.i.buildingInfo_name.text = "Logistic center";
         UIManager.i.buildingInfo_price.text = "$1000";
-        UIManager.i.buildingInfo.text = "Auto collect nearby resources from buildings. Grant 4x buffs when collecting resources from town hall.";
+        UIManager.i.buildingInfo.text = "Collect nearby resources from buildings. Grant 4x buffs when collecting resources from town hall.";
         if (buildingSelectedInScene)
         {
             buildingSelectedInScene.GetComponent<BuildingSelection>().indicator.SetActive(false);
@@ -368,9 +361,6 @@ public class GameManager : MonoBehaviour
     {
         // Record elapsed time
         timeElapsed += Time.deltaTime;
-        // Get money and pollution
-        //SaveData.current.money = Currency.MONEY;
-        //SaveData.current.pollution = Pollution.POLLUTION;
 
         if (buildingSelectedInScene)
         {
@@ -425,7 +415,7 @@ public class GameManager : MonoBehaviour
                 UIManager.i.upgradePlusText.text = "$" + estimateCostToUpgrade;
             }
 
-            // Building detail text
+            // Building description text
             if (buildingSelectedInScene.tag == "House")
             {
                 // Turret shooting speed buff = building production buff * 0.2
