@@ -1,12 +1,7 @@
 # Summary
-1-year long Unity project.
 
-Technique used: Binary Formatter, Async, LeanTween API, URP Shader Graph
-
-Learnt: Writing step-to-step tutorials, writing post-release devlogs for users (players)
-
-## Step-to-step guide on saving data in a city building game (on PC/Mac/Linux/WebGL) using binary formatter
-Today's example will be saving multiple building positions in a city builder game. As building positions are stored as `Vector3`, but binary formatter cannot store Unity variables such as `GameObject`, `Transform`, `Vector3`, we need to convert it to non Unity-only variables (`int`, `float`, etc.).
+## Creating a save system (works on PC/Mac/Linux/WebGL) using binary formatter
+The example showcased how to save GameObject's position. Building positions are stored as `Vector3`, but binary formatter cannot store types only avaliable in Unity such as `GameObject`, `Transform` or `Vector3`, we need to convert it to basic C# type (`int`, `float`, etc.).
 
 The scene will be reloaded to wipe any old data before new save data is read and loaded.
 
@@ -14,7 +9,7 @@ The scene will be reloaded to wipe any old data before new save data is read and
 
 `SaveSystem.cs`: Static class that handles the binary formatter 
 
-`SaveLoadHandler.cs`: A script that has to be placed in the Unity hierarchy (using a empty GameObject) in order to work. Has functions `SaveGame()` and `CreateSceneLoader()` to trigger saving and loading
+`SaveLoadHandler.cs`: A script that has to be placed in the Unity hierarchy (you might just create an empty GameObject and put the SaveLoadHandler.cs script in) in order to work. Has functions `SaveGame()` and `CreateSceneLoader()` to trigger saving and loading
 
 `AllSaveData.cs`: Stores the game data you want to save (must be a string, int, float, bool)
 
